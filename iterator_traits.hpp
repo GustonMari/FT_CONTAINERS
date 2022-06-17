@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:10:30 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/16 17:43:23 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/16 18:22:47 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <cstddef>
 
 /*
+**	IteratorTraitshttps://code.woboq.org/gcc/include/c++/7.2.1/bits/stl_iterator_base_types.h.html#std::output_iterator_tag
 	-> iterator_tag sont des types vide permetant de stocker des types différents d'itérateurs
 	-> struct input_iterator_tag {}; et les tag correspondent a des balises qui permettent 
 	de selectionner l'algorithme le plus adequate pour un itérateur
