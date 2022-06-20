@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 11:17:13 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/17 14:01:45 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/20 10:21:35 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 */
 
 #include "iterator_traits.hpp"
+
 
 namespace ft {
 
@@ -30,6 +31,40 @@ namespace ft {
 			random_access_iterator() : current() {}
 			explicit random_access_iterator(Iterator it) : current(it) {} // [ ] pq avoir proteger le constructeur de tte conversion
 			random_access_iterator(const random_access_iterator<Iterator>& it) : current(it.current) {}
+			//!--------------------------------OPERATOR------------------------------------------------------
+
+			random_access_iterator& operator=(const random_access_iterator<Iterator>& it)
+			{
+				current = it.current;
+				return (*this);
+			}
+
+			random_access_iterator& operator++()
+			{
+				++current;
+				return (*this);
+			}
+
+			random_access_iterator& operator--()
+			{
+				--current;
+				return (*this);
+			}
+
+			random_access_iterator& operator+=(difference_type n)
+			{
+				current += n;
+				return (*this);
+			}
+
+			random_access_iterator& operator-=(difference_type n)
+			{
+				current -= n;
+				return (*this);
+			}
+
+			//!--------------------------------FUNCTION------------------------------------------------------
+			//faire fucntion pour retourner l'iterator type ??
 			//operator
 	};
 	
