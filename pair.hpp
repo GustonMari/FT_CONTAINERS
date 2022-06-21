@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:20:53 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/21 15:56:37 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:58:35 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ namespace ft
 
 		//TODO: swap nest pas a inclure puisqu'il est code seuement a partir de c11 ??
 	};
+
+	template <class T1, class T2>
+	inline pair<T1, T2> make_pair(const T1 & a, const T2 & b)
+	{
+		return pair<T1, T2>(a, b);
+	}
 
 	template <class T1, class T2>
 	inline bool operator==(const pair<T1, T2> & a, const pair<T1, T2> & b)
