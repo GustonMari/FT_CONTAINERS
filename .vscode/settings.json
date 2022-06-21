@@ -18,6 +18,11 @@
 		"numeric": "cpp",
 		"initializer_list": "cpp",
 		"ranges": "cpp",
-		"utility": "cpp"
+		"utility": "cpp",
+		"compare": "cpp",
+		"random": "cpp",
+		"fstream": "cpp",
+		"sstream": "cpp",
+		"tuple": "cpp"
 	}
 }
