@@ -6,13 +6,16 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/16 11:09:19 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/21 16:09:35 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+*/
+
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-#	include <memory>
+# include <memory>
 
 
 template <typename T, typename Alloc = std::allocator<T>>
