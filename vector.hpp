@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/22 13:08:25 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/22 14:13:59 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ typedef typename : You are not actually creating a new data type,
 
   L'allocateur par défaut est sans état, c'est-à-dire que toutes les instances de l'allocateur donné sont interchangeables,
    comparables et peuvent libérer de la mémoire allouée par toute autre instance du même type d'allocateur.
+	explicit: Vous ne pouvez affecter que des valeurs qui correspondent aux valeurs du type de classe. docn pas de conv dans dautres types
+	
+	description de l'imbrication de base dans vector
+	https://code.woboq.org/gcc/libstdc++-v3/include/bits/stl_vector.h.html#std::vector::_Base
 */
 
 #ifndef VECTOR_HPP
@@ -24,9 +28,10 @@ typedef typename : You are not actually creating a new data type,
 # include <vector>
 # include "iterator_traits.hpp"
 # include "reverse_itertor.hpp"
+# include "vector_base.hpp"
 
 template <typename Tp, typename Allocator = std::allocator<Tp>>
-class vector
+class vector: protected vector_base<Tp, Allocator>
 {
 	public:
 		typedef Tp												value_type;
@@ -43,6 +48,14 @@ class vector
 		typedef typename Allocator::pointer						pointer; //aka Tp*
 		
 		//!------------------------------CONSTRUCTOR----------------------------------
+
+		explicit vector (const allocator_type & alloc = allocator_type());
+		explicit vector (size_type n, const value_type & val = value_type());
+		
+		template <class InputIterator>
+		vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
+		vector (const vector & x);
+
 		//!------------------------------DESTRUCTOR-----------------------------------
 		//!------------------------------OPERATOR-------------------------------------
 		//!------------------------------FUNCTION-------------------------------------
