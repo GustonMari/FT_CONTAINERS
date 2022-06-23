@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/22 17:32:52 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 11:46:24 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ class vector_base
 		
 		//!----------------------------CONSTRUCTOR-------------------------------------
 		
+		//TODO: il y a bcp de constructor faut-il tous les faire ??
+	public:
 		vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(nullptr), m_size(0)
 		{
 			//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
@@ -56,15 +58,75 @@ class vector_base
 		vector_base(size_t n, const value_type & val, const alloc_type & alloc = alloc_type()):
 		 m_alloc(alloc), m_capacity(n), m_start(m_alloc.allocate(n)), m_size(n)
 		{
+			for (size_type i = 0; i < n; i++)
+				m_alloc.construct(m_start + i, val);
 			//TODO: need to continue this constructor to add the value to the vector
 			//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
 		}
+		
+		vector_base(size_t n): m_alloc(alloc_type()), m_capacity(n), m_start(m_alloc.allocate(n)), m_size(n)
+		{
+			//?????????? dois je  continuer
+		}
 
+		
 		//!----------------------------DESTRUCTOR-------------------------------------
+
+		~vector_base()
+		{
+			if (m_capacity)
+			{
+				for (size_type i = 0; i < m_size; i++)
+					m_alloc.destroy(m_start + i);
+				m_alloc.deallocate(m_start, m_capacity);
+			}
+		}
+
 		//!----------------------------FUNCTION-------------------------------------
+		size_type	size() const { return m_size; }
+
+		void	reserve(size_type n)
+		{
+			if (n < m_capacity)
+				return ;
+			if (n > m_alloc.max_size())
+			{
+				throw std:length_error("vector_base::reserve: max_size exceeded"); //TODO check message
+			}
+			pointer tmp = m_alloc.allocate(n);
+			for (size_type i = 0; i < m_size; i++)
+				m_alloc.construct(tmp + i, m_start[i]);
+			deallocate(m_start, m_capacity);
+			m_start = tmp;
+			m_capacity = n;
+			m_size = n;
+		}
+		
+		void	resize(size_type count)
+		{
+			if (count > m_size)
+				
+		}
+
 };
 
 		//!----------------------------OPERATOR-------------------------------------
-//TODO FAIRE == ET !=
+
+template<typename Tp, typename Allocator>
+bool operator==(const vector_base<Tp, Allocator> & lhs, const vector_base<Tp, Allocator> & rhs)
+{
+	if (lhs.size() != rhs.size())
+		return false;
+	for (size_t i = 0; i < lhs.size(); i++)
+		if (lhs[i] != rhs[i])
+			return false;
+	return true;
+}
+
+template<typename Tp, typename Allocator>
+bool operator!=(const vector_base<Tp, Allocator> & lhs, const vector_base<Tp, Allocator> & rhs)
+{
+	return !(lhs == rhs);
+}
 
 #endif

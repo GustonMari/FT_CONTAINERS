@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/22 15:13:57 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 11:37:21 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef typename : You are not actually creating a new data type,
 # include <memory>
 # include <vector>
 # include "iterator_traits.hpp"
-# include "reverse_itertor.hpp"
+# include "reverse_iterator.hpp"
 # include "vector_base.hpp"
 
 template <typename Tp, typename Allocator = std::allocator<Tp>>
