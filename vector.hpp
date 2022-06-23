@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 14:23:01 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:23:55 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,46 +31,161 @@ typedef typename : You are not actually creating a new data type,
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
 
-template <typename Tp, typename Allocator = std::allocator<Tp> >
-class vector: protected vector_base<Tp, Allocator>
-{
-	public:
-		typedef Tp												value_type;
-		typedef	Allocator										allocator_type;
-		typedef value_type&										reference;
-		//typedef std::__1::allocator_traits<Allocator>			alloc_traits; //BUG que faire ??
-		typedef const value_type&								const_reference;
-		typedef size_t											size_type;
-		typedef ptrdiff_t										difference_type;
-		typedef Tp*												iterator;
-		typedef const Tp* 										const_iterator; // pas sur dutous
-		typedef ft::reverse_iterator<iterator>					reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-		typedef typename Allocator::pointer						pointer; //aka Tp*
-		
-		//!------------------------------CONSTRUCTOR----------------------------------
+namespace ft {
 
-		explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
-		{
+	template <typename Tp, typename Allocator = std::allocator<Tp> >
+	class vector: protected vector_base<Tp, Allocator>
+	{
+		public:
+			typedef Tp												value_type;
+			typedef	Allocator										allocator_type;
+			typedef value_type&										reference;
+			//typedef std::__1::allocator_traits<Allocator>			alloc_traits; //BUG que faire ??
+			typedef const value_type&								const_reference;
+			typedef size_t											size_type;
+			typedef ptrdiff_t										difference_type;
+			typedef Tp*												iterator;
+			typedef const Tp* 										const_iterator; // pas sur dutous
+			typedef ft::reverse_iterator<iterator>					reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef typename Allocator::pointer						pointer; //aka Tp*
 			
-		};
-		
-		explicit vector (size_type n, const value_type & val = value_type()): vector_base<Tp, Allocator>(n, val)
-		{
-			
-		};
-		
-		//template <class InputIterator>
-		//vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
-		vector (const vector & x): vector_base<Tp, Allocator>(x.size())
-		{
-			//TODO: ligne 458
-		};
+			//!------------------------------CONSTRUCTOR----------------------------------
 
-		//!------------------------------DESTRUCTOR-----------------------------------
-		//!------------------------------OPERATOR-------------------------------------
-		//!------------------------------FUNCTION-------------------------------------
-	private:
-};
+			explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
+			{
+				
+			};
+			
+			explicit vector (size_type n, const value_type & val = value_type()): vector_base<Tp, Allocator>(n, val)
+			{
+				
+			};
+			
+			//template <class InputIterator>
+			//vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
+			vector (const vector & x): vector_base<Tp, Allocator>(x.size())
+			{
+				//TODO: ligne 458
+			};
+
+			//!------------------------------DESTRUCTOR-----------------------------------
+			
+			~vector()
+			{
+				//TODO:DESTROY EVERYTHING ??
+				//ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
+			};
+			//!------------------------------OPERATOR-------------------------------------
+			
+			vector & operator= (const vector & x)
+			{
+				if (this != &x)
+				{
+					ft::vector_base<Tp, Allocator>::operator=(x);
+					
+				}
+			}
+
+			reference operator[] (size_type n)
+			{
+				if (n >= this->m_size)
+					throw std::out_of_range("vector_base::operator[]: out of range");
+				return (this->m_start[n]);
+			}
+
+			//!------------------------------FUNCTION-------------------------------------
+
+			void	reserve(size_type n)
+			{
+				if (n < this->m_capacity)
+					return ;
+				if (n > this->m_alloc.max_size())
+				{
+					throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
+				}
+				ft::vector_base<Tp, Allocator>::reserve(n);
+			}
+			
+			//TODO: need to do assign function
+
+			Allocator get_allocator() const
+			{
+				return (this->m_alloc);
+			}
+
+			iterator begin()
+			{
+				return (this->m_start);
+			}
+			
+			iterator end()
+			{
+				return (this->m_start + this->m_size);
+			}
+
+			const_iterator begin() const
+			{
+				return (this->m_start);
+			}
+
+			const_iterator end() const
+			{
+				return (this->m_start + this->m_size);
+			}
+
+			reverse_iterator rbegin()
+			{
+				return (reverse_iterator(this->m_start + this->m_size));
+			}
+
+			reverse_iterator rend()
+			{
+				return (reverse_iterator(this->m_start));
+			}
+
+			const_reverse_iterator rbegin() const
+			{
+				return (const_reverse_iterator(this->m_start + this->m_size));
+			}
+
+			const_reverse_iterator rend() const
+			{
+				return (const_reverse_iterator(this->m_start));
+			}
+			
+			size_type size() const
+			{
+				return (this->m_size);
+			}
+
+			bool empty() const
+			{
+				return (this->m_size == 0);
+			}
+			
+			size_type capacity() const
+			{
+				return (this->m_capacity);
+			}
+			
+			size_type	max_size() const
+			{
+				return (this->m_alloc.max_size());
+			}
+
+			reference front()
+			{
+				return (this->m_start[0]);
+			}
+			
+			const_reference front() const
+			{
+				return (this->m_start[0]);
+			}
+		// private:
+	};
+
+}
 
 #endif

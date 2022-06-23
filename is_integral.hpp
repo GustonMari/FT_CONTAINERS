@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:31:43 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 14:22:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 16:19:34 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 		static const Tp					value = v;
 		typedef Tp							value_type;
 		typedef integral_constant<Tp, v>	type;
-		//value_type operator() const { return value; } //BUG : compile error why ??
+		value_type operator() (void) const { return value; } //BUG : compile error why ??
 		operator value_type() const { return value; } //BUG pas compris ca
 	};
 	
