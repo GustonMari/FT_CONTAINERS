@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 17:23:55 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 17:42:16 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ namespace ft {
 
 			reference operator[] (size_type n)
 			{
+				//TODO: QUE FAIR POUR N < 0 ??
 				if (n >= this->m_size)
 					throw std::out_of_range("vector_base::operator[]: out of range");
 				return (this->m_start[n]);
@@ -98,6 +99,7 @@ namespace ft {
 
 			void	reserve(size_type n)
 			{
+				//TODO: QUE FAIR POUR N < 0 ??
 				if (n < this->m_capacity)
 					return ;
 				if (n > this->m_alloc.max_size())
@@ -174,6 +176,15 @@ namespace ft {
 				return (this->m_alloc.max_size());
 			}
 
+			reference at(size_type n)
+			{
+				if (n < 0) // fautil check ca ??
+					throw std::out_of_range("vector_base::at: out of range");
+				if (n >= size())
+					throw std::out_of_range("vector_base::at: out of range");
+				return (this->m_start[n]);
+			}
+
 			reference front()
 			{
 				return (this->m_start[0]);
@@ -182,6 +193,13 @@ namespace ft {
 			const_reference front() const
 			{
 				return (this->m_start[0]);
+			}
+			
+			pointer data()
+			{
+				//If size() is 0, data() may or may not return a null pointer.
+				//TODO: CHECK THIS
+				return (this->m_start);
 			}
 		// private:
 	};
