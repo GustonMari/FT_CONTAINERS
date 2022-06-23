@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 11:46:24 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 14:07:25 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class vector_base
 		typedef Tp*			pointer;
 		typedef Allocator	alloc_type;
 		typedef size_t		size_type;
-
+		typedef Tp			value_type;
 	private:
 		alloc_type			m_alloc; //object allocate
 		size_type			m_capacity; //the capacity of object in th e vector
@@ -50,7 +50,10 @@ class vector_base
 		
 		//TODO: il y a bcp de constructor faut-il tous les faire ??
 	public:
-		vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(nullptr), m_size(0)
+		
+		//vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(std::nullptr_t), m_size(0)
+		//BUG pq std::nullptr_t ne marche pas ??
+		vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(NULL), m_size(0)
 		{
 			//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
 		}
@@ -91,7 +94,7 @@ class vector_base
 				return ;
 			if (n > m_alloc.max_size())
 			{
-				throw std:length_error("vector_base::reserve: max_size exceeded"); //TODO check message
+				throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
 			}
 			pointer tmp = m_alloc.allocate(n);
 			for (size_type i = 0; i < m_size; i++)
@@ -104,10 +107,42 @@ class vector_base
 		
 		void	resize(size_type count)
 		{
-			if (count > m_size)
-				
+			(void)count;
+			//if (count > m_size)
+			//	//TODO: neeD TO CONTINUE
 		}
 
+		void	realloc(size_type count) //TODO not sure for realloc
+		{
+			if(m_capacity)
+			{
+				for (size_type i = 0; i < m_size; i++)
+					m_alloc.destroy(m_start + i);
+				m_alloc.deallocate(m_start, m_capacity);
+			}
+			pointer tmp = m_alloc.allocate(count);
+			for (size_type i = 0; i < m_size; i++)
+				m_alloc.construct(tmp + i, m_start[i]);
+			m_start = tmp;
+			m_capacity = count;
+			m_size = count;
+		}
+
+		void	realloc_arg(size_type count, const value_type & val)
+		{
+			if(m_capacity)
+			{
+				for (size_type i = 0; i < m_size; i++)
+					m_alloc.destroy(m_start + i);
+				m_alloc.deallocate(m_start, m_capacity);
+			}
+			pointer tmp = m_alloc.allocate(count);
+			for (size_type i = 0; i < m_size; i++)
+				m_alloc.construct(tmp + i, val);
+			m_start = tmp;
+			m_capacity = count;
+			m_size = count;
+		}
 };
 
 		//!----------------------------OPERATOR-------------------------------------

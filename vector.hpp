@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 11:37:21 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 14:23:01 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef typename : You are not actually creating a new data type,
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
 
-template <typename Tp, typename Allocator = std::allocator<Tp>>
+template <typename Tp, typename Allocator = std::allocator<Tp> >
 class vector: protected vector_base<Tp, Allocator>
 {
 	public:
 		typedef Tp												value_type;
 		typedef	Allocator										allocator_type;
 		typedef value_type&										reference;
-		typedef std::__1::allocator_traits<Allocator>			alloc_traits;
+		//typedef std::__1::allocator_traits<Allocator>			alloc_traits; //BUG que faire ??
 		typedef const value_type&								const_reference;
 		typedef size_t											size_type;
 		typedef ptrdiff_t										difference_type;
@@ -50,12 +50,22 @@ class vector: protected vector_base<Tp, Allocator>
 		
 		//!------------------------------CONSTRUCTOR----------------------------------
 
-		explicit vector (const allocator_type & alloc = allocator_type());
-		explicit vector (size_type n, const value_type & val = value_type());
+		explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
+		{
+			
+		};
 		
-		template <class InputIterator>
-		vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
-		vector (const vector & x);
+		explicit vector (size_type n, const value_type & val = value_type()): vector_base<Tp, Allocator>(n, val)
+		{
+			
+		};
+		
+		//template <class InputIterator>
+		//vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
+		vector (const vector & x): vector_base<Tp, Allocator>(x.size())
+		{
+			//TODO: ligne 458
+		};
 
 		//!------------------------------DESTRUCTOR-----------------------------------
 		//!------------------------------OPERATOR-------------------------------------

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:31:43 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/21 11:04:15 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 14:22:22 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 	Mostly this matters when initialization at runtime would be time-consuming
 	and you want to push that work off onto the compiler, 
 	where it's also time-consuming, but doesn't slow down execution time of the compiled program
+	https://stackoverflow.com/questions/29469225/how-to-use-c11-integral-constantvalue-type
 */
 
 
@@ -48,10 +49,11 @@ namespace ft
 	template <typename Tp, Tp v>
 	struct integral_constant
 	{
-		static constexpr Tp					value = v;
+		static const Tp					value = v;
 		typedef Tp							value_type;
 		typedef integral_constant<Tp, v>	type;
-		constexpr operator value_type() const noexcept { return value; }
+		//value_type operator() const { return value; } //BUG : compile error why ??
+		operator value_type() const { return value; } //BUG pas compris ca
 	};
 	
 	typedef integral_constant<bool, true>	true_type;

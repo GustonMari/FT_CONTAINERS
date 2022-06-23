@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_itertor.cpp                                :+:      :+:    :+:   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/20 15:31:54 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 13:46:33 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
 			
 			
 			//return c current, accesss the underlying container
-			base() const { return current; }
+			Iterator & base() const { return current; }
 
 			reverse_iterator& operator=(const reverse_iterator<Iterator>& other)
 			{
@@ -61,14 +61,14 @@ namespace ft
 			}
 			
 			//retourne une reference sur le contenu de l'itérateur
-			reference operator*() const 
+			reference operator*() const //TODO: vraiment a tester
 			{
 				Iterator tmp = current; 
 				return *(tmp);
 			}
 			
 			//retourne un pointeur sur le contenu de l'itérateur (a --current)
-			operator->() const { return &(operator*()); }
+			pointer operator->() const { return &(operator*()); } //TODO vraiment a tester
 
 			reverse_iterator & operator++()
 			{

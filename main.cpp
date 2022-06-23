@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 11:37:08 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/23 13:32:25 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,9 @@
 #include "iterator_traits.hpp"
 #include "lexicographical_compare.hpp"
 #include "pair.hpp"
+
+int main()
+{
+	
+	return (0);
+}
