@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 17:17:35 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/24 10:21:14 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ namespace ft {
 				m_capacity = count;
 				m_size = count;
 			}
+
+			//void	add_back
 		//!----------------------------OPERATOR-------------------------------------
 	
 		vector_base & operator=(const vector_base & rhs)

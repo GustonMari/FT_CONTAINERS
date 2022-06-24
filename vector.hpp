@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 17:42:16 by gmary            ###   ########.fr       */
+/*   Updated: 2022/06/24 10:26:07 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,31 @@ namespace ft {
 			reference operator[] (size_type n)
 			{
 				//TODO: QUE FAIR POUR N < 0 ??
-				if (n >= this->m_size)
+				/*
+		*This operator allows for easy, array-style, data access.
+       *  Note that data access with this operator is unchecked and
+       *  out_of_range lookups are not defined. (For checked lookups
+       *  see at().)
+				*/
+				if (n >= this->m_size) //surement faux par consequent
 					throw std::out_of_range("vector_base::operator[]: out of range");
 				return (this->m_start[n]);
 			}
+
+			const_reference operator[] (size_type n) const
+			{
+				//TODO: QUE FAIR POUR N < 0 ??
+				/*
+		*This operator allows for easy, array-style, data access.
+       *  Note that data access with this operator is unchecked and
+       *  out_of_range lookups are not defined. (For checked lookups
+       *  see at().)
+				*/
+				if (n >= this->m_size) //surement faux par consequent
+					throw std::out_of_range("vector_base::operator[]: out of range");
+				return (this->m_start[n]);
+			}
+			
 
 			//!------------------------------FUNCTION-------------------------------------
 
@@ -185,21 +206,66 @@ namespace ft {
 				return (this->m_start[n]);
 			}
 
+			const_reference at(size_type n) const
+			{
+				if (n < 0) // fautil check ca ??
+					throw std::out_of_range("vector_base::at: out of range");
+				if (n >= size())
+					throw std::out_of_range("vector_base::at: out of range");
+				return (this->m_start[n]);
+			}
+
 			reference front()
 			{
+				if (empty() == true)
+					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[0]);
 			}
 			
 			const_reference front() const
 			{
+				if (empty() == true)
+					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[0]);
 			}
 			
-			pointer data()
+			reference back()
+			{
+				if (empty() == true)
+					return ; //BUG que faire dans ce cas la ???
+				return (this->m_start[this->m_size - 1]);
+			}
+
+			const_reference back() const
+			{
+				if (empty() == true)
+					return ; //BUG que faire dans ce cas la ???
+				return (this->m_start[this->m_size - 1]);
+			}
+			
+
+			//? return a pointeur on the first element of the vector
+			Tp* data()
 			{
 				//If size() is 0, data() may or may not return a null pointer.
-				//TODO: CHECK THIS
+				//TODO: CHECK THIS vraimenet pas sur
 				return (this->m_start);
+			}
+
+			const Tp* data() const
+			{
+				//If size() is 0, data() may or may not return a null pointer.
+				//TODO: CHECK THIS vraimenet pas sur
+				return (this->m_start);
+			}
+
+			void	push_back(const value_type & x)
+			{
+				//TODO elle nest pas dutous fini a finir
+				if (this->m_size == this->m_capacity)
+					this->reserve(this->m_capacity * 2);
+				this->m_start[this->m_size] = x;
+				this->m_size++;
 			}
 		// private:
 	};
