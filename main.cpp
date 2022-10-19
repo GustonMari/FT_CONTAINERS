@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/19 13:48:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/19 16:14:50 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,12 @@
 
 int main()
 {
-	std::vector<int> yes;
-	yes.push_back(1);
-	COUT(yes[0])
-	
-	
-	CCOUT(BRED, "========== data test =================")
-	std::vector<int> tab;
-	ft::vector<int> test;
-	std::vector<int> tab2;
-	ft::vector<int> test2;
-
-	COUT("empty data test")
-	CCOUT(BRED, tab.data())
-	CCOUT(BGRN, test.data())
-	COUT("empty data test")
-	CCOUT(BRED, tab2.data())
-	CCOUT(BGRN, test2.data())
+	std::vector<std::string> yes;
+	yes.reserve(20);
+	COUT("|"<< yes.size() << "|")
+	CCOUT(BRED, "--------------------")
+	ft::vector<int> no;
+	no.reserve(20);
+	COUT("|"<< no.size() << "|")
 	return (0);
 }

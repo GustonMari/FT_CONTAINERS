@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/24 10:21:14 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/19 15:16:51 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ namespace ft {
 				deallocate(m_start, m_capacity);
 				m_start = tmp;
 				m_capacity = n;
-				m_size = n;
 			}
 			
 
@@ -154,6 +153,7 @@ namespace ft {
 				}
 			}
 	};
+	
 	template<typename Tp, typename Allocator>
 	bool operator==(const vector_base<Tp, Allocator> & lhs, const vector_base<Tp, Allocator> & rhs)
 	{

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/19 13:37:09 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/19 16:23:22 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,13 @@ namespace ft {
 			{
 				
 			};
+			//TODO integrer le constructor en dessous 
+			// template <class InputIterator>
+			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
+			// {
+				
+			// }
 			
-			//template <class InputIterator>
-			//vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type());
 			vector (const vector & x): vector_base<Tp, Allocator>(x.size())
 			{
 				//TODO: ligne 458
@@ -96,9 +100,11 @@ namespace ft {
        *  out_of_range lookups are not defined. (For checked lookups
        *  see at().)
 				*/
-				if (n >= this->m_size) //surement faux par consequent
-					throw std::out_of_range("vector_base::operator[]: out of range");
-				return (this->m_start[n]);
+			// if (n < 0 || n > this->m_size)
+			// 	return (this->m_start[0]);
+				//if (n >= this->m_size) //surement faux par consequent
+				//	throw std::out_of_range("vector_base::operator[]: out of range");
+			return (this->m_start[n]);
 			}
 
 			const_reference operator[] (size_type n) const
@@ -110,26 +116,44 @@ namespace ft {
        *  out_of_range lookups are not defined. (For checked lookups
        *  see at().)
 				*/
-				if (n >= this->m_size) //surement faux par consequent
-					throw std::out_of_range("vector_base::operator[]: out of range");
+				
+				//if (n >= this->m_size) //surement faux par consequent
+				//	throw std::out_of_range("vector_base::operator[]: out of range");
 				return (this->m_start[n]);
 			}
 			
 
-			//!------------------------------FUNCTION-------------------------------------
+			// !------------------------------FUNCTION-------------------------------------
 
 			void	reserve(size_type n)
 			{
 				//TODO: QUE FAIR POUR N < 0 ??
 				if (n < this->m_capacity)
 					return ;
-				if (n > this->m_alloc.max_size())
+				if (n > this->m_alloc::max_size())
 				{
 					throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
 				}
 				ft::vector_base<Tp, Allocator>::reserve(n);
 			}
 			
+
+			void	resize(size_type n, value_type val = value_type())
+			{
+				if (n > this->m_size)
+				{
+					if (n >= this->m_capacity)
+						reserve(n);
+					for (size_type i = this->m_size; i < n; i++)
+						m_alloc.construct(this->m_begin + i, val);
+				}
+				else if (n < this->m_size)
+				{
+					for (size_type i = n; i < this->m_size; i++)
+						m_alloc.destroy(this->m_begin + i);
+				}
+				this->m_size = n;
+			}
 			//TODO: need to do assign function
 
 			Allocator get_allocator() const
@@ -194,13 +218,11 @@ namespace ft {
 			
 			size_type	max_size() const
 			{
-				return (this->m_alloc.max_size());
+				return (this->m_alloc::max_size());
 			}
 
 			reference at(size_type n)
 			{
-				if (n < 0) // fautil check ca ??
-					throw std::out_of_range("vector_base::at: out of range");
 				if (n >= size())
 					throw std::out_of_range("vector_base::at: out of range");
 				return (this->m_start[n]);
@@ -208,8 +230,6 @@ namespace ft {
 
 			const_reference at(size_type n) const
 			{
-				if (n < 0) // fautil check ca ??
-					throw std::out_of_range("vector_base::at: out of range");
 				if (n >= size())
 					throw std::out_of_range("vector_base::at: out of range");
 				return (this->m_start[n]);
@@ -217,54 +237,36 @@ namespace ft {
 
 			reference front()
 			{
-				if (empty() == true)
-					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[0]);
 			}
 			
 			const_reference front() const
 			{
-				if (empty() == true)
-					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[0]);
 			}
 			
 			reference back()
 			{
-				if (empty() == true)
-					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[this->m_size - 1]);
 			}
 
 			const_reference back() const
 			{
-				if (empty() == true)
-					return ; //BUG que faire dans ce cas la ???
 				return (this->m_start[this->m_size - 1]);
-			}
-			
-
-			//? return a pointeur on the first element of the vector
-			Tp* data()
-			{
-				//If size() is 0, data() may or may not return a null pointer.
-				//TODO: CHECK THIS vraimenet pas sur
-				return (this->m_start);
-			}
-
-			const Tp* data() const
-			{
-				//If size() is 0, data() may or may not return a null pointer.
-				//TODO: CHECK THIS vraimenet pas sur
-				return (this->m_start);
 			}
 
 			void	push_back(const value_type & x)
 			{
 				//TODO elle nest pas dutous fini a finir
-				if (this->m_size == this->m_capacity)
-					this->reserve(this->m_capacity * 2);
-				this->m_start[this->m_size] = x;
+				if (this->m_size >= this->m_capacity)
+				{
+					if (m_capacity == 0)
+						reserve(1);
+					else
+						this->reserve(this->m_capacity * 2);
+				}
+				this->m_alloc.construct(this->m_start[this->m_size], x);
+				// this->m_start[this->m_size] = x;
 				this->m_size++;
 			}
 		// private:
