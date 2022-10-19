@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/19 16:23:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/19 18:12:17 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft {
 			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 			typedef typename Allocator::pointer						pointer; //aka Tp*
 			
-			//!------------------------------CONSTRUCTOR----------------------------------
+			// !------------------------------CONSTRUCTOR----------------------------------
 
 			explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
 			{
@@ -61,7 +61,7 @@ namespace ft {
 			{
 				
 			};
-			//TODO integrer le constructor en dessous 
+			// TODO integrer le constructor en dessous 
 			// template <class InputIterator>
 			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
 			// {
@@ -223,6 +223,8 @@ namespace ft {
 
 			reference at(size_type n)
 			{
+				// if (n < 0)
+				// 	throw std::out_of_range("vector_base::at: out of range");
 				if (n >= size())
 					throw std::out_of_range("vector_base::at: out of range");
 				return (this->m_start[n]);
@@ -230,6 +232,8 @@ namespace ft {
 
 			const_reference at(size_type n) const
 			{
+				// if (n < 0)
+				// 	throw std::out_of_range("vector_base::at: out of range");
 				if (n >= size())
 					throw std::out_of_range("vector_base::at: out of range");
 				return (this->m_start[n]);
@@ -257,7 +261,6 @@ namespace ft {
 
 			void	push_back(const value_type & x)
 			{
-				//TODO elle nest pas dutous fini a finir
 				if (this->m_size >= this->m_capacity)
 				{
 					if (m_capacity == 0)
@@ -269,9 +272,30 @@ namespace ft {
 				// this->m_start[this->m_size] = x;
 				this->m_size++;
 			}
-		// private:
-	};
+			
+			void	pop_back()
+			{
+				this->m_alloc.destroy(this->m_start + this->m_size - 1);
+				this->m_size--;
+			}
 
+			void	swap(vector<Tp> & x)
+			{
+				ft::real_swap(this->m_start, x.m_start);
+				ft::real_swap(this->m_size, x.m_size);
+				ft::real_swap(this->m_capacity, x.m_capacity);
+			}
+
+		private:
+
+		template <class T> 
+		void swap ( T& a, T& b )
+		{
+			T	c(a);
+			a = b;
+			b = c;
+		}
+	};
 }
 
 #endif
