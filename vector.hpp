@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/24 10:26:07 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/19 13:37:09 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace ft {
 			~vector()
 			{
 				//TODO:DESTROY EVERYTHING ??
-				//ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
+				// ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
 			};
 			//!------------------------------OPERATOR-------------------------------------
 			

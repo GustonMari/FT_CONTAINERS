@@ -1,0 +1,27 @@
+VECTOR			Do		Test
+
+constructor		[ ]		[ ]
+operator=		[ ]		[ ]
+assign			[ ]		[ ]
+get_allocator	[ ]		[ ]
+at				[x]		[ ]
+operator[]		[ ]		[ ]
+front			[x]		[ ] a verif
+back			[x]		[ ] a verif
+begin			[x]		[ ]
+end				[x]		[ ]
+rebgin			[x]		[ ]
+rend			[x]		[ ]
+empty			[ ]		[ ]
+size			[x]		[ ]
+max_size		[x]		[ ]
+reserve			[ ]		[ ]
+capacity		[x]		[ ]
+clear			[ ]		[ ]
+insert			[ ]		[ ]
+erase			[ ]		[ ]
+push_back		[ ]		[ ]
+pop_back		[ ]		[ ]
+resize			[ ]		[ ]
+swap			[ ]		[ ]
+operator==		[ ]		[ ]
