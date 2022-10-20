@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/19 18:12:17 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 13:26:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ namespace ft {
 					ft::vector_base<Tp, Allocator>::operator=(x);
 					
 				}
+				return (*this);
 			}
 
 			reference operator[] (size_type n)
@@ -130,7 +131,7 @@ namespace ft {
 				//TODO: QUE FAIR POUR N < 0 ??
 				if (n < this->m_capacity)
 					return ;
-				if (n > this->m_alloc::max_size())
+				if (n > this->m_alloc.max_size())
 				{
 					throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
 				}
@@ -145,12 +146,12 @@ namespace ft {
 					if (n >= this->m_capacity)
 						reserve(n);
 					for (size_type i = this->m_size; i < n; i++)
-						m_alloc.construct(this->m_begin + i, val);
+						this->m_alloc.construct(this->m_begin + i, val);
 				}
 				else if (n < this->m_size)
 				{
 					for (size_type i = n; i < this->m_size; i++)
-						m_alloc.destroy(this->m_begin + i);
+						this->m_alloc.destroy(this->m_begin + i);
 				}
 				this->m_size = n;
 			}
@@ -165,7 +166,7 @@ namespace ft {
 			{
 				return (this->m_start);
 			}
-			
+
 			iterator end()
 			{
 				return (this->m_start + this->m_size);
@@ -200,7 +201,7 @@ namespace ft {
 			{
 				return (const_reverse_iterator(this->m_start));
 			}
-			
+
 			size_type size() const
 			{
 				return (this->m_size);
@@ -210,7 +211,7 @@ namespace ft {
 			{
 				return (this->m_size == 0);
 			}
-			
+
 			size_type capacity() const
 			{
 				return (this->m_capacity);
@@ -263,7 +264,7 @@ namespace ft {
 			{
 				if (this->m_size >= this->m_capacity)
 				{
-					if (m_capacity == 0)
+					if (this->m_capacity == 0)
 						reserve(1);
 					else
 						this->reserve(this->m_capacity * 2);
@@ -272,7 +273,7 @@ namespace ft {
 				// this->m_start[this->m_size] = x;
 				this->m_size++;
 			}
-			
+
 			void	pop_back()
 			{
 				this->m_alloc.destroy(this->m_start + this->m_size - 1);
@@ -281,15 +282,82 @@ namespace ft {
 
 			void	swap(vector<Tp> & x)
 			{
-				ft::real_swap(this->m_start, x.m_start);
-				ft::real_swap(this->m_size, x.m_size);
-				ft::real_swap(this->m_capacity, x.m_capacity);
+				real_swap(this->m_start, x.m_start);
+				real_swap(this->m_size, x.m_size);
+				real_swap(this->m_capacity, x.m_capacity);
 			}
 
+			//! A reallocation is not guaranteed to happen, and the vector capacity is not guaranteed to change due to calling this function.
+			void	clear()
+			{
+				for (size_type i = 0; i < this->m_size; i++)
+					this->m_alloc.destroy(this->m_start + i);
+				this->m_size = 0;
+			}
+
+			iterator	erase(iterator pos)
+			{
+				if (pos == this->end() - 1)
+				{
+					this->pop_back();
+					this->m_size--;
+					return (pos);
+				}
+				this->m_alloc.destroy(*pos);
+				for (iterator tmp = pos; !(tmp == this->m_start + this->m_size - 1); tmp++)
+				{
+					//on deference pour avoir la valeur n+1 et on la met dans la case n
+					this->m_alloc.construct(tmp, *(tmp + 1));
+					this->m_alloc.destroy(*(tmp + 1));
+				}
+				this->m_size--;
+				// An iterator pointing to the new location of the element that followed the last element erased by the function call.
+				return (pos);
+			}
+
+			iterator	erase(iterator first, iterator last)
+			{
+				for (iterator tmp = first; !(tmp == last) ; tmp++)
+					this->erase(tmp);
+				return(first);
+			}
+			
+			iterator	insert(iterator position, const value_type & x)
+			{
+				if (this->m_size >= this->m_capacity)
+				{
+					if (this->m_capacity == 0)
+						reserve(1);
+					else
+						this->reserve(this->m_capacity * 2);
+				}
+				
+				for(iterator it = position; it != this->end(); it++)
+				{
+					this->m_alloc.construct(it, *(it + 1));
+					this->m_alloc.destroy(*(it + 1));
+				}
+				this->m_alloc.construct(position, x);
+				this->m_size++;
+				return (position);
+			}
+			
+			// void	insert(iterator position, size_type n, const value_type & x)
+			// {
+			// 	for (size_type i = 0; i < n; i++)
+			// 		this->insert(position, x);
+			// }
+
+			// void	insert(iterator pos, iterator first, iterator last)
+			// {
+			// 	for (iterator tmp = first; !(tmp == last); tmp++)
+			// 		this->insert(pos, *tmp);
+			// }
+			
 		private:
 
 		template <class T> 
-		void swap ( T& a, T& b )
+		void real_swap ( T& a, T& b )
 		{
 			T	c(a);
 			a = b;

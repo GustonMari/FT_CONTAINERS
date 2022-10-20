@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/19 16:14:50 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 13:09:03 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@
 
 int main()
 {
-	std::vector<std::string> yes;
-	yes.reserve(20);
-	COUT("|"<< yes.size() << "|")
-	CCOUT(BRED, "--------------------")
-	ft::vector<int> no;
-	no.reserve(20);
-	COUT("|"<< no.size() << "|")
+	std::vector<int> yes;
+	yes.push_back(1);
+	yes.push_back(2);
+	yes.push_back(3);
+	std::vector<int>::iterator it = yes.begin();
+	it++;
+	yes.insert(it, 9999);
+	for (std::vector<int>::iterator ito = yes.begin(); ito != yes.end(); ito++)
+		std::cout << *ito << std::endl;
 	return (0);
 }
