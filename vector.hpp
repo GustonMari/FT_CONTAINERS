@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 17:12:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 17:31:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,6 +325,7 @@ namespace ft {
 			
 			iterator	insert(iterator position, const value_type & x)
 			{
+				//https://c.developpez.com/cours/bernard-cassagne/node44.php
 				ptrdiff_t pos = position - begin();
 				if (this->m_size >= this->m_capacity)
 				{
@@ -346,41 +347,20 @@ namespace ft {
 				return (position);
 			}
 			
-			// iterator insert(iterator position, const value_type & x)
-            // {
-            //     iterator    it = begin();
-            //     size_type    i = 0;
-            //     while (it++ != position)
-            //         i++;
-            //     if (this->m_size >= this->m_capacity)
-            //     {
-            //         if (this->m_capacity == 0)
-            //             reserve(1);
-            //         else
-            //             reserve(this->m_capacity * 2);
-            //     }
-            //     for (size_type pos = this->m_size; pos > i; pos--)
-            //     {
-            //         this->m_alloc.construct(this->m_start + (pos), *(this->m_start + pos - 1));
-            //         this->m_alloc.destroy(this->m_start + (pos - 1));
-            //     }
-            //     this->m_alloc.construct(this->m_start + i, x);
-            //     this->m_size++;
-            //     return (position);
-            // }
-			
-			// void	insert(iterator position, size_type n, const value_type & x)
-			// {
-			// 	for (size_type i = 0; i < n; i++)
-			// 		this->insert(position, x);
-			// }
+			void insert (iterator position, size_type n, const value_type& val)
+			{
+				ptrdiff_t pos;
+				for (size_type i = 0; i < n; i++)
+				{
+					//calculate the position of the iterator
+					pos = position - begin();
+					//insert the value
+					this->insert(position, val);
+					//move the iterator to the next position (n + 1)
+					position = begin() + pos + 1;
+				}
+			}
 
-			// void	insert(iterator pos, iterator first, iterator last)
-			// {
-			// 	for (iterator tmp = first; !(tmp == last); tmp++)
-			// 		this->insert(pos, *tmp);
-			// }
-			
 		private:
 
 		template <class T> 
