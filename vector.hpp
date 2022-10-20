@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 14:48:05 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 17:12:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,6 +325,7 @@ namespace ft {
 			
 			iterator	insert(iterator position, const value_type & x)
 			{
+				ptrdiff_t pos = position - begin();
 				if (this->m_size >= this->m_capacity)
 				{
 					if (this->m_capacity == 0)
@@ -333,17 +334,40 @@ namespace ft {
 						this->reserve(this->m_capacity * 2);
 				}
 				iterator it = end();
-				for(; it != begin() + (position- begin()); it--)
+				for(; (begin() + pos) != it; it--)
 				{
-					//COUT(*it)
-					// COUT("construct = " << *it << " destroy = " << *(it - 1));
-					this->m_alloc.construct(it, *(it - 1));
+					// COUT ( "n = " <<*it << " n - 1 = " << *(it - 1));
+					this->m_alloc.construct(&(*it), *(it - 1));
 					this->m_alloc.destroy(&(*(it - 1)));
 				}
-				this->m_alloc.construct(it, x);
+				this->m_alloc.construct(&(*it), x);
+				// this->m_alloc.construct(&(*position -1), x);
 				this->m_size++;
 				return (position);
 			}
+			
+			// iterator insert(iterator position, const value_type & x)
+            // {
+            //     iterator    it = begin();
+            //     size_type    i = 0;
+            //     while (it++ != position)
+            //         i++;
+            //     if (this->m_size >= this->m_capacity)
+            //     {
+            //         if (this->m_capacity == 0)
+            //             reserve(1);
+            //         else
+            //             reserve(this->m_capacity * 2);
+            //     }
+            //     for (size_type pos = this->m_size; pos > i; pos--)
+            //     {
+            //         this->m_alloc.construct(this->m_start + (pos), *(this->m_start + pos - 1));
+            //         this->m_alloc.destroy(this->m_start + (pos - 1));
+            //     }
+            //     this->m_alloc.construct(this->m_start + i, x);
+            //     this->m_size++;
+            //     return (position);
+            // }
 			
 			// void	insert(iterator position, size_type n, const value_type & x)
 			// {
