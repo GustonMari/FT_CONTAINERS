@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 13:26:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 14:48:05 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef typename : You are not actually creating a new data type,
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
+# include "utils.hpp"
 
 namespace ft {
 
@@ -269,7 +270,7 @@ namespace ft {
 					else
 						this->reserve(this->m_capacity * 2);
 				}
-				this->m_alloc.construct(this->m_start[this->m_size], x);
+				this->m_alloc.construct(&(this->m_start[this->m_size]), x);
 				// this->m_start[this->m_size] = x;
 				this->m_size++;
 			}
@@ -303,12 +304,12 @@ namespace ft {
 					this->m_size--;
 					return (pos);
 				}
-				this->m_alloc.destroy(*pos);
+				this->m_alloc.destroy(pos);
 				for (iterator tmp = pos; !(tmp == this->m_start + this->m_size - 1); tmp++)
 				{
 					//on deference pour avoir la valeur n+1 et on la met dans la case n
 					this->m_alloc.construct(tmp, *(tmp + 1));
-					this->m_alloc.destroy(*(tmp + 1));
+					this->m_alloc.destroy(tmp + 1);
 				}
 				this->m_size--;
 				// An iterator pointing to the new location of the element that followed the last element erased by the function call.
@@ -331,13 +332,15 @@ namespace ft {
 					else
 						this->reserve(this->m_capacity * 2);
 				}
-				
-				for(iterator it = position; it != this->end(); it++)
+				iterator it = end();
+				for(; it != begin() + (position- begin()); it--)
 				{
-					this->m_alloc.construct(it, *(it + 1));
-					this->m_alloc.destroy(*(it + 1));
+					//COUT(*it)
+					// COUT("construct = " << *it << " destroy = " << *(it - 1));
+					this->m_alloc.construct(it, *(it - 1));
+					this->m_alloc.destroy(&(*(it - 1)));
 				}
-				this->m_alloc.construct(position, x);
+				this->m_alloc.construct(it, x);
 				this->m_size++;
 				return (position);
 			}
