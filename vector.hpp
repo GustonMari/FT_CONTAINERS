@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 17:31:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/20 17:48:27 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,14 +350,15 @@ namespace ft {
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				ptrdiff_t pos;
+				//calculate the position of the iterator
+				pos = position - begin();
 				for (size_type i = 0; i < n; i++)
 				{
-					//calculate the position of the iterator
-					pos = position - begin();
 					//insert the value
-					this->insert(position, val);
+					this->insert(begin() + pos, val);
+					COUT(i);
 					//move the iterator to the next position (n + 1)
-					position = begin() + pos + 1;
+					// position = begin() + pos + 1;
 				}
 			}
 
