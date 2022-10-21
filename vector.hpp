@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/21 13:02:45 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/21 14:51:22 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,9 +349,8 @@ namespace ft {
 
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				ptrdiff_t pos = position - begin();
 				//calculate the position of the iterator
-				//pos = position - begin();
+				ptrdiff_t pos = position - begin();
 				if (this->m_size + n >= this->m_capacity)
 				{
 					if (this->m_capacity * 2 > this->m_size + n)
@@ -360,22 +359,13 @@ namespace ft {
 						this->reserve(this->m_size + n);
 				}
 				for (size_type i = 0; i < n; i++)
-				{
-					//insert the value
-					// this->insert(position, val);
 					this->insert(begin() + pos, val);
-					// COUT(i);
-					//move the iterator to the next position (n + 1)
-					// position = begin() + pos + 1;
-				}
-			// this->m_size += n;
 			}
 			
 			void insert (iterator position, iterator first, iterator last)
 			{
-				ptrdiff_t pos = position - begin();
 				//calculate the position of the iterator
-				//pos = position - begin();
+				ptrdiff_t pos = position - begin();
 				if (this->m_size + (last - first) >= this->m_capacity)
 				{
 					if (this->m_capacity * 2 > this->m_size + (last - first))
@@ -383,15 +373,13 @@ namespace ft {
 					else
 						this->reserve(this->m_size + (last - first));
 				}
-				for (iterator it = first; it != last; it++)
+				
+				for (int i = 0;; last != first; first++)
 				{
-					//insert the value
-					// this->insert(position, val);
-					this->insert(begin() + pos, *it);
-					// COUT(i);
-					//move the iterator to the next position (n + 1)
-					// position = begin() + pos + 1;
+					this->insert(begin() + pos + i, *first);
+					i++;
 				}
+			}
 
 		private:
 

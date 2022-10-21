@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/21 13:04:56 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/21 14:53:40 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,15 @@ int main()
 	to_insert.push_back(9999);
 	to_insert.push_back(8);
 	to_insert.push_back(10);
-
+	to_insert.push_back(11);
+	ft::vector<int>::iterator	it_range = range_insert.begin();
+	ft::vector<int>::iterator	it_first = to_insert.begin();
+	ft::vector<int>::iterator	it_last = to_insert.end();
+	range_insert.insert(it_range, it_first, it_last);
+	P_TABC(BGRN, range_insert)
 	
+	// for (ft::vector<int>::iterator ito = range_insert.begin(); ito != range_insert.end() ; ito++)
+	// 	CCOUT(BGRN, *ito)
 	
 
 	return (0);
