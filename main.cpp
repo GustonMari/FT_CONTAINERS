@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/21 11:51:12 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/21 13:04:56 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int main()
 	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
 	// 	CCOUT(BGRN, *ito)
 
-	// ft::vector<int>::iterator it_n3 = n_test.end();
+	// ft::vector<int>::iterator it_n3 = n_test.begin();
 	// it_n3++;
 	// n_test.insert(it_n3, 3, 44444);
 	// CCOUT(BHYEL, "insert middle multiple")
@@ -140,5 +140,48 @@ int main()
 	// CCOUT(BHYEL, "insert end multiple")
 	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
 	// 	CCOUT(BGRN, *ito)
+	
+	// //!-------------------------------------------------------------------------
+
+	// std::vector<int> n_test;
+	// n_test.push_back(1);
+	// n_test.push_back(2);
+	// n_test.push_back(3);
+	// ft::vector<int>::iterator it_n = n_test.begin();
+	// // it_n++;
+	// n_test.insert(it_n, 3, 9999);
+	// CCOUT(BHYEL, "insert begin multiple")
+	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BRED, *ito)
+
+	// std::vector<int>::iterator it_n3 = n_test.begin();
+	// it_n3++;
+	// n_test.insert(it_n3, 3, 44444);
+	// CCOUT(BHYEL, "insert middle multiple")
+	// for (std::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BRED, *ito)
+
+
+	// ft::vector<int>::iterator it_n2 = n_test.end();
+	// //it_n2++;
+	// n_test.insert(it_n2, 3, 1111111);
+	// CCOUT(BHYEL, "insert end multiple")
+	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BRED, *ito)
+
+
+	CCOUT(UMAG, "----------- insert (iterator position, size_type n, const value_type& val) ----------")
+	ft::vector<int> range_insert;
+	range_insert.push_back(1);
+	range_insert.push_back(2);
+	range_insert.push_back(3);
+	ft::vector<int> to_insert;
+	to_insert.push_back(9999);
+	to_insert.push_back(8);
+	to_insert.push_back(10);
+
+	
+	
+
 	return (0);
 }
