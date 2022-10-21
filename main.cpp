@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 17:39:57 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/21 11:51:12 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,13 @@ int main()
 	// test3.insert(it_middle, 22222);
 	// for (ft::vector<int>::iterator ita = test3.begin(); ita != test3.end(); ita++)
 	// 	CCOUT(BGRN, *ita)
-	
+	// test3.insert(it_middle, 22222);
+	// for (ft::vector<int>::iterator ita = test3.begin(); ita != test3.end(); ita++)
+	// 	CCOUT(BGRN, *ita)
+	// test3.insert(it_middle, 22222);
+	// for (ft::vector<int>::iterator ita = test3.begin(); ita != test3.end(); ita++)
+	// 	CCOUT(BGRN, *ita)
+
 	// CCOUT(BHYEL, "insert end")
 	// it3 = test3.end();
 	// test3.insert(it3, 77777);
@@ -86,14 +92,21 @@ int main()
 	// test33.insert(it33, 9999);
 	// CCOUT(BHYEL, "insert begin")
 	// for (std::vector<int>::iterator ito = test33.begin(); ito != test33.end(); ito++)
-	// 	CCOUT(BRED, *ito)
+		// CCOUT(BRED, *ito)
 	
 	// CCOUT(BHYEL, "insert middle")
-	// //std::vector<int>::iterator it33 = test33.begin();
+	// std::vector<int>::iterator it33 = test33.begin();
+
 	// it33++;
 	// test33.insert(it33, 22222);
 	// for (std::vector<int>::iterator ito = test33.begin(); ito != test33.end(); ito++)
 	// 	CCOUT(BRED, *ito)
+	// // test33.insert(it33, 22222);
+	// // for (std::vector<int>::iterator ito = test33.begin(); ito != test33.end(); ito++)
+	// // 	CCOUT(BRED, *ito)
+	// // test33.insert(it33, 22222);
+	// // for (std::vector<int>::iterator ito = test33.begin(); ito != test33.end(); ito++)
+	// // 	CCOUT(BRED, *ito)
 	
 	// CCOUT(BHYEL, "insert end")
 	// it33 = test33.end();
@@ -101,31 +114,31 @@ int main()
 	// for (std::vector<int>::iterator ito = test33.begin(); ito != test33.end(); ito++)
 	// 	CCOUT(BRED, *ito)
 
-	CCOUT(UMAG, "----------- insert (iterator position, size_type n, const value_type& val) ----------")
-	ft::vector<int> n_test;
-	n_test.push_back(1);
-	n_test.push_back(2);
-	n_test.push_back(3);
-	ft::vector<int>::iterator it_n = n_test.begin();
-	// it_n++;
-	n_test.insert(it_n, 3, 9999);
-	CCOUT(BHYEL, "insert begin multiple")
-	for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
-		CCOUT(BGRN, *ito)
+	// CCOUT(UMAG, "----------- insert (iterator position, size_type n, const value_type& val) ----------")
+	// ft::vector<int> n_test;
+	// n_test.push_back(1);
+	// n_test.push_back(2);
+	// n_test.push_back(3);
+	// ft::vector<int>::iterator it_n = n_test.begin();
+	// // it_n++;
+	// n_test.insert(it_n, 3, 9999);
+	// CCOUT(BHYEL, "insert begin multiple")
+	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BGRN, *ito)
 
-	ft::vector<int>::iterator it_n3 = n_test.end();
-	it_n3++;
-	n_test.insert(it_n3, 3, 44444);
-	CCOUT(BHYEL, "insert middle multiple")
-	for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
-		CCOUT(BGRN, *ito)
+	// ft::vector<int>::iterator it_n3 = n_test.end();
+	// it_n3++;
+	// n_test.insert(it_n3, 3, 44444);
+	// CCOUT(BHYEL, "insert middle multiple")
+	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BGRN, *ito)
 
 
-	ft::vector<int>::iterator it_n2 = n_test.end();
-	//it_n2++;
-	n_test.insert(it_n2, 3, 1111111);
-	CCOUT(BHYEL, "insert end multiple")
-	for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
-		CCOUT(BGRN, *ito)
+	// ft::vector<int>::iterator it_n2 = n_test.end();
+	// //it_n2++;
+	// n_test.insert(it_n2, 3, 1111111);
+	// CCOUT(BHYEL, "insert end multiple")
+	// for (ft::vector<int>::iterator ito = n_test.begin(); ito != n_test.end(); ito++)
+	// 	CCOUT(BGRN, *ito)
 	return (0);
 }

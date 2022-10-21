@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 17:48:27 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/21 11:50:07 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ namespace ft {
 				}
 				ft::vector_base<Tp, Allocator>::reserve(n);
 			}
-			
 
 			void	resize(size_type n, value_type val = value_type())
 			{
@@ -325,8 +324,9 @@ namespace ft {
 			
 			iterator	insert(iterator position, const value_type & x)
 			{
-				//https://c.developpez.com/cours/bernard-cassagne/node44.php
+				
 				ptrdiff_t pos = position - begin();
+				//https://c.developpez.com/cours/bernard-cassagne/node44.php
 				if (this->m_size >= this->m_capacity)
 				{
 					if (this->m_capacity == 0)
@@ -335,31 +335,33 @@ namespace ft {
 						this->reserve(this->m_capacity * 2);
 				}
 				iterator it = end();
-				for(; (begin() + pos) != it; it--)
+				for(; it != this->m_start + pos; it--)
 				{
-					// COUT ( "n = " <<*it << " n - 1 = " << *(it - 1));
-					this->m_alloc.construct(&(*it), *(it - 1));
-					this->m_alloc.destroy(&(*(it - 1)));
+					// COUT ( "n = " << *it << " n - 1 = " << *(it - 1));
+					this->m_alloc.construct(it, *(it - 1));
+					this->m_alloc.destroy((it - 1));
 				}
 				this->m_alloc.construct(&(*it), x);
-				// this->m_alloc.construct(&(*position -1), x);
+				// this->m_alloc.construct(&(*position), x);
 				this->m_size++;
 				return (position);
 			}
-			
+
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				ptrdiff_t pos;
+				ptrdiff_t pos = position - begin();
 				//calculate the position of the iterator
-				pos = position - begin();
+				//pos = position - begin();
 				for (size_type i = 0; i < n; i++)
 				{
 					//insert the value
-					this->insert(begin() + pos, val);
+					this->insert(position, val);
+					//this->insert(begin() + pos, val);
 					COUT(i);
 					//move the iterator to the next position (n + 1)
-					// position = begin() + pos + 1;
+					position = begin() + pos + 1;
 				}
+			this->m_size += n;
 			}
 
 		private:
