@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/21 14:53:40 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/23 21:28:01 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,25 +170,46 @@ int main()
 	// 	CCOUT(BRED, *ito)
 
 
-	CCOUT(UMAG, "----------- insert (iterator position, size_type n, const value_type& val) ----------")
-	ft::vector<int> range_insert;
-	range_insert.push_back(1);
-	range_insert.push_back(2);
-	range_insert.push_back(3);
-	ft::vector<int> to_insert;
-	to_insert.push_back(9999);
-	to_insert.push_back(8);
-	to_insert.push_back(10);
-	to_insert.push_back(11);
-	ft::vector<int>::iterator	it_range = range_insert.begin();
-	ft::vector<int>::iterator	it_first = to_insert.begin();
-	ft::vector<int>::iterator	it_last = to_insert.end();
-	range_insert.insert(it_range, it_first, it_last);
-	P_TABC(BGRN, range_insert)
-	
-	// for (ft::vector<int>::iterator ito = range_insert.begin(); ito != range_insert.end() ; ito++)
-	// 	CCOUT(BGRN, *ito)
-	
+	// CCOUT(UMAG, "----------- insert (iterator position, size_type n, const value_type& val) ----------")
+	// ft::vector<int> range_insert;
+	// range_insert.push_back(1);
+	// range_insert.push_back(2);
+	// range_insert.push_back(3);
+	// ft::vector<int> to_insert;
+	// to_insert.push_back(9999);
+	// to_insert.push_back(8);
+	// to_insert.push_back(10);
+	// to_insert.push_back(11);
+	// ft::vector<int>::iterator	it_range = range_insert.begin();
+	// ft::vector<int>::iterator	it_first = to_insert.begin();
+	// ft::vector<int>::iterator	it_last = to_insert.end();
+	// range_insert.insert(it_range, it_first, it_last);
+	// P_TABC(BGRN, range_insert)
+	   
+	//CCOUT(UMAG, "----------- assign(iterator first, iterator last) ----------")
+	// ft::vector<int> range_assign;
+	// range_assign.push_back(1);
+	// range_assign.push_back(2);
+	// range_assign.push_back(3);
+	// ft::vector<int> to_assign;
+	// to_assign.push_back(9999);
+	// to_assign.push_back(8);
+	// to_assign.push_back(10);
+	// to_assign.push_back(11);
+	// ft::vector<int>::iterator	it_first = to_assign.begin();
+	// ft::vector<int>::iterator	it_last = to_assign.end();
+	// range_assign.assign(it_first, it_last);
+	// P_TABC(BGRN, range_assign)
+	// CCOUT(BGRN, "size = " << range_assign.size())
+
+	CCOUT(UMAG, "----------- assign(size_type n, const value_type & val) ----------")
+	std::vector<int> range_assign;
+	range_assign.push_back(1);
+	range_assign.push_back(2);
+	range_assign.push_back(3);
+	range_assign.assign(4, 6);
+	P_TABC(BGRN, range_assign)
+	CCOUT(BGRN, "size = " << range_assign.size())
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/21 14:51:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/23 21:28:21 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,11 +374,29 @@ namespace ft {
 						this->reserve(this->m_size + (last - first));
 				}
 				
-				for (int i = 0;; last != first; first++)
+				for (int i = 0; last != first; first++)
 				{
 					this->insert(begin() + pos + i, *first);
 					i++;
 				}
+			}
+
+			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
+			//TODO: if n is < 0 it need to segfault
+			//TODO: need to redo assign for better speed benchmark result 
+			void	assign(iterator first, iterator last)
+			{
+				this->clear();
+				for (iterator tmp = first; !(tmp == last); tmp++)
+					this->push_back(*tmp);
+			}
+
+			//TODO: need to redo assign for better speed benchmark result 
+			void	assign(size_type n, const value_type & val)
+			{
+				this->clear();
+				for (size_type i = 0; i < n; i++)
+					this->push_back(val);
 			}
 
 		private:
