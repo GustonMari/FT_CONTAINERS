@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 10:26:32 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 16:49:53 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ namespace ft {
 			template <class InputIterator>
 			vector_base(InputIterator first, InputIterator last, const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(NULL), m_size(0)
 			{
-
+				//TODO: more things to do ??
+				(void)first;
+				(void)last;
 			}
 			
 			vector_base(const vector_base & x): m_alloc(x.m_alloc), m_capacity(x.m_capacity), m_start(m_alloc.allocate(x.m_capacity)), m_size(x.m_size)
@@ -102,6 +104,7 @@ namespace ft {
 				for (size_type i = 0; i < m_size; i++)
 					m_alloc.construct(tmp + i, m_start[i]);
 				m_alloc.deallocate(m_start, m_capacity);
+				//TODO: need to make a loop to destroy things
 				m_start = tmp;
 				m_capacity = n;
 			}

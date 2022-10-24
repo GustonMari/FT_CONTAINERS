@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   .main.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 10:57:47 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 16:56:15 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "pair.hpp"
 # include "utils.hpp"
 # include "_colors.hpp"
+# include "map.hpp"
 
 int main()
 {
@@ -203,16 +204,16 @@ int main()
 	// P_TABC(BGRN, range_assign)
 	// CCOUT(BGRN, "size = " << range_assign.size())
 
-	CCOUT(UMAG, "----------- assign(size_type n, const value_type & val) ----------")
-	std::vector<int> range_assign;
-	range_assign.push_back(1);
-	range_assign.push_back(2);
-	range_assign.push_back(3);
-	range_assign.assign(4, 6);
-	P_TABC(BGRN, range_assign)
-	CCOUT(BGRN, "size = " << range_assign.size())
+	// CCOUT(UMAG, "----------- assign(size_type n, const value_type & val) ----------")
+	// std::vector<int> range_assign;
+	// range_assign.push_back(1);
+	// range_assign.push_back(2);
+	// range_assign.push_back(3);
+	// range_assign.assign(4, 6);
+	// P_TABC(BGRN, range_assign)
+	// CCOUT(BGRN, "size = " << range_assign.size())
 
-	std::map<int, int> test;
+	// std::map<int, int> test;
 
 	return (0);
 }

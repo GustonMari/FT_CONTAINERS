@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:35:37 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/21 11:04:51 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 17:07:10 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ namespace ft
 		TODO: faut il faire deux declaration de enable if tel que (https://cplusplus.com/reference/type_traits/enable_if/) ou une seul??
 	*/
 	
-	template <bool B, class T = void> struct enable_if {};
+	template <bool B, class T = void>
+	struct enable_if {};
 	
-	template <class T> struct enable_if<true, T> { typedef T type; };
-	
+	template <class T>
+	struct enable_if<true, T> 
+	{
+		typedef T type;
+	};
 	
 }
 #endif

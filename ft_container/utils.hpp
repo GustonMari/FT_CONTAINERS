@@ -9,6 +9,7 @@
 # define EXCEPTION(x, y) public: class x : public std::exception { const char * what (void) const throw { return y; } }
 # define P_TAB(x) print_tab(x);
 # define P_TABC(color, x) print_tab_color(x, color);
+// # define ENABLE_IF typename ft::enable_if<!ft::is_integral<InputIterator>, InputIterator >::type
 
 template <typename T>
 void print_tab(T & x)

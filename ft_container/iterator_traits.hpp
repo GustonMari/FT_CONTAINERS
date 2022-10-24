@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:10:30 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/16 18:22:47 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 17:19:22 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@
 namespace ft {
 
 	//TODO pas trop compris comment inclure vraiment les legacy iterator
-	struct input_iterator_tag {};
-	struct output_iterator_tag {};
-	struct forward_iterator_tag : public input_iterator_tag {};
-	struct bidirectional_iterator_tag : public forward_iterator_tag {};
-	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+	// struct input_iterator_tag {};
+	// struct output_iterator_tag {};
+	// struct forward_iterator_tag : public input_iterator_tag {};
+	// struct bidirectional_iterator_tag : public forward_iterator_tag {};
+	// struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 	// on passe par des struct car on ne peut pas faire de typedef sur un template direct tel que : typedef std::vector Tableau; // erreur de compilation
 	//la classe permet de definir les typedef utiliser plustard lors des specialistation
@@ -69,21 +69,21 @@ namespace ft {
 	template<typename Tp>
 	struct iterator_traits<Tp*> //permet la specialisation de l'iterateur
 	{
-		typedef random_access_iterator_tag	iterator_category;
-		typedef Tp							value_type;
-		typedef std::ptrdiff_t				difference_type;
-		typedef Tp*							pointer;
-		typedef Tp&							reference;
-	};
+		typedef std::random_access_iterator_tag			iterator_category;
+		typedef Tp										value_type;
+		typedef std::ptrdiff_t							difference_type;
+		typedef Tp*										pointer;
+		typedef Tp&										reference;
+	};	
 
 	template<typename Tp>
 	struct iterator_traits<const Tp*> //pareille mais en constt
 	{
-		typedef random_access_iterator_tag	iterator_category;
-		typedef Tp							value_type;
-		typedef std::ptrdiff_t				difference_type;
-		typedef const Tp*						pointer;
-		typedef const Tp&						reference;
+		typedef std::random_access_iterator_tag			iterator_category;
+		typedef Tp										value_type;
+		typedef std::ptrdiff_t							difference_type;
+		typedef const Tp*								pointer;
+		typedef const Tp&								reference;
 	};
 
 	

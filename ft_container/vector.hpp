@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 11:04:34 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 17:39:38 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ typedef typename : You are not actually creating a new data type,
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <memory>
-# include <vector>
+// # include <vector>
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
 # include "utils.hpp"
+# include "enable_if.hpp"
+# include "is_integral.hpp"
+
 
 namespace ft {
 
@@ -51,86 +54,7 @@ namespace ft {
 			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 			typedef typename Allocator::pointer						pointer; //aka Tp*
 			
-			// !------------------------------CONSTRUCTOR----------------------------------
 
-			explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
-			{
-				
-			};
-			
-			explicit vector (size_type n, const value_type & val = value_type()): vector_base<Tp, Allocator>(n, val)
-			{
-				
-			};
-			
-			template <class InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
-			{
-				for (; first != last; first++)
-					push_back(*first);
-			};
-			// TODO integrer le constructor en dessous 
-			// template <class InputIterator>
-			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
-			// {
-				
-			// }
-			
-			vector (const vector & x): vector_base<Tp, Allocator>(x.size())
-			{
-				//TODO: ligne 458
-			};
-
-			//!------------------------------DESTRUCTOR-----------------------------------
-			
-			~vector()
-			{
-				//TODO:DESTROY EVERYTHING ??
-				// ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
-			};
-			//!------------------------------OPERATOR-------------------------------------
-			
-			vector & operator= (const vector & x)
-			{
-				if (this != &x)
-				{
-					ft::vector_base<Tp, Allocator>::operator=(x);
-					this->assign(x.begin(), x.end());
-				}
-				return (*this);
-			}
-
-			reference operator[] (size_type n)
-			{
-				//TODO: QUE FAIR POUR N < 0 ??
-				/*
-		*This operator allows for easy, array-style, data access.
-       *  Note that data access with this operator is unchecked and
-       *  out_of_range lookups are not defined. (For checked lookups
-       *  see at().)
-				*/
-			// if (n < 0 || n > this->m_size)
-			// 	return (this->m_start[0]);
-				//if (n >= this->m_size) //surement faux par consequent
-				//	throw std::out_of_range("vector_base::operator[]: out of range");
-			return (this->m_start[n]);
-			}
-
-			const_reference operator[] (size_type n) const
-			{
-				//TODO: QUE FAIR POUR N < 0 ??
-				/*
-		*This operator allows for easy, array-style, data access.
-       *  Note that data access with this operator is unchecked and
-       *  out_of_range lookups are not defined. (For checked lookups
-       *  see at().)
-				*/
-				
-				//if (n >= this->m_size) //surement faux par consequent
-				//	throw std::out_of_range("vector_base::operator[]: out of range");
-				return (this->m_start[n]);
-			}
-			
 
 			// !------------------------------FUNCTION-------------------------------------
 
@@ -369,7 +293,9 @@ namespace ft {
 					this->insert(begin() + pos, val);
 			}
 			
-			void insert (iterator position, iterator first, iterator last)
+
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last)
 			{
 				//calculate the position of the iterator
 				ptrdiff_t pos = position - begin();
@@ -387,16 +313,44 @@ namespace ft {
 					i++;
 				}
 			}
+			// void insert (iterator position, iterator first, iterator last)
+			// {
+			// 	//calculate the position of the iterator
+			// 	ptrdiff_t pos = position - begin();
+			// 	if (this->m_size + (last - first) >= this->m_capacity)
+			// 	{
+			// 		if (this->m_capacity * 2 > this->m_size + (last - first))
+			// 			this->reserve(this->m_capacity * 2);
+			// 		else
+			// 			this->reserve(this->m_size + (last - first));
+			// 	}
+				
+			// 	for (int i = 0; last != first; first++)
+			// 	{
+			// 		this->insert(begin() + pos + i, *first);
+			// 		i++;
+			// 	}
+			// }
 
 			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
 			//TODO: if n is < 0 it need to segfault
 			//TODO: need to redo assign for better speed benchmark result 
-			void	assign(iterator first, iterator last)
+			template <class InputIterator>
+			void	assign(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator >::type last)
 			{
 				this->clear();
-				for (iterator tmp = first; !(tmp == last); tmp++)
-					this->push_back(*tmp);
+				// for (InputIterator tmp = first; !(tmp == last); tmp++)
+				// 	this->push_back(*tmp);
+				for (; (first != last); first++)
+					this->push_back(*first);
 			}
+
+			// void	assign(iterator first, iterator last)
+			// {
+			// 	this->clear();
+			// 	for (iterator tmp = first; !(tmp == last); tmp++)
+			// 		this->push_back(*tmp);
+			// }
 
 			//TODO: need to redo assign for better speed benchmark result 
 			void	assign(size_type n, const value_type & val)
@@ -405,6 +359,88 @@ namespace ft {
 				for (size_type i = 0; i < n; i++)
 					this->push_back(val);
 			}
+
+		public:
+			// !------------------------------CONSTRUCTOR----------------------------------
+
+			explicit vector (const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(alloc)
+			{
+				
+			};
+			
+			explicit vector (size_type n, const value_type & val = value_type()): vector_base<Tp, Allocator>(n, val)
+			{
+				
+			};
+			
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
+			{
+				for (; first != last; first++)
+					push_back(*first);
+			};
+			// TODO integrer le constructor en dessous 
+			// template <class InputIterator>
+			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
+			// {
+				
+			// }
+			
+			vector (const vector & x): vector_base<Tp, Allocator>(x.size())
+			{
+				//TODO: ligne 458
+			};
+
+			//!------------------------------DESTRUCTOR-----------------------------------
+			
+			~vector()
+			{
+				//TODO:DESTROY EVERYTHING ??
+				// ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
+			};
+			//!------------------------------OPERATOR-------------------------------------
+			
+			vector & operator= (const vector & x)
+			{
+				if (this != &x)
+				{
+					ft::vector_base<Tp, Allocator>::operator=(x);
+					this->assign(x.begin(), x.end());
+				}
+				return (*this);
+			}
+
+			reference operator[] (size_type n)
+			{
+				//TODO: QUE FAIR POUR N < 0 ??
+				/*
+		*This operator allows for easy, array-style, data access.
+       *  Note that data access with this operator is unchecked and
+       *  out_of_range lookups are not defined. (For checked lookups
+       *  see at().)
+				*/
+			// if (n < 0 || n > this->m_size)
+			// 	return (this->m_start[0]);
+				//if (n >= this->m_size) //surement faux par consequent
+				//	throw std::out_of_range("vector_base::operator[]: out of range");
+			return (this->m_start[n]);
+			}
+
+			const_reference operator[] (size_type n) const
+			{
+				//TODO: QUE FAIR POUR N < 0 ??
+				/*
+		*This operator allows for easy, array-style, data access.
+       *  Note that data access with this operator is unchecked and
+       *  out_of_range lookups are not defined. (For checked lookups
+       *  see at().)
+				*/
+				
+				//if (n >= this->m_size) //surement faux par consequent
+				//	throw std::out_of_range("vector_base::operator[]: out of range");
+				return (this->m_start[n]);
+			}
+			
 
 		private:
 
