@@ -6,24 +6,25 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/23 21:28:01 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 10:57:47 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <vector>
-#include "enable_if.hpp"
-#include "vector_base.hpp"
-#include "vector.hpp"
-#include "equal.hpp"
-#include "is_integral.hpp"
-#include "reverse_iterator.hpp"
-#include "iterator.hpp"
-#include "iterator_traits.hpp"
-#include "lexicographical_compare.hpp"
-#include "pair.hpp"
-#include "utils.hpp"
-#include "_colors.hpp"
+# include <iostream>
+# include <vector>
+# include <map>
+# include "enable_if.hpp"
+# include "vector_base.hpp"
+# include "vector.hpp"
+# include "equal.hpp"
+# include "is_integral.hpp"
+# include "reverse_iterator.hpp"
+# include "iterator.hpp"
+# include "iterator_traits.hpp"
+# include "lexicographical_compare.hpp"
+# include "pair.hpp"
+# include "utils.hpp"
+# include "_colors.hpp"
 
 int main()
 {
@@ -210,6 +211,8 @@ int main()
 	range_assign.assign(4, 6);
 	P_TABC(BGRN, range_assign)
 	CCOUT(BGRN, "size = " << range_assign.size())
+
+	std::map<int, int> test;
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/23 21:28:21 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 11:04:34 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ namespace ft {
 			{
 				
 			};
+			
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
+			{
+				for (; first != last; first++)
+					push_back(*first);
+			};
 			// TODO integrer le constructor en dessous 
 			// template <class InputIterator>
 			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
@@ -88,7 +95,7 @@ namespace ft {
 				if (this != &x)
 				{
 					ft::vector_base<Tp, Allocator>::operator=(x);
-					
+					this->assign(x.begin(), x.end());
 				}
 				return (*this);
 			}
@@ -219,7 +226,7 @@ namespace ft {
 			
 			size_type	max_size() const
 			{
-				return (this->m_alloc::max_size());
+				return (this->m_alloc.max_size());
 			}
 
 			reference at(size_type n)

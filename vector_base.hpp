@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/20 10:20:24 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/24 10:26:32 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,19 @@ namespace ft {
 				//?????????? dois je  continuer
 			}
 
+			template <class InputIterator>
+			vector_base(InputIterator first, InputIterator last, const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(NULL), m_size(0)
+			{
+
+			}
 			
+			vector_base(const vector_base & x): m_alloc(x.m_alloc), m_capacity(x.m_capacity), m_start(m_alloc.allocate(x.m_capacity)), m_size(x.m_size)
+			{
+				//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
+				//? on copie les elements de x dans le vecteur
+				for (size_type i = 0; i < x.m_size; i++)
+					m_alloc.construct(m_start + i, x.m_start[i]);
+			}
 			//!----------------------------DESTRUCTOR-------------------------------------
 
 			~vector_base()

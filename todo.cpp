@@ -1,7 +1,7 @@
 VECTOR			Do		Test
 
-constructor		[ ]		[ ]
-operator=		[ ]		[ ]
+constructor		[x]		[ ]
+operator=		[x]		[ ]
 assign			[x]		[ ]
 get_allocator	[x]		[ ]
 at				[x]		[ ]
