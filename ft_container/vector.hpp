@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 17:39:38 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 10:39:40 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ namespace ft {
 			//TODO: if n is < 0 it need to segfault
 			//TODO: need to redo assign for better speed benchmark result 
 			template <class InputIterator>
-			void	assign(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator >::type last)
+			void	assign(InputIterator first, ENABLE_IF(InputIterator) last)
 			{
 				this->clear();
 				// for (InputIterator tmp = first; !(tmp == last); tmp++)

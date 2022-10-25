@@ -44,7 +44,7 @@ $(OBJS_PATH)%_ft.o: $(SRCS_PATH)%.cpp
 
 clean:
 	@echo "\\n\033[38;5;202;1mDeleting Objects... \033[0m \\n"
-	rm -rf $(OBJS_FT) $(OBJS_STD) $(DEPS)
+	rm -rf $(OBJS_FT) $(OBJS_STD) $(DEPS) ft.txt std.txt
 	@echo "\\n\033[32;1mDeleting OK \033[0m \\n"
 
 fclean: clean
@@ -53,6 +53,13 @@ fclean: clean
 	@echo "\\n\033[32;1mOK \033[0m \\n"
 
 re: fclean all
+
+compare: all
+	@echo "\\n\033[38;5;202;1mCOMPARING... \033[0m \\n"
+	./$(NAME_FT) > ft.txt
+	./$(NAME_STD) > std.txt
+	diff ft.txt std.txt
+	@echo "\\n\033[32;1mOK \033[0m \\n"
 
 -include $(DEPS)
 
