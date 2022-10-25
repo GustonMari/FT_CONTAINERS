@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 16:49:53 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 11:02:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ namespace ft {
 	
 		vector_base & operator=(const vector_base & rhs)
 		{
-			if (this != rhs)
+			if (this != &rhs)
 			{
 				destroy_vector();
 				m_capacity = rhs.m_capacity;
@@ -154,6 +154,7 @@ namespace ft {
 				for (size_type i = 0; i < m_size; i++)
 					m_alloc.construct(m_start + i, rhs.m_start[i]);
 			}
+			return (*this);
 		}
 		
 		private:

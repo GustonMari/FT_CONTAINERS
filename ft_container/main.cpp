@@ -6,13 +6,16 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 17:45:56 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 11:42:50 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO: maybe delete all std include for evaluation ?
 # include <iostream>
 # include <vector>
 # include <map>
+# include <list>
+# include <iterator>
 # include "enable_if.hpp"
 # include "vector_base.hpp"
 # include "vector.hpp"
@@ -62,40 +65,22 @@ void	printSize(TESTED_NAMESPACE::vector<T> const &vct, bool print_content = true
 
 int main()
 {
-	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(7);
-	TESTED_NAMESPACE::vector<TESTED_TYPE> vct_two(4);
-	TESTED_NAMESPACE::vector<TESTED_TYPE> vct_three;
-	TESTED_NAMESPACE::vector<TESTED_TYPE> vct_four;
+	std::list<TESTED_TYPE> lst;
+	std::list<TESTED_TYPE>::iterator lst_it;
+	for (int i = 1; i < 5; ++i)
+		lst.push_back(i * 3);
 
-	for (unsigned long int i = 0; i < vct.size(); ++i)
-		vct[i] = (vct.size() - i) * 3;
-	for (unsigned long int i = 0; i < vct_two.size(); ++i)
-		vct_two[i] = (vct_two.size() - i) * 5;
+	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(lst.begin(), lst.end());
 	printSize(vct);
-	printSize(vct_two);
 
-	vct_three.assign(vct.begin(), vct.end());
-	vct.assign(vct_two.begin(), vct_two.end());
-	vct_two.assign(2, 42);
-	vct_four.assign(4, 21);
-
-	std::cout << "\t### After assign(): ###" << std::endl;
-
+	lst_it = lst.begin();
+	for (int i = 1; lst_it != lst.end(); ++i)
+		*lst_it++ = i * 5;
+	vct.assign(lst.begin(), lst.end());
 	printSize(vct);
-	printSize(vct_two);
-	printSize(vct_three);
-	printSize(vct_four);
 
-	vct_four.assign(6, 84);
-	printSize(vct_four);
 
-	std::cout << "\t### assign() on enough capacity and low size: ###" << std::endl;
-
-	vct.assign(5, 53);
-	vct_two.assign(vct_three.begin(), vct_three.begin() + 3);
-
-	printSize(vct);
-	printSize(vct_two);
-
+	vct.insert(vct.end(), lst.rbegin(), lst.rend());
+	// printSize(vct);
 	return (0);
 }

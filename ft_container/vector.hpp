@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 10:39:40 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 13:06:16 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef typename : You are not actually creating a new data type,
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <memory>
+
 // # include <vector>
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
@@ -295,7 +296,7 @@ namespace ft {
 			
 
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last)
+			void insert (iterator position, InputIterator first, ENABLE_IF(InputIterator) last)
 			{
 				//calculate the position of the iterator
 				ptrdiff_t pos = position - begin();
@@ -313,24 +314,6 @@ namespace ft {
 					i++;
 				}
 			}
-			// void insert (iterator position, iterator first, iterator last)
-			// {
-			// 	//calculate the position of the iterator
-			// 	ptrdiff_t pos = position - begin();
-			// 	if (this->m_size + (last - first) >= this->m_capacity)
-			// 	{
-			// 		if (this->m_capacity * 2 > this->m_size + (last - first))
-			// 			this->reserve(this->m_capacity * 2);
-			// 		else
-			// 			this->reserve(this->m_size + (last - first));
-			// 	}
-				
-			// 	for (int i = 0; last != first; first++)
-			// 	{
-			// 		this->insert(begin() + pos + i, *first);
-			// 		i++;
-			// 	}
-			// }
 
 			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
 			//TODO: if n is < 0 it need to segfault
@@ -374,7 +357,7 @@ namespace ft {
 			};
 			
 			template <class InputIterator>
-			vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
+			vector (InputIterator first, ENABLE_IF(InputIterator) last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
 			{
 				for (; first != last; first++)
 					push_back(*first);
@@ -386,9 +369,11 @@ namespace ft {
 				
 			// }
 			
-			vector (const vector & x): vector_base<Tp, Allocator>(x.size())
+			vector (const vector & x): vector_base<Tp, Allocator>(x)
 			{
-				//TODO: ligne 458
+				// for (size_type i = 0; i < x.size(); i++)
+				// 	push_back(x[i]);
+				// *this = x;
 			};
 
 			//!------------------------------DESTRUCTOR-----------------------------------

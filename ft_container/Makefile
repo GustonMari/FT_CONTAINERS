@@ -9,7 +9,11 @@ DEPS = $(OBJS_STD:.o=.d) $(OBJS_FT:.o=.d)
 NAME_FT= ft_containers
 NAME_STD= std_containers
 
-all: server $(NAME_FT) $(NAME_STD)
+ft: $(NAME_FT)
+
+std: $(NAME_STD)
+
+all: $(NAME_FT) $(NAME_STD)
 	@echo "\\n\033[32;1mMAKE ALL OK \033[0m \\n"
 	# @echo "\033[32;1m      ___           ___           ___           ___                  \033[0m"
 	# @echo "\033[32;1m     /\__\         /\  \         /\  \         /\  \                 \033[0m"
@@ -24,15 +28,13 @@ all: server $(NAME_FT) $(NAME_STD)
 	# @echo "\033[32;1m     \/__/         \/__/         \/__/         \/__/           \/__/ \033[0m"
 	# @echo "\\n"
 
-server: $(NAME)
-
 $(NAME_FT): $(OBJS_FT)
 	$(CXX) $(CXXFLAGS) -o $(NAME_FT) $(OBJS_FT) 
-	@echo "\\n\033[32;1mCOMPILATION OK \033[0m \\n"
+	@echo "\\n\033[32;1mFT COMPILATION OK \033[0m \\n"
 
 $(NAME_STD): $(OBJS_STD)
 	$(CXX) $(CXXFLAGS) -o $(NAME_STD) $(OBJS_STD) 
-	@echo "\\n\033[32;1mCOMPILATION OK \033[0m \\n"
+	@echo "\\n\033[32;1mSTD COMPILATION OK \033[0m \\n"
 
 $(OBJS_PATH)%_std.o: $(SRCS_PATH)%.cpp
 	mkdir -p $(dir $@)
