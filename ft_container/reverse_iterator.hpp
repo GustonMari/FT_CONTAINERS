@@ -6,13 +6,15 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 16:59:10 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 18:27:44 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 # include "iterator_traits.hpp"
+# include "_colors.hpp"
+# include "utils.hpp"
 
 /*
 	Les inline spécificateurs et __inline les spécificateurs indiquent au compilateur 
@@ -40,7 +42,7 @@ namespace ft
 			
 			reverse_iterator() : current() {}
 			
-			explicit reverse_iterator(iterator_type other) : current(other) {} //why need a explicit constructor?
+			explicit reverse_iterator(iterator_type other) : current(other) {}
 			
 			// reverse_iterator(const reverse_iterator<Iterator>& other) : current(other.current) {}
 			template <class Iter>
@@ -55,6 +57,8 @@ namespace ft
 
 			reverse_iterator& operator=(const reverse_iterator<Iterator>& other)
 			{
+				CCOUT(BRED, "AAAAAAAAAAAAAAAAA")
+
 				if (this != &other)
 				{
 					current = other.current;
@@ -97,14 +101,17 @@ namespace ft
 				++current;
 				return (tmp);
 			}
-
-
+			
+	
 			// ici on utilise difference_type car on a sait que (ptrdiff_t) appartient forcement au container associee
 			reverse_iterator operator+(difference_type n) const
 			{
 				return (reverse_iterator(current - n));
 			}
 
+			
+
+			
 			reverse_iterator operator-(difference_type n) const
 			{
 				return (reverse_iterator(current + n));
@@ -124,10 +131,36 @@ namespace ft
 			
 			reference operator[](difference_type n) const
 			{
-				return *(*this + n);
+				CCOUT(BRED, "fgdhjhfgjdhfgjdjg")
+				return (*(*this + n));
 			}
 	};
+
+	template<typename Iterator>
+	typename ft::reverse_iterator<Iterator> operator-(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> & x)
+	{
+		return (reverse_iterator<Iterator>(x.base() + n));
+	}
 	
+	template<typename Iterator>
+	typename ft::reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> & x)
+	{
+		return (reverse_iterator<Iterator>(x.base() - n));
+	}
+	// template <typename IteratorL,
+	
+	template <typename IteratorL, typename IteratorR>
+	typename reverse_iterator<IteratorL>::difference_type operator-(const reverse_iterator<IteratorL>& lhs, const reverse_iterator<IteratorR>& rhs)
+	{
+		return (rhs.base() - lhs.base());
+	}
+
+	template <typename IteratorL, typename IteratorR>
+	typename reverse_iterator<IteratorL>::difference_type operator+(const reverse_iterator<IteratorL>& lhs, const reverse_iterator<IteratorR>& rhs)
+	{
+		return (rhs.base() + lhs.base());
+	}
+
 	//! template with one argument: const/const or non const/non const
 	
 	template <typename Iterator>
