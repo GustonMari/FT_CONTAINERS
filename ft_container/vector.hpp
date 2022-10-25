@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 13:06:16 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 16:52:52 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef typename : You are not actually creating a new data type,
 # include "utils.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
-
+# include "lexicographical_compare.hpp"
+# include "equal.hpp"
 
 namespace ft {
 
@@ -66,6 +67,7 @@ namespace ft {
 					return ;
 				if (n > this->m_alloc.max_size())
 				{
+					CCOUT(BRED, n << "\n" << this->m_alloc.max_size());
 					throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
 				}
 				ft::vector_base<Tp, Allocator>::reserve(n);
@@ -78,12 +80,12 @@ namespace ft {
 					if (n >= this->m_capacity)
 						reserve(n);
 					for (size_type i = this->m_size; i < n; i++)
-						this->m_alloc.construct(this->m_begin + i, val);
+						this->m_alloc.construct(this->m_start + i, val);
 				}
 				else if (n < this->m_size)
 				{
 					for (size_type i = n; i < this->m_size; i++)
-						this->m_alloc.destroy(this->m_begin + i);
+						this->m_alloc.destroy(this->m_start + i);
 				}
 				this->m_size = n;
 			}
@@ -232,7 +234,7 @@ namespace ft {
 				if (pos == this->end() - 1)
 				{
 					this->pop_back();
-					this->m_size--;
+					// this->m_size--;
 					return (pos);
 				}
 				this->m_alloc.destroy(pos);
@@ -247,13 +249,20 @@ namespace ft {
 				return (pos);
 			}
 
+
 			iterator	erase(iterator first, iterator last)
 			{
-				for (iterator tmp = first; !(tmp == last) ; tmp++)
-					this->erase(tmp);
-				return(first);
+				ptrdiff_t diff = last - first;
+				for (iterator tmp = first; !(tmp == last); tmp++)
+					this->m_alloc.destroy(tmp);
+				//BUG: attention peut etre que le end() - distance devrait etre en ptrdiff_t
+				// for (iterator tmp = first; tmp < end() - std::distance(first, last); tmp++)
+				for (iterator tmp = first; tmp < end() - (diff); tmp++)
+					(*tmp) = *(tmp + diff);
+				this->m_size -= diff;
+				return (first);
 			}
-			
+
 			iterator	insert(iterator position, const value_type & x)
 			{
 				
@@ -300,12 +309,12 @@ namespace ft {
 			{
 				//calculate the position of the iterator
 				ptrdiff_t pos = position - begin();
-				if (this->m_size + (last - first) >= this->m_capacity)
+				if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
 				{
-					if (this->m_capacity * 2 > this->m_size + (last - first))
+					if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
 						this->reserve(this->m_capacity * 2);
 					else
-						this->reserve(this->m_size + (last - first));
+						this->reserve(this->m_size + (std::distance(first, last)));
 				}
 				
 				for (int i = 0; last != first; first++)
@@ -385,6 +394,17 @@ namespace ft {
 			};
 			//!------------------------------OPERATOR-------------------------------------
 			
+			// vector & operator=(const vector & x)
+			// {
+			// 	if (this != &x)
+			// 	{
+			// 		this->clear();
+			// 		for (size_type i = 0; i < x.size(); i++)
+			// 			push_back(x[i]);
+			// 	}
+			// 	return (*this);
+			// }
+			
 			vector & operator= (const vector & x)
 			{
 				if (this != &x)
@@ -437,6 +457,58 @@ namespace ft {
 			b = c;
 		}
 	};
+
+//TODO: faire swap extern a la class
+
+template <class T, class Alloc>
+bool	operator==(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	if (lhs.size() != rhs.size())
+		return (false);
+	if (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+		return (false);
+	return (true);
+}
+
+
+
+template <class T, class Alloc>
+bool	operator!=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template <class T, class Alloc>
+bool	operator<(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+}
+
+template <class T, class Alloc>
+bool	operator<=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	if (lhs == rhs || lhs < rhs)
+		return (true);
+	return (false);
+}
+
+template <class T, class Alloc>
+bool	operator>(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	if (lhs <= rhs)
+		return (false);
+	return (true);
+}
+
+template <class T, class Alloc>
+bool	operator>=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+{
+	if (lhs < rhs)
+		return (false);
+	return (true);
+}
+
+
 }
 
 #endif

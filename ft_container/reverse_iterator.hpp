@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 13:46:33 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/25 16:59:10 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ namespace ft
 			
 			explicit reverse_iterator(iterator_type other) : current(other) {} //why need a explicit constructor?
 			
-			reverse_iterator(const reverse_iterator<Iterator>& other) : current(other.current) {}
+			// reverse_iterator(const reverse_iterator<Iterator>& other) : current(other.current) {}
+			template <class Iter>
+			reverse_iterator(const reverse_iterator<Iter>& other) : current(other.base()) {}
 			
 			//!----------------------------OPERATORS---------------------------------------------------------
 			
 			
 			
 			//return c current, accesss the underlying container
-			Iterator & base() const { return current; }
+			Iterator base() const { return current; }
 
 			reverse_iterator& operator=(const reverse_iterator<Iterator>& other)
 			{
