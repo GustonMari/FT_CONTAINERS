@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 18:27:44 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 08:10:23 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,34 @@ namespace ft
 			//return c current, accesss the underlying container
 			Iterator base() const { return current; }
 
+
 			reverse_iterator& operator=(const reverse_iterator<Iterator>& other)
 			{
-				CCOUT(BRED, "AAAAAAAAAAAAAAAAA")
+				// CCOUT(BRED, "cest caaaaaaaaaaaaaaaaaaaaaaaa")
 
-				if (this != &other)
-				{
+				// if (this != &other)
+				// {
 					current = other.current;
-				}
+				// }
 				return *this;
 			}
 			
-			//retourne une reference sur le contenu de l'itérateur
-			reference operator*() const //TODO: vraiment a tester
+			//retourne une reference sur le contenu de l'itérateur,par exmple on en a besoin pour it[0] = size;
+			reference operator*() const
 			{
-				Iterator tmp = current; 
-				return *(tmp);
+				Iterator tmp = current;
+				return *--tmp;
 			}
+
 			
 			//retourne un pointeur sur le contenu de l'itérateur (a --current)
 			pointer operator->() const { return &(operator*()); } //TODO vraiment a tester
+
+			// pointer operator->() const
+			// {
+			// 	Iterator tmp = current;
+			// 	return &(*--tmp);
+			// }
 
 			reverse_iterator & operator++()
 			{
@@ -131,10 +139,11 @@ namespace ft
 			
 			reference operator[](difference_type n) const
 			{
-				CCOUT(BRED, "fgdhjhfgjdhfgjdjg")
 				return (*(*this + n));
 			}
 	};
+
+	//! END CLASS ---------------------------------------------------------------------------------------
 
 	template<typename Iterator>
 	typename ft::reverse_iterator<Iterator> operator-(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> & x)
@@ -178,25 +187,26 @@ namespace ft
 	template <typename Iterator>
 	inline bool operator<(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
 	{
-		return lhs.base() < rhs.base();
+		// CCOUT(BYEL, "aaaaaaaaaaaaa")
+		return lhs.base() > rhs.base();
 	}
 
 	template <typename Iterator>
 	inline bool operator>(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
 	{
-		return lhs.base() > rhs.base();
+		return lhs.base() < rhs.base();
 	}
 
 	template <typename Iterator>
 	inline bool operator<=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
 	{
-		return lhs.base() <= rhs.base();
+		return lhs.base() >= rhs.base();
 	}
 
 	template <typename Iterator>
 	inline bool operator>=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
 	{
-		return lhs.base() >= rhs.base();
+		return lhs.base() <= rhs.base();
 	}
 
 	//! template with two arguments: const/non const or non const/ const
@@ -216,25 +226,25 @@ namespace ft
 	template <typename IteratorL, typename IteratorR>
 	inline bool operator<(const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
 	{
-		return lhs.base() < rhs.base();
+		return lhs.base() > rhs.base();
 	}
 
 	template <typename IteratorL, typename IteratorR>
 	inline bool operator>(const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
 	{
-		return lhs.base() > rhs.base();
+		return lhs.base() < rhs.base();
 	}
 
 	template <typename IteratorL, typename IteratorR>
 	inline bool operator<=(const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
 	{
-		return lhs.base() <= rhs.base();
+		return lhs.base() >= rhs.base();
 	}
 
 	template <typename IteratorL, typename IteratorR>
 	inline bool operator>=(const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
 	{
-		return lhs.base() >= rhs.base();
+		return lhs.base() <= rhs.base();
 	}
 	
 }
