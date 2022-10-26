@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 14:39:35 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 15:37:41 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,8 +299,8 @@ void	awesome_tests(void)
 int main()
 {
 	// push_pop_back_tests<int>();
-	resize_tests<int>();
-	// insert_tests<int>();
+	// resize_tests<int>();
+	insert_tests<int>();
 	// reserve_tests<int>();
 	// copy_swap_tests<int>();
 	// reverse_it_tests<int>();

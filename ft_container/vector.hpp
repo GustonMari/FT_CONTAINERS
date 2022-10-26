@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 14:41:04 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 15:37:19 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,20 @@ namespace ft {
 
 			void	resize(size_type n, value_type val = value_type())
 			{
+				//TODO: QUE FAIR POUR N < 0 ??
+				if (n > max_size())
+					throw std::length_error("vector::resize");
 				if (n > this->m_size)
 				{
-					if (n >= this->m_capacity)
+					if (n >= this->m_size * 2)
 						reserve(n);
+					else
+						reserve(this->m_size * 2);
 					for (size_type i = this->m_size; i < n; i++)
+					{
+						
 						this->m_alloc.construct(this->m_start + i, val);
+					}
 				}
 				else if (n < this->m_size)
 				{
