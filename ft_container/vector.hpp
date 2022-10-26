@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 18:31:49 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 14:41:04 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ namespace ft {
 					return ;
 				if (n > this->m_alloc.max_size())
 				{
-					CCOUT(BRED, n << "\n" << this->m_alloc.max_size());
-					throw std::length_error("vector_base::reserve: max_size exceeded"); //TODO check message
+					throw std::length_error("vector::reserve"); //TODO check message
 				}
 				ft::vector_base<Tp, Allocator>::reserve(n);
 			}
@@ -252,14 +251,12 @@ namespace ft {
 
 			iterator	erase(iterator first, iterator last)
 			{
-				ptrdiff_t diff = last - first;
-				for (iterator tmp = first; !(tmp == last); tmp++)
-					this->m_alloc.destroy(tmp);
-				//BUG: attention peut etre que le end() - distance devrait etre en ptrdiff_t
-				// for (iterator tmp = first; tmp < end() - std::distance(first, last); tmp++)
-				for (iterator tmp = first; tmp < end() - (diff); tmp++)
-					(*tmp) = *(tmp + diff);
-				this->m_size -= diff;
+				iterator tmp = first;
+				while (tmp != last)
+				{
+					tmp = this->erase(tmp);
+					last--;
+				}
 				return (first);
 			}
 
@@ -278,19 +275,21 @@ namespace ft {
 				iterator it = end();
 				for(; it != this->m_start + pos; it--)
 				{
-					// COUT ( "n = " << *it << " n - 1 = " << *(it - 1));
 					this->m_alloc.construct(it, *(it - 1));
 					this->m_alloc.destroy((it - 1));
 				}
 				this->m_alloc.construct(&(*it), x);
 				// this->m_alloc.construct(&(*position), x);
 				this->m_size++;
-				return (position);
+				return (begin() + pos);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val)
 			{
 				//calculate the position of the iterator
+				if (n == 0)
+					return ;
+				// ptrdiff_t pos = std::distance(begin(), position);
 				ptrdiff_t pos = position - begin();
 				if (this->m_size + n >= this->m_capacity)
 				{
@@ -300,7 +299,9 @@ namespace ft {
 						this->reserve(this->m_size + n);
 				}
 				for (size_type i = 0; i < n; i++)
-					this->insert(begin() + pos, val);
+				{
+					this->insert(begin() + pos + i, val);
+				}
 			}
 			
 
@@ -327,22 +328,25 @@ namespace ft {
 			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
 			//TODO: if n is < 0 it need to segfault
 			//TODO: need to redo assign for better speed benchmark result 
+
+			// template <class InputIterator>
+			// void assign (InputIterator first, ENABLE_IF(InputIterator) last)
+			// {
+			// 	this->clear();
+			// 	this->insert(this->begin(), first, last);
+			// }
+			
 			template <class InputIterator>
 			void	assign(InputIterator first, ENABLE_IF(InputIterator) last)
 			{
+				// if (this == &last)
+				// 	return ;
 				this->clear();
 				// for (InputIterator tmp = first; !(tmp == last); tmp++)
 				// 	this->push_back(*tmp);
 				for (; (first != last); first++)
 					this->push_back(*first);
 			}
-
-			// void	assign(iterator first, iterator last)
-			// {
-			// 	this->clear();
-			// 	for (iterator tmp = first; !(tmp == last); tmp++)
-			// 		this->push_back(*tmp);
-			// }
 
 			//TODO: need to redo assign for better speed benchmark result 
 			void	assign(size_type n, const value_type & val)
@@ -387,10 +391,19 @@ namespace ft {
 
 			//!------------------------------DESTRUCTOR-----------------------------------
 			
+			// ~vector()
+			// {
+			// 	// COUT ("~vector()");
+			// 	this->clear();
+			// 	this->m_alloc.deallocate(this->m_start, this->m_capacity);
+			// };
+			
 			~vector()
 			{
-				//TODO:DESTROY EVERYTHING ??
-				// ft::vector_base<Tp, Allocator>::~vector_base(); //pas sur dutous
+				//TODO: que faire ici?? il y a deja dans ma base un destructeur qui fait le meme boulot
+				// COUT ("~vector()");
+				// this->clear();
+				// this->m_alloc.deallocate(this->m_start, this->m_capacity);
 			};
 			//!------------------------------OPERATOR-------------------------------------
 			

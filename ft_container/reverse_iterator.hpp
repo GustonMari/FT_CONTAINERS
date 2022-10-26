@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 08:10:23 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 08:43:53 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ namespace ft
 			{
 				// CCOUT(BRED, "cest caaaaaaaaaaaaaaaaaaaaaaaa")
 
-				// if (this != &other)
-				// {
+				if (this != &other)
+				{
 					current = other.current;
-				// }
+				}
 				return *this;
 			}
 			

@@ -1,5 +1,5 @@
 CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g3 -MMD #-fsanitize=address
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g3 -MMD -fsanitize=address
 SRCS = main.cpp
 
 OBJS_STD =	$(addprefix $(OBJS_PATH), $(SRCS:.cpp=_std.o))

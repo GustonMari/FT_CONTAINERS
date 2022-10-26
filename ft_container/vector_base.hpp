@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/25 11:02:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 11:00:41 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,29 @@ namespace ft {
 
 			void	reserve(size_type n)
 			{
-				pointer tmp = m_alloc.allocate(n);
-				for (size_type i = 0; i < m_size; i++)
-					m_alloc.construct(tmp + i, m_start[i]);
-				m_alloc.deallocate(m_start, m_capacity);
-				//TODO: need to make a loop to destroy things
-				m_start = tmp;
-				m_capacity = n;
+				//TODO: throw anerror if n > m_alloc.amx_size()
+				
+				if (n > m_capacity)
+				{
+					pointer tmp = m_alloc.allocate(n);
+					for (size_type i = 0; i < m_size; i++)
+						m_alloc.construct(tmp + i, m_start[i]);
+					destroy_vector();
+					m_start = tmp;
+					m_capacity = n;
+				}
 			}
+
+			// void	reserve(size_type n)
+			// {
+			// 	pointer tmp = m_alloc.allocate(n);
+			// 	for (size_type i = 0; i < m_size; i++)
+			// 		m_alloc.construct(tmp + i, m_start[i]);
+			// 	destroy_vector();
+			// 	//TODO: need to make a loop to destroy things
+			// 	m_start = tmp;
+			// 	m_capacity = n;
+			// }
 			
 
 
@@ -149,7 +164,8 @@ namespace ft {
 			{
 				destroy_vector();
 				m_capacity = rhs.m_capacity;
-				m_start = m_alloc.allocate(m_capacity);
+				//TODO m_start = m_alloc.allocate(m_capacity);
+				m_start = m_alloc.allocate(rhs.m_capacity);
 				m_size = rhs.m_size;
 				for (size_type i = 0; i < m_size; i++)
 					m_alloc.construct(m_start + i, rhs.m_start[i]);

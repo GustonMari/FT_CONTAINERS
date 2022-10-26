@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _colors.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamaurai <mamaurai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 10:23:56 by gmary             #+#    #+#             */
-/*   Updated: 2022/07/05 10:17:53 by mamaurai         ###   ########.fr       */
+/*   Updated: 2022/10/26 08:31:07 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define _COLORS_HPP
 
 //Regular text
-# define BLK "\e[0;30m"
-# define RED "\e[0;31m"
-# define GRN "\e[0;32m"
-# define YEL "\e[0;33m"
-# define BLU "\e[0;34m"
-# define MAG "\e[0;35m"
-# define CYN "\e[0;36m"
-# define WHT "\e[0;37m"
+// # define BLK "\e[0;30m"
+// # define RED "\e[0;31m"
+// # define GRN "\e[0;32m"
+// # define YEL "\e[0;33m"
+// # define BLU "\e[0;34m"
+// # define MAG "\e[0;35m"
+// # define CYN "\e[0;36m"
+// # define WHT "\e[0;37m"
 
 //Regular bold text
 # define BBLK "\e[1;30m"
