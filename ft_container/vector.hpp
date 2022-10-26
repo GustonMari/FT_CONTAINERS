@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 15:37:19 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/26 16:16:49 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ namespace ft {
 					else
 						reserve(this->m_size * 2);
 					for (size_type i = this->m_size; i < n; i++)
-					{
-						
 						this->m_alloc.construct(this->m_start + i, val);
-					}
 				}
 				else if (n < this->m_size)
 				{
@@ -302,7 +299,7 @@ namespace ft {
 				if (this->m_size + n >= this->m_capacity)
 				{
 					if (this->m_capacity * 2 > this->m_size + n)
-						this->reserve(this->m_capacity * 2);
+						this->reserve(this->m_size * 2);
 					else
 						this->reserve(this->m_size + n);
 				}
@@ -480,6 +477,11 @@ namespace ft {
 	};
 
 //TODO: faire swap extern a la class
+template <class T, class Alloc>
+void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+{
+	x.swap(y);
+}
 
 template <class T, class Alloc>
 bool	operator==(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
