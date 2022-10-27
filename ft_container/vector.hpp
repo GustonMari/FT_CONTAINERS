@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 16:16:49 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/27 10:51:50 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,13 +379,8 @@ namespace ft {
 			{
 				for (; first != last; first++)
 					push_back(*first);
+				this->m_capacity = this->m_size;
 			};
-			// TODO integrer le constructor en dessous 
-			// template <class InputIterator>
-			// vector (InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
-			// {
-				
-			// }
 			
 			vector (const vector & x): vector_base<Tp, Allocator>(x)
 			{
@@ -427,8 +422,10 @@ namespace ft {
 			{
 				if (this != &x)
 				{
-					ft::vector_base<Tp, Allocator>::operator=(x);
+					this->clear();
+					//ft::vector_base<Tp, Allocator>::operator=(x);
 					this->assign(x.begin(), x.end());
+					
 				}
 				return (*this);
 			}
