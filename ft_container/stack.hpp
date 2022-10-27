@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:10:19 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 13:50:10 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/27 14:25:24 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ namespace ft
 			typedef typename Container::size_type		size_type;
 			typedef			 Container					container_type;
 			
+			// stack() : c() {}
+			
 			explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {}
+
+			~stack (void) {}
 
 			bool empty() const { return c.empty(); }
 			

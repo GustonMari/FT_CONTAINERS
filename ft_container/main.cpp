@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 13:50:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/27 14:16:58 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,53 +39,40 @@
 
 using namespace TESTED_NAMESPACE;
 
-#define TESTED_TYPE int
-typedef std::list<TESTED_TYPE> container_type;
-#define t_stack_ TESTED_NAMESPACE::stack<TESTED_TYPE, container_type>
+// using namespace NAMESPACE;
 
-template <class T_STACK>
-void	cmp(const T_STACK &lhs, const T_STACK &rhs)
+int main()
 {
-	static int i = 0;
+	stack<float>								other_stack;
+	vector<std::string>							lst;
 
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
-}
+	lst.push_back("salut");
+	lst.push_back("tu vas bien?");
+	lst.push_back("super");
+	lst.push_back("et toi?");
 
-int		main(void)
-{
-	container_type	ctnr;
+	stack<std::string, vector<std::string> >	my_stack(lst);
+	std::cout << std::boolalpha << other_stack.empty() << std::endl;
+	COUT("fjkdhkjfdh")
+	other_stack.push(8.5); // 8.5;
+	other_stack.push(42.4242); // 8.5; 42.4242;
+	std::cout << other_stack.size() << '\n'; // 2
+	other_stack.pop(); // 8.5;
+	std::cout << other_stack.size() << '\n'; // 1
+	other_stack.push(78541.987); // 8.5; 78541.987;
+	std::cout << other_stack.size() << '\n'; // 2
+	std::cout << other_stack.top() << '\n'; //78541.987
+	std::cout << std::boolalpha << other_stack.empty() << std::endl;
 
-	ctnr.push_back(21);
-	ctnr.push_back(42);
-	ctnr.push_back(1337);
-	ctnr.push_back(19);
-	ctnr.push_back(0);
-	ctnr.push_back(183792);
+	const std::string const_top = my_stack.top();
 
-	t_stack_	stck(ctnr);
-	t_stack_	stck2(ctnr);
+	std::cout << "const top: " << const_top << '\n';
 
-	cmp(stck, stck);  // 0
-	cmp(stck, stck2); // 1
+	while (!my_stack.empty())
+	{
+		std::cout << my_stack.top() << '\n';
+		my_stack.pop();
+	}
 
-	stck2.push(60);
-	stck2.push(61);
-	stck2.push(62);
-
-	cmp(stck, stck2); // 2
-	cmp(stck2, stck); // 3
-
-	stck.push(42);
-
-	cmp(stck, stck2); // 4
-	cmp(stck2, stck); // 5
-
-	stck.push(100);
-
-	cmp(stck, stck2); // 6
-	cmp(stck2, stck); // 7
 	return (0);
 }

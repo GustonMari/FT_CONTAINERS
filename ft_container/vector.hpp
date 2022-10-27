@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 10:51:50 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/27 14:26:05 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,8 +398,11 @@ namespace ft {
 			// 	this->m_alloc.deallocate(this->m_start, this->m_capacity);
 			// };
 			
-			~vector()
+			virtual ~vector()
 			{
+				// if (this->m_capacity == 0) {
+				// 	return ;
+				// }
 				//TODO: que faire ici?? il y a deja dans ma base un destructeur qui fait le meme boulot
 				// COUT ("~vector()");
 				// this->clear();
