@@ -11,6 +11,8 @@
 # define P_TABC(color, x) print_tab_color(x, color);
 # define ENABLE_IF(x) typename ft::enable_if<!ft::is_integral<x>::value, x >::type
 # define LOG( message ) logError( __LINE__, message );
+# define BLACK 0
+# define RED 1
 
 void logError (int line, const std::string& message)
 {
