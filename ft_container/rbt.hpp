@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/31 11:27:54 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/31 15:52:49 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RBT_HPP
 
 #include "utils.hpp"
+#include "nullptr.hpp"
 
 /*
 	?	https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
@@ -25,7 +26,8 @@
 
 
 #include <iostream>
-using namespace std;
+#include <string>
+// using namespace std;
 
 struct Node {
 	int data;
@@ -41,21 +43,21 @@ class RedBlackTree
 {
 	private:
 		NodePtr root;
-		NodePtr TNULL;
+		NodePtr LEAF_NULL;
 
 		void initializeNULLNode(NodePtr node, NodePtr parent)
 		{
 			node->data = 0;
 			node->parent = parent;
-			node->left = nullptr;
-			node->right = nullptr;
+			node->left = ft::_nullptr;
+			node->right = ft::_nullptr;
 			node->color = BLACK;
 		}
 
 		// Preorder
 		void preOrderHelper(NodePtr node)
 		{
-			if (node != TNULL)
+			if (node != LEAF_NULL)
 			{
 				std::cout << node->data << " ";
 				preOrderHelper(node->left);
@@ -66,7 +68,7 @@ class RedBlackTree
 		// Inorder
 		void inOrderHelper(NodePtr node)
 		{
-			if (node != TNULL)
+			if (node != LEAF_NULL)
 			{
 				inOrderHelper(node->left);
 				std::cout << node->data << " ";
@@ -77,7 +79,7 @@ class RedBlackTree
 		// Post order
 		void postOrderHelper(NodePtr node)
 		{
-			if (node != TNULL)
+			if (node != LEAF_NULL)
 			{
 				postOrderHelper(node->left);
 				postOrderHelper(node->right);
@@ -92,7 +94,7 @@ class RedBlackTree
 
 		NodePtr searchTreeHelper(NodePtr node, int key)
 		{
-			if (node == TNULL || key == node->data)
+			if (node == LEAF_NULL || key == node->data)
 			{
 				return node;
 			}
@@ -181,7 +183,7 @@ class RedBlackTree
 
 		void rbTransplant(NodePtr u, NodePtr v)
 		{
-			if (u->parent == nullptr)
+			if (u->parent == ft::_nullptr)
 			{
 				root = v;
 			}
@@ -196,10 +198,11 @@ class RedBlackTree
 				v->parent = u->parent;
 		}
 
-		void deleteNodeHelper(NodePtr node, int key) {
-			NodePtr z = TNULL;
+		void deleteNodeHelper(NodePtr node, int key)
+		{
+			NodePtr z = LEAF_NULL;
 			NodePtr x, y;
-			while (node != TNULL)
+			while (node != LEAF_NULL)
 			{
 				if (node->data == key)
 				{
@@ -216,7 +219,7 @@ class RedBlackTree
 				}
 			}
 
-			if (z == TNULL)
+			if (z == LEAF_NULL)
 			{
 				std::cout << "Key not found in the tree" << std::endl;
 				return;
@@ -224,16 +227,18 @@ class RedBlackTree
 
 			y = z;
 			int y_original_color = y->color;
-			if (z->left == TNULL)
+			//*first, we follow the ordinary BST deletion process which makes sure that x is either a leaf node or has a single child.
+			if (z->left == LEAF_NULL)
 			{
 				x = z->right;
 				rbTransplant(z, z->right);
 			}
-			else if (z->right == TNULL)
+			else if (z->right == LEAF_NULL)
 			{
 				x = z->left;
 				rbTransplant(z, z->left);
 			}
+			//* node with two children
 			else
 			{
 				y = minimum(z->right);
@@ -256,13 +261,16 @@ class RedBlackTree
 				y->color = z->color;
 			}
 			delete z;
-			if (y_original_color == 0)
+			if (y_original_color == BLACK)
 			{
 				deleteFix(x);
 			}
 		}
 
-		// For balancing the tree after insertion
+		// *For balancing the tree after insertion
+		//* the case 1 is when the node is the root is already check if insert
+		//* the case 2 is when the parent is black it cannot append because we insert red node
+		//* sowe need to resolve the case 3 where we violate the property of to red node side by side
 		void insertFix(NodePtr k)
 		{
 			NodePtr u;
@@ -271,26 +279,29 @@ class RedBlackTree
 				if (k->parent == k->parent->parent->right)
 				{
 					u = k->parent->parent->left;
-					if (u->color == RED)
+					//* the new node (child ) is red and the parent is red so we color black the parent and the uncle in black and the grandparent in red
+					if (u->color == RED) //* case 3.1
 					{
 						u->color = BLACK;
 						k->parent->color = BLACK;
 						k->parent->parent->color = RED;
 						k = k->parent->parent;
 					}
-					else
+					else //* case 3.2 we need double or single rotation depending if k is right or left child of parent
 					{
-						if (k == k->parent->left)
+						if (k == k->parent->left) //* case 3.2.2
 						{
 							k = k->parent;
 							rightRotate(k);
 						}
+						//*case 3.2.1
 						k->parent->color = BLACK;
 						k->parent->parent->color = RED;
+						//* we need to rotate the grandparent to the left,so the grand parent is now the sibling of k
 						leftRotate(k->parent->parent);
 					}
 				}
-				else
+				else //* symetric case
 				{
 					u = k->parent->parent->right;
 
@@ -301,7 +312,7 @@ class RedBlackTree
 						k->parent->parent->color = RED;
 						k = k->parent->parent;
 					}
-					else
+					else //* case 3.2.3 and 3.2.4 is the symetric of 3.2.1 and 3.2.2
 					{
 						if (k == k->parent->right)
 						{
@@ -313,17 +324,18 @@ class RedBlackTree
 						rightRotate(k->parent->parent);
 					}
 				}
-				if (k == root)
+				if (k == root) //* finish the loop because everything is balanced
 				{
 					break;
 				}
 			}
+			//* root node is always black
 			root->color = BLACK;
 		}
 
-		void printHelper(NodePtr root, string indent, bool last)
+		void printHelper(NodePtr root, std::string indent, bool last)
 		{
-			if (root != TNULL)
+			if (root != LEAF_NULL)
 			{
 				std::cout << indent;
 				if (last)
@@ -337,7 +349,7 @@ class RedBlackTree
 					indent += "|  ";
 				}
 
-				string sColor = root->color ? "RED" : "BLACK";
+				std::string sColor = root->color ? "RED" : "BLACK";
 				std::cout << root->data << "(" << sColor << ")" << std::endl;
 				printHelper(root->left, indent, false);
 				printHelper(root->right, indent, true);
@@ -347,11 +359,11 @@ class RedBlackTree
 		public:
 		RedBlackTree()
 		{
-			TNULL = new Node;
-			TNULL->color = BLACK;
-			TNULL->left = nullptr;
-			TNULL->right = nullptr;
-			root = TNULL;
+			LEAF_NULL = new Node;
+			LEAF_NULL->color = BLACK;
+			LEAF_NULL->left = ft::_nullptr;
+			LEAF_NULL->right = ft::_nullptr;
+			root = LEAF_NULL;
 		}
 
 		void preorder()
@@ -376,7 +388,7 @@ class RedBlackTree
 
 		NodePtr minimum(NodePtr node)
 		{
-			while (node->left != TNULL)
+			while (node->left != LEAF_NULL)
 			{
 				node = node->left;
 			}
@@ -385,67 +397,72 @@ class RedBlackTree
 
 		NodePtr maximum(NodePtr node)
 		{
-			while (node->right != TNULL)
+			while (node->right != LEAF_NULL)
 			{
 				node = node->right;
 			}
 			return node;
 		}
 
-		NodePtr successor(NodePtr x)
-		{
-			if (x->right != TNULL)
-			{
-				return minimum(x->right);
-			}
+		// NodePtr successor(NodePtr x)
+		// {
+		// 	if (x->right != LEAF_NULL)
+		// 	{
+		// 		return minimum(x->right);
+		// 	}
 
-			NodePtr y = x->parent;
-			while (y != TNULL && x == y->right)
-			{
-				x = y;
-				y = y->parent;
-			}
-			return y;
-		}
+		// 	NodePtr y = x->parent;
+		// 	while (y != LEAF_NULL && x == y->right)
+		// 	{
+		// 		x = y;
+		// 		y = y->parent;
+		// 	}
+		// 	return y;
+		// }
 
-		NodePtr predecessor(NodePtr x)
-		{
-			if (x->left != TNULL)
-			{
-				return maximum(x->left);
-			}
+		// NodePtr predecessor(NodePtr x)
+		// {
+		// 	if (x->left != LEAF_NULL)
+		// 	{
+		// 		return maximum(x->left);
+		// 	}
 
-			NodePtr y = x->parent;
-			while (y != TNULL && x == y->left)
-			{
-				x = y;
-				y = y->parent;
-			}
+		// 	NodePtr y = x->parent;
+		// 	while (y != LEAF_NULL && x == y->left)
+		// 	{
+		// 		x = y;
+		// 		y = y->parent;
+		// 	}
 
-			return y;
-		}
+		// 	return y;
+		// }
 
 		void leftRotate(NodePtr x)
 		{
 			NodePtr y = x->right;
 			x->right = y->left;
-			if (y->left != TNULL)
+			//* if y's left child is not null (y has a left subtree), assign x as the parent of the left subtree of y
+			if (y->left != LEAF_NULL)
 			{
 				y->left->parent = x;
 			}
 			y->parent = x->parent;
-			if (x->parent == nullptr)
+			//* if x's parent is null, assign y as the root of the tree
+			if (x->parent == ft::_nullptr)
 			{
 				this->root = y;
 			}
+			//* else if x is the left child of parent, assign y as the left child of x's parent
 			else if (x == x->parent->left)
 			{
 				x->parent->left = y;
 			}
+			//* else assign y as the right child of x's parent
 			else
 			{
 				x->parent->right = y;
 			}
+			//* y is now the parent of x
 			y->left = x;
 			x->parent = y;
 		}
@@ -454,42 +471,49 @@ class RedBlackTree
 		{
 			NodePtr y = x->left;
 			x->left = y->right;
-			if (y->right != TNULL)
+			//* if x's right child is not null (x has a right subtree), assign y as the parent of the right subtree of x
+			if (y->right != LEAF_NULL)
 			{
 				y->right->parent = x;
 			}
 			y->parent = x->parent;
-			if (x->parent == nullptr)
+			//* if x's parent is null, assign y as the root of the tree
+			if (x->parent == ft::_nullptr)
 			{
 				this->root = y;
 			}
+			//* else if x is the right child of parent, assign y as the right child of x's parent
 			else if (x == x->parent->right)
 			{
 				x->parent->right = y;
 			}
+			//* else assign y as the left child of x's parent
 			else
 			{
 				x->parent->left = y;
 			}
+			//* y is now the parent of x
 			y->right = x;
 			x->parent = y;
 		}
 
-		// Inserting a node
+		//! Inserting a node
+		//* we always insert a node as a red node, and then we fix the tree, because red nodes does not violate the red-black tree properties
+		//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 		void insert(int key)
 		{
 			//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
 			NodePtr node = new Node;
-			node->parent = nullptr;
+			node->parent = ft::_nullptr;
 			node->data = key;
-			node->left = TNULL;
-			node->right = TNULL;
+			node->left = LEAF_NULL;
+			node->right = LEAF_NULL;
 			node->color = RED;
 			//TODO: why this initialization?
-			NodePtr y = nullptr;
+			NodePtr y = ft::_nullptr;
 			NodePtr x = this->root;
 
-			while (x != TNULL)
+			while (x != LEAF_NULL)
 			{
 				y = x;
 				//*Move depending on the value of the data
@@ -508,10 +532,11 @@ class RedBlackTree
 			//*inserting the new node
 			node->parent = y;
 			//*If the tree is empty, the new node is the root (case 1)
-			if (y == nullptr)
+			if (y == ft::_nullptr)
 			{
 				root = node;
 			}
+			//* place node to left of right of y depending on the value of the data
 			else if (node->data < y->data)
 			{
 				y->left = node;
@@ -522,14 +547,14 @@ class RedBlackTree
 			}
 
 			//*If the new node is a root node, color it black and return (case 2)
-			if (node->parent == nullptr)
+			if (node->parent == ft::_nullptr)
 			{
 				node->color = BLACK;
 				return;
 			}
 			
 			//*If the grandparent is null, there is nothing to do (case 3)
-			if (node->parent->parent == nullptr)
+			if (node->parent->parent == ft::_nullptr)
 			{
 				return;
 			}
@@ -557,21 +582,6 @@ class RedBlackTree
 		}
 };
 
-int main() {
-	
-RedBlackTree bst;
-bst.insert(55);
-bst.insert(40);
-bst.insert(65);
-bst.insert(60);
-bst.insert(75);
-bst.insert(57);
 
-bst.printTree();
-std::cout << std::endl
-	<< "After deleting" << std::endl;
-bst.deleteNode(40);
-bst.printTree();
-}
 
 #endif
