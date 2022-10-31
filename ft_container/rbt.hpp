@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/31 15:52:49 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/31 17:10:28 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ class RedBlackTree
 				v->parent = u->parent;
 		}
 
+
+		//? https://www.youtube.com/watch?v=lU99loSvD8s&ab_channel=MichaelSambol
 		void deleteNodeHelper(NodePtr node, int key)
 		{
 			NodePtr z = LEAF_NULL;
@@ -226,24 +228,30 @@ class RedBlackTree
 			}
 
 			y = z;
+			//* we save the original color of futur deleted node
 			int y_original_color = y->color;
-			//*first, we follow the ordinary BST deletion process which makes sure that x is either a leaf node or has a single child.
+			//* if the left child is null (leaf)
 			if (z->left == LEAF_NULL)
 			{
+				//*we assign the right child to x (it became a null_leaf)
 				x = z->right;
+				//* we transplant (replace) the deleted node with x
 				rbTransplant(z, z->right);
 			}
-			else if (z->right == LEAF_NULL)
+			else if (z->right == LEAF_NULL) //*same thing but symetrics
 			{
 				x = z->left;
 				rbTransplant(z, z->left);
 			}
-			//* node with two children
-			else
+			else //* neither child is null (leaf)
 			{
+				//* we assign the minimum of the right subtree (of the node to be deleted) to y
 				y = minimum(z->right);
+				//* we save the original color of y
 				y_original_color = y->color;
+				//* we assign the right child of y to x
 				x = y->right;
+				//* if y is one of the child of the node to be deleted, then we assign x parent to y
 				if (y->parent == z)
 				{
 					x->parent = y;
