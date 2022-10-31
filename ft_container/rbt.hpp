@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rdt.hpp                                            :+:      :+:    :+:   */
+/*   rbt.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/31 11:26:03 by gmary            ###   ########.fr       */
+/*   Updated: 2022/10/31 11:27:54 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RDT_HPP
-# define RDT_HPP
+#ifndef RBT_HPP
+# define RBT_HPP
 
 #include "utils.hpp"
 
@@ -28,11 +28,11 @@
 using namespace std;
 
 struct Node {
-int data;
-Node *parent;
-Node *left;
-Node *right;
-int color;
+	int data;
+	Node *parent;
+	Node *left;
+	Node *right;
+	int color;
 };
 
 typedef Node *NodePtr;
