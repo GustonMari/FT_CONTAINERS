@@ -6,15 +6,18 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 19:03:39 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 19:41:17 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RBT_HPP
 # define RBT_HPP
 
-#include "utils.hpp"
-#include "nullptr.hpp"
+# include "utils.hpp"
+# include "nullptr.hpp"
+# include "node_rbt.hpp"
+# include <iostream>
+# include <string>
 
 /*
 	?	https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
@@ -25,14 +28,13 @@
 */
 
 
-#include <iostream>
-#include <string>
 // using namespace std;
-template <class value_type, class key_compare,class allocator_type>
+template <class value_type, class key_compare, class allocator_type>
 class RedBlackTree
 {
 	public:
-		struct Node {
+		struct Node
+		{
 			value_type data;
 			Node *parent;
 			Node *left;
@@ -41,10 +43,60 @@ class RedBlackTree
 		};
 
 		typedef Node *NodePtr;
-	
-	private:
+		
+		//!	Constructors and destructor
 		NodePtr root;
 		NodePtr LEAF_NULL;
+
+		RedBlackTree(): x->root(ft::_nullptr), _comp(key_compare)
+		{
+			//TODO: need to instantiate _alloc so need to replace the new
+			LEAF_NULL = new Node;
+			LEAF_NULL->color = BLACK;
+			LEAF_NULL->left = ft::_nullptr;
+			LEAF_NULL->right = ft::_nullptr;
+			root = LEAF_NULL;
+		}
+
+		RedBlackTree(): x->root(ft::_nullptr), _comp(key_compare)
+		{
+			//TODO: need to instantiate _alloc
+		}
+
+		RedBlackTree(const RedBlackTree &x)
+		{
+			*this = x;
+		}
+
+		~RedBlackTree()
+		{
+			//TODO: need to delete all nodes
+		}
+
+		//!Operators
+		RedBlackTree &operator=(const RedBlackTree &x)
+		{
+			if (this != &x)
+			{
+				_root = x._root;
+				_comp = x._comp;
+				_alloc = x._alloc;
+			}
+			return (*this);
+		}
+
+	private:
+		//!Utils variables
+		key_compare _comp;
+		allocator_type _alloc;
+		NodePtr _root;
+		NodePtr _nil;
+		
+
+
+		//!Utils functions
+		// NodePtr root;
+		// NodePtr LEAF_NULL;
 
 		void initializeNULLNode(NodePtr node, NodePtr parent)
 		{
@@ -376,14 +428,14 @@ class RedBlackTree
 		}
 
 		public:
-		RedBlackTree()
-		{
-			LEAF_NULL = new Node;
-			LEAF_NULL->color = BLACK;
-			LEAF_NULL->left = ft::_nullptr;
-			LEAF_NULL->right = ft::_nullptr;
-			root = LEAF_NULL;
-		}
+		// RedBlackTree()
+		// {
+		// 	LEAF_NULL = new Node;
+		// 	LEAF_NULL->color = BLACK;
+		// 	LEAF_NULL->left = ft::_nullptr;
+		// 	LEAF_NULL->right = ft::_nullptr;
+		// 	root = LEAF_NULL;
+		// }
 
 		void preorder()
 		{

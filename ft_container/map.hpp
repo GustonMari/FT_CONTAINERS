@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 18:59:11 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 19:17:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 # include "pair.hpp"
 # include "less.hpp"
 # include "rbt.hpp"
-//TODO: less is needed for 
-
-
-#include <map>
-std::map<int, int> m;
-
 
 namespace ft
 {
