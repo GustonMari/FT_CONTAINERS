@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 18:38:01 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 18:59:11 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
 			typedef ft::pair<const Key, mapped_type>					value_type;
 			typedef Compare												key_compare;
 			typedef Allocator											allocator_type;
-			typedef RedBlackTree<key_type, value_type, allocator_type>	_Rep_type;
+			typedef RedBlackTree<value_type, key_compare, allocator_type>	_Rep_type;
 			typedef typename Allocator::pointer		 					pointer;
 			typedef typename Allocator::const_pointer					const_pointer;
 			typedef typename Allocator::reference						reference;

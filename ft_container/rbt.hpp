@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 18:37:42 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 19:03:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@
 #include <iostream>
 #include <string>
 // using namespace std;
-template <class key_type, class value_type, class allocator_type>
+template <class value_type, class key_compare,class allocator_type>
 class RedBlackTree
 {
 	public:
 		struct Node {
-			key_type data;
-			// int data;
+			value_type data;
 			Node *parent;
 			Node *left;
 			Node *right;
