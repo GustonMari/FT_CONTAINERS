@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/31 17:10:28 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 15:00:55 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,12 @@ class RedBlackTree
 			return searchTreeHelper(node->right, key);
 		}
 
-		// For balancing the tree after deletion
+
 		void deleteFix(NodePtr x) {
 			NodePtr s;
 			while (x != root && x->color == BLACK)
 			{
+				CCOUT(BYEL, "x->parent->left = " << x->parent->left->data << " x->parent->right = " << x->parent->right->data)
 				if (x == x->parent->left)
 				{
 					s = x->parent->right;
@@ -129,6 +130,7 @@ class RedBlackTree
 					}
 					else
 					{
+						CCOUT(BMAG, "s = " << s->data << " s->color = " << s->color << " s->left->data = " << s->left->data << " s->right->data = " << s->right->data)
 						if (s->right->color == BLACK)
 						{
 							s->left->color = BLACK;
@@ -144,6 +146,7 @@ class RedBlackTree
 						x = root;
 					}
 				}
+				//*same as above but the rotation is contrar
 				else
 				{
 					s = x->parent->left;
@@ -181,6 +184,7 @@ class RedBlackTree
 			x->color = BLACK;
 		}
 
+
 		void rbTransplant(NodePtr u, NodePtr v)
 		{
 			if (u->parent == ft::_nullptr)
@@ -195,7 +199,7 @@ class RedBlackTree
 			{
 				u->parent->right = v;
 			}
-				v->parent = u->parent;
+			v->parent = u->parent;
 		}
 
 
@@ -204,6 +208,7 @@ class RedBlackTree
 		{
 			NodePtr z = LEAF_NULL;
 			NodePtr x, y;
+			//*find the node to delete
 			while (node != LEAF_NULL)
 			{
 				if (node->data == key)
@@ -234,6 +239,7 @@ class RedBlackTree
 			if (z->left == LEAF_NULL)
 			{
 				//*we assign the right child to x (it became a null_leaf)
+				std::cout << "POUET" << std::endl;
 				x = z->right;
 				//* we transplant (replace) the deleted node with x
 				rbTransplant(z, z->right);
@@ -248,6 +254,7 @@ class RedBlackTree
 				//* we assign the minimum of the right subtree (of the node to be deleted) to y
 				y = minimum(z->right);
 				//* we save the original color of y
+				CCOUT(BYEL, "data = " << y->data << " color = " << y->color << std::endl);
 				y_original_color = y->color;
 				//* we assign the right child of y to x
 				x = y->right;
@@ -269,6 +276,8 @@ class RedBlackTree
 				y->color = z->color;
 			}
 			delete z;
+			//* if the original color of y was black, then we need to fix the tree
+			CCOUT(BMAG, x->data);
 			if (y_original_color == BLACK)
 			{
 				deleteFix(x);
@@ -357,8 +366,14 @@ class RedBlackTree
 					indent += "|  ";
 				}
 
-				std::string sColor = root->color ? "RED" : "BLACK";
-				std::cout << root->data << "(" << sColor << ")" << std::endl;
+				// std::string sColor = root->color ? "RED" : "BLACK";
+				// std::cout << root->data << "(" << sColor << ")" << std::endl;
+				if (root->color == RED)
+				std::cout << BRED << root->data << "(" << "RED" << ")" << CRESET<< std::endl;
+				else
+				{
+					std::cout << BBLU << root->data << "(" << "BLACK" << ")" << CRESET << std::endl;
+				}
 				printHelper(root->left, indent, false);
 				printHelper(root->right, indent, true);
 			}
