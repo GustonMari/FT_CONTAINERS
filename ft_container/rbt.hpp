@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 19:41:17 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 19:48:02 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,19 @@ class RedBlackTree
 		{
 			if (this != &x)
 			{
-				_root = x._root;
-				_comp = x._comp;
-				_alloc = x._alloc;
+				m_root = x.m_root;
+				m_comp = x.m_comp;
+				m_alloc = x.m_alloc;
 			}
 			return (*this);
 		}
 
 	private:
 		//!Utils variables
-		key_compare _comp;
-		allocator_type _alloc;
-		NodePtr _root;
-		NodePtr _nil;
+		key_compare m_comp;
+		allocator_type m_alloc;
+		NodePtr m_root;
+		NodePtr m_nil;
 		
 
 
@@ -568,7 +568,7 @@ class RedBlackTree
 			x->parent = y;
 		}
 
-		//! Inserting a node
+		//!========================================= Inserting a node =======================================================================
 		//* we always insert a node as a red node, and then we fix the tree, because red nodes does not violate the red-black tree properties
 		//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 		void insert(int key)
@@ -632,6 +632,68 @@ class RedBlackTree
 			//*Recalibrate the tree after insertion
 			insertFix(node);
 		}
+
+		// void insert(int key)
+		// {
+		// 	//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
+		// 	NodePtr node = new Node;
+		// 	node->parent = ft::_nullptr;
+		// 	node->data = key;
+		// 	node->left = LEAF_NULL;
+		// 	node->right = LEAF_NULL;
+		// 	node->color = RED;
+		// 	NodePtr y = ft::_nullptr;
+		// 	NodePtr x = this->root;
+
+		// 	while (x != LEAF_NULL)
+		// 	{
+		// 		y = x;
+		// 		//*Move depending on the value of the data
+		// 		if (node->data < x->data)
+		// 		{
+		// 			//*If the data is smaller than the current node, go left
+		// 			x = x->left;
+		// 		}
+		// 		else
+		// 		{
+		// 			//*If the data is bigger than the current node, go right
+		// 			x = x->right;
+		// 		}
+		// 	}
+
+		// 	//*inserting the new node
+		// 	node->parent = y;
+		// 	//*If the tree is empty, the new node is the root (case 1)
+		// 	if (y == ft::_nullptr)
+		// 	{
+		// 		root = node;
+		// 	}
+		// 	//* place node to left of right of y depending on the value of the data
+		// 	else if (node->data < y->data)
+		// 	{
+		// 		y->left = node;
+		// 	}
+		// 	else
+		// 	{
+		// 		y->right = node;
+		// 	}
+
+		// 	//*If the new node is a root node, color it black and return (case 2)
+		// 	if (node->parent == ft::_nullptr)
+		// 	{
+		// 		node->color = BLACK;
+		// 		return;
+		// 	}
+			
+		// 	//*If the grandparent is null, there is nothing to do (case 3)
+		// 	if (node->parent->parent == ft::_nullptr)
+		// 	{
+		// 		return;
+		// 	}
+
+		// 	//*Recalibrate the tree after insertion
+		// 	insertFix(node);
+		// }
 
 		NodePtr getRoot()
 		{
