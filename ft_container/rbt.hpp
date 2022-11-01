@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 15:00:55 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 16:03:56 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ class RedBlackTree
 			NodePtr s;
 			while (x != root && x->color == BLACK)
 			{
-				CCOUT(BYEL, "x->parent->left = " << x->parent->left->data << " x->parent->right = " << x->parent->right->data)
 				if (x == x->parent->left)
 				{
 					s = x->parent->right;
@@ -130,7 +129,6 @@ class RedBlackTree
 					}
 					else
 					{
-						CCOUT(BMAG, "s = " << s->data << " s->color = " << s->color << " s->left->data = " << s->left->data << " s->right->data = " << s->right->data)
 						if (s->right->color == BLACK)
 						{
 							s->left->color = BLACK;
@@ -239,7 +237,6 @@ class RedBlackTree
 			if (z->left == LEAF_NULL)
 			{
 				//*we assign the right child to x (it became a null_leaf)
-				std::cout << "POUET" << std::endl;
 				x = z->right;
 				//* we transplant (replace) the deleted node with x
 				rbTransplant(z, z->right);
@@ -254,7 +251,6 @@ class RedBlackTree
 				//* we assign the minimum of the right subtree (of the node to be deleted) to y
 				y = minimum(z->right);
 				//* we save the original color of y
-				CCOUT(BYEL, "data = " << y->data << " color = " << y->color << std::endl);
 				y_original_color = y->color;
 				//* we assign the right child of y to x
 				x = y->right;
@@ -277,7 +273,6 @@ class RedBlackTree
 			}
 			delete z;
 			//* if the original color of y was black, then we need to fix the tree
-			CCOUT(BMAG, x->data);
 			if (y_original_color == BLACK)
 			{
 				deleteFix(x);
@@ -532,7 +527,6 @@ class RedBlackTree
 			node->left = LEAF_NULL;
 			node->right = LEAF_NULL;
 			node->color = RED;
-			//TODO: why this initialization?
 			NodePtr y = ft::_nullptr;
 			NodePtr x = this->root;
 
