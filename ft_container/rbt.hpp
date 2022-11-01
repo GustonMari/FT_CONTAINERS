@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 16:03:56 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/01 17:48:10 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@
 #include <iostream>
 #include <string>
 // using namespace std;
-
-struct Node {
-	int data;
-	Node *parent;
-	Node *left;
-	Node *right;
-	int color;
-};
-
-typedef Node *NodePtr;
-
+template <class T>
 class RedBlackTree
 {
+	public:
+		struct Node {
+			T data;
+			// int data;
+			Node *parent;
+			Node *left;
+			Node *right;
+			int color;
+		};
+
+		typedef Node *NodePtr;
+	
 	private:
 		NodePtr root;
 		NodePtr LEAF_NULL;
@@ -422,38 +424,38 @@ class RedBlackTree
 			return node;
 		}
 
-		// NodePtr successor(NodePtr x)
-		// {
-		// 	if (x->right != LEAF_NULL)
-		// 	{
-		// 		return minimum(x->right);
-		// 	}
+		NodePtr successor(NodePtr x)
+		{
+			if (x->right != LEAF_NULL)
+			{
+				return minimum(x->right);
+			}
 
-		// 	NodePtr y = x->parent;
-		// 	while (y != LEAF_NULL && x == y->right)
-		// 	{
-		// 		x = y;
-		// 		y = y->parent;
-		// 	}
-		// 	return y;
-		// }
+			NodePtr y = x->parent;
+			while (y != LEAF_NULL && x == y->right)
+			{
+				x = y;
+				y = y->parent;
+			}
+			return y;
+		}
 
-		// NodePtr predecessor(NodePtr x)
-		// {
-		// 	if (x->left != LEAF_NULL)
-		// 	{
-		// 		return maximum(x->left);
-		// 	}
+		NodePtr predecessor(NodePtr x)
+		{
+			if (x->left != LEAF_NULL)
+			{
+				return maximum(x->left);
+			}
 
-		// 	NodePtr y = x->parent;
-		// 	while (y != LEAF_NULL && x == y->left)
-		// 	{
-		// 		x = y;
-		// 		y = y->parent;
-		// 	}
+			NodePtr y = x->parent;
+			while (y != LEAF_NULL && x == y->left)
+			{
+				x = y;
+				y = y->parent;
+			}
 
-		// 	return y;
-		// }
+			return y;
+		}
 
 		void leftRotate(NodePtr x)
 		{
