@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:53:55 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 10:20:35 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 10:57:26 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 
 //?https://cdmana.com/2021/12/202112300642463009.html
+//?https://www.cs.fsu.edu/~lacher/courses/COP4530/lectures/binary_search_trees3/index.html?$$$slide08t.html$$$
 
 template <class T, class k>
 class IteratorMap
@@ -102,16 +103,27 @@ class IteratorMap
 	private:
 		// T *_ptr;
 		// bool _is_end;
+
+		
+		
 		void	increment()
 		{
+			//* do nothing on a null iterator
+			//TODO: pas sur de cette condition en dessous
+			if (this->node == NULL)
+				return ;
+			//* if node is right threaded
 			if (this->node->right != NULL)
 			{
 				this->node = this->node->right;
+				//* if node is left threaded, go to the leftmost node
 				while (this->node->left != NULL)
 					this->node = this->node->left;
 			}
+			//* if node is left threaded
 			else
 			{
+				//* if node is right threaded, go to the rightmost node
 				Node *tmp = this->node->parent;
 				while (tmp != NULL && this->node == tmp->right)
 				{
@@ -124,6 +136,9 @@ class IteratorMap
 
 		void	decrement()
 		{
+			//TODO: pas sur de cette condition en dessous
+			if (this->node == NULL)
+				return ;
 			if (this->node->left != NULL)
 			{
 				this->node = this->node->left;

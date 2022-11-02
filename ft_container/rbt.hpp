@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/01 19:48:02 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 13:21:08 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,59 +41,79 @@ class RedBlackTree
 			Node *right;
 			int color;
 		};
-
+	
 		typedef Node *NodePtr;
+		typedef typename allocator_type::template rebind<Node>::other node_allocator_type; //BUG comment marche reelmend le rebind??
 		
-		//!	Constructors and destructor
-		NodePtr root;
-		NodePtr LEAF_NULL;
-
-		RedBlackTree(): x->root(ft::_nullptr), _comp(key_compare)
-		{
-			//TODO: need to instantiate _alloc so need to replace the new
-			LEAF_NULL = new Node;
-			LEAF_NULL->color = BLACK;
-			LEAF_NULL->left = ft::_nullptr;
-			LEAF_NULL->right = ft::_nullptr;
-			root = LEAF_NULL;
-		}
-
-		RedBlackTree(): x->root(ft::_nullptr), _comp(key_compare)
-		{
-			//TODO: need to instantiate _alloc
-		}
-
-		RedBlackTree(const RedBlackTree &x)
-		{
-			*this = x;
-		}
-
-		~RedBlackTree()
-		{
-			//TODO: need to delete all nodes
-		}
-
-		//!Operators
-		RedBlackTree &operator=(const RedBlackTree &x)
-		{
-			if (this != &x)
-			{
-				m_root = x.m_root;
-				m_comp = x.m_comp;
-				m_alloc = x.m_alloc;
-			}
-			return (*this);
-		}
 
 	private:
 		//!Utils variables
 		key_compare m_comp;
 		allocator_type m_alloc;
 		NodePtr m_root;
-		NodePtr m_nil;
+		// NodePtr m_nil;
+
+	public:
+
+		
+		//!	Constructors and destructor
+		NodePtr root;
+		NodePtr LEAF_NULL;
+
+		RedBlackTree()
+		{
+			//TODO: need to instantiate _alloc so need to replace the new
+			LEAF_NULL = m_alloc.allocate(sizeof(Node));
+			// LEAF_NULL = new Node;
+			m_comp = key_compare();
+			LEAF_NULL->color = BLACK;
+			LEAF_NULL->left = ft::_nullptr;
+			LEAF_NULL->right = ft::_nullptr;
+			root = LEAF_NULL;
+		};
+
+		// RedBlackTree(): root(ft::_nullptr), m_comp(key_compare)
+		// {
+		// 	//TODO: need to instantiate _alloc
+		// }
+
+		// RedBlackTree(const RedBlackTree &x)
+		// {
+		// 	*this = x;
+		// }
+
+		~RedBlackTree()
+		{
+			//TODO: need to delete all nodes
+			// for (NodePtr node = root; node != LEAF_NULL; node = node->right)
+			// {
+			// 	if (node->left != LEAF_NULL)
+			// 	{
+			// 		node = node->left;
+			// 	}
+			// 	else
+			// 	{
+			// 		m_alloc.destroy(node);
+			// 		m_alloc.deallocate(node, sizeof(Node));
+			// 	}
+			// }
+		}
+
+		// //!Operators
+		// RedBlackTree &operator=(const RedBlackTree &x)
+		// {
+		// 	if (this != &x)
+		// 	{
+		// 		m_root = x.m_root;
+		// 		m_comp = x.m_comp;
+		// 		m_alloc = x.m_alloc;
+		// 	}
+		// 	return (*this);
+		// }
+
 		
 
-
+	private:
 		//!Utils functions
 		// NodePtr root;
 		// NodePtr LEAF_NULL;
