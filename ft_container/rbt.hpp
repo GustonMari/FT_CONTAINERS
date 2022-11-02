@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 16:39:46 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 17:24:46 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,9 @@ class RedBlackTree
 				y->left->parent = y;
 				y->color = z->color;
 			}
-			delete z;
+			m_alloc.destroy(z);
+			m_alloc.deallocate(z, sizeof(Node));
+			// delete z;
 			//* if the original color of y was black, then we need to fix the tree
 			if (y_original_color == BLACK)
 			{

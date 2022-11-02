@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 15:49:25 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 17:25:11 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ using namespace TESTED_NAMESPACE;
 
 // using namespace NAMESPACE;
 int main() {
-	
 	RedBlackTree<int, int, std::allocator<std::pair<int, int> > > bst;
 	(void)bst;
 	bst.insert(10);
@@ -72,9 +71,9 @@ int main() {
 	bst.insert(57);
 
 	// bst.printTree();
-	// bst.deleteNode(8);
-	// bst.deleteNode(7);
-	// bst.deleteNode(16);
+	bst.deleteNode(8);
+	bst.deleteNode(7);
+	bst.deleteNode(16);
 	bst.printTree();
 	// std::cout << std::endl
 	// 	<< "After deleting" << std::endl;
