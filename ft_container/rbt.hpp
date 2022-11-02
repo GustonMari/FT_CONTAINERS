@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 14:00:33 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 15:50:15 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ class RedBlackTree
 	public:
 		struct Node
 		{
+
+			Node(const value_type & new_data): data(new_data), parent(ft::_nullptr), left(ft::_nullptr), right(ft::_nullptr), color(RED) {}
+			
+			Node(const value_type & new_data, Node * ptr_left, Node * ptr_right): parent(ft::_nullptr), left(ptr_left), right(ptr_right), color(RED)
+			{
+				this->data = new_data;
+				// this->color = color;
+				// this->parent = ft::_nullptr;
+				// this->left = LEAF_NULL;
+				// this->right = LEAF_NULL;
+			}
 			value_type data;
 			Node *parent;
 			Node *left;
@@ -64,6 +75,7 @@ class RedBlackTree
 		{
 			//TODO: need to instantiate _alloc so need to replace the new
 			LEAF_NULL = m_alloc.allocate(sizeof(Node));
+			m_alloc.construct(LEAF_NULL, Node(value_type()));
 			// LEAF_NULL = new Node;
 			m_comp = key_compare();
 			LEAF_NULL->color = BLACK;
@@ -420,6 +432,8 @@ class RedBlackTree
 
 		void printHelper(NodePtr root, std::string indent, bool last)
 		{
+			// if (root == ft::_nullptr)
+			// 	return ;
 			if (root != LEAF_NULL)
 			{
 				std::cout << indent;
@@ -437,7 +451,9 @@ class RedBlackTree
 				// std::string sColor = root->color ? "RED" : "BLACK";
 				// std::cout << root->data << "(" << sColor << ")" << std::endl;
 				if (root->color == RED)
-				std::cout << BRED << root->data << "(" << "RED" << ")" << CRESET<< std::endl;
+				{
+					std::cout << BRED << root->data << "(" << "RED" << ")" << CRESET<< std::endl;
+				}
 				else
 				{
 					std::cout << BBLU << root->data << "(" << "BLACK" << ")" << CRESET << std::endl;
@@ -591,15 +607,19 @@ class RedBlackTree
 		//!========================================= Inserting a node =======================================================================
 		//* we always insert a node as a red node, and then we fix the tree, because red nodes does not violate the red-black tree properties
 		//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
+		
+		//TODO: need to change int for the key to value_type??
 		void insert(int key)
 		{
 			//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
-			NodePtr node = new Node;
-			node->parent = ft::_nullptr;
-			node->data = key;
-			node->left = LEAF_NULL;
-			node->right = LEAF_NULL;
-			node->color = RED;
+			// NodePtr node = new Node;
+			NodePtr node = m_alloc.allocate(1);
+			m_alloc.construct(node, Node(key, LEAF_NULL, LEAF_NULL));
+			// node->parent = ft::_nullptr;
+			// node->data = key;
+			// node->left = LEAF_NULL;
+			// node->right = LEAF_NULL;
+			// node->color = RED;
 			NodePtr y = ft::_nullptr;
 			NodePtr x = this->root;
 
