@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 13:21:08 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 14:00:33 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class RedBlackTree
 	private:
 		//!Utils variables
 		key_compare m_comp;
-		allocator_type m_alloc;
+		node_allocator_type m_alloc;
 		NodePtr m_root;
 		// NodePtr m_nil;
 
