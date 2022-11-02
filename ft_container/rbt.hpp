@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 16:09:04 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 16:39:46 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,11 @@ class RedBlackTree
 
 		~RedBlackTree()
 		{
-			//TODO: need to delete all nodes
-			// for (NodePtr node = root; node != LEAF_NULL; node = node->right)
-			// {
-			// 	if (node->left != LEAF_NULL)
-			// 	{
-			// 		node = node->left;
-			// 	}
-			// 	else
-			// 	{
-			// 		m_alloc.destroy(node);
-			// 		m_alloc.deallocate(node, sizeof(Node));
-			// 	}
-			// }
+			clear(root);
+			m_alloc.destroy(LEAF_NULL);
+			m_alloc.deallocate(LEAF_NULL, sizeof(Node));
 		}
+
 
 		// //!Operators
 		// RedBlackTree &operator=(const RedBlackTree &x)
@@ -129,6 +120,18 @@ class RedBlackTree
 		//!Utils functions
 		// NodePtr root;
 		// NodePtr LEAF_NULL;
+
+		void	clear(NodePtr node)
+		{
+			if (node == LEAF_NULL)
+				return ; 
+		
+			clear(node->left); 
+			clear(node->right); 
+		
+			m_alloc.destroy(node);
+			m_alloc.deallocate(node, 1);
+		}
 
 		void initializeNULLNode(NodePtr node, NodePtr parent)
 		{
