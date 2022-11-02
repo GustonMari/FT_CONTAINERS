@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 17:24:46 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 17:27:09 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ class RedBlackTree
 		RedBlackTree()
 		{
 			//TODO: need to instantiate _alloc so need to replace the new
+			m_alloc = allocator_type();
+			m_comp = key_compare();
 			LEAF_NULL = m_alloc.allocate(sizeof(Node));
 			m_alloc.construct(LEAF_NULL, Node(value_type()));
 			// LEAF_NULL = new Node;
-			m_comp = key_compare();
+			
 			LEAF_NULL->color = BLACK;
 			LEAF_NULL->left = ft::_nullptr;
 			LEAF_NULL->right = ft::_nullptr;
