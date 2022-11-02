@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 15:50:15 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/02 16:09:04 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,8 @@ class RedBlackTree
 
 
 		//? https://www.youtube.com/watch?v=lU99loSvD8s&ab_channel=MichaelSambol
-		void deleteNodeHelper(NodePtr node, int key)
+		//TODO: replace int with value_type juste en dessous ??
+		void deleteNodeHelper(NodePtr node, value_type key)
 		{
 			NodePtr z = LEAF_NULL;
 			NodePtr x, y;
@@ -609,7 +610,7 @@ class RedBlackTree
 		//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 		
 		//TODO: need to change int for the key to value_type??
-		void insert(int key)
+		void insert(value_type key)
 		{
 			//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
 			// NodePtr node = new Node;
@@ -740,7 +741,7 @@ class RedBlackTree
 			return this->root;
 		}
 
-		void deleteNode(int data)
+		void deleteNode(value_type data)
 		{
 			deleteNodeHelper(this->root, data);
 		}
