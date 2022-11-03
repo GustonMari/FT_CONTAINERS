@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 10:38:45 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 14:09:59 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,103 @@ namespace ft
 			typedef typename _Rep_type::reverse_iterator	 				reverse_iterator;
 			typedef typename _Rep_type::const_reverse_iterator			const_reverse_iterator;
 
-			map(void) {}
 		private:
+			_Rep_type		m_root;
+			allocator_type	m_alloc;
+			key_compare		m_comp;
+			size_type		m_size;
+		
+		public:
+			//!=============================== Constructors ======================================================
+
+			//*empty
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp),  m_size(0)
+			{
+			}
+		
+			// //*range
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(), m_size(std::distance(first, last)), m_comp(comp), m_alloc(alloc)
+			{
+				insert(first, last);
+			}
+			
+			// //*copy
+			map (const map& x): m_root(), m_size(x.m_size), m_comp(x.m_comp), m_alloc(x.m_alloc)
+			{
+				insert(x.begin(), x.end());
+			}
+
+			//!=============================== Destructor ======================================================
+			~map()
+			{
+				//TODO: double free ???
+				clear();
+			}
+
+			//!=============================== Operators ======================================================
+			map& operator= (const map& x)
+			{
+				if (this != &x)
+				{
+					clear();
+					insert(x.begin(), x.end());
+				}
+				return (*this);
+			}
+
+			//!=============================== Functions ======================================================
+		
+			void	clear()
+			{
+				// if (m_root)
+				// {
+					m_root.delete_tree();
+					// m_root = NULL;
+					m_size = 0;
+				// }
+			}
+
+			iterator begin(void)
+			{
+				return (m_root.begin());
+			}
+
+			const_iterator begin(void) const
+			{
+				return (m_root.begin());
+			}
+
+			iterator end(void)
+			{
+				return (m_root.end());
+			}
+
+			const_iterator end(void) const
+			{
+				return (m_root.end());
+			}
+			
+			reverse_iterator rbegin(void)
+			{
+				return (m_root.rbegin());
+			}
+			
+			bool empty(void) const
+			{
+				//ou utiliser la fonction empty dans rbt
+				return (m_size == 0);
+			}
+			
+			size_type count (const key_type& k) const
+			{
+				return (m_root.count(k));
+			}
+
+
 			
 	};
 }
+
 
 #endif

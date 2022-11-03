@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 10:38:39 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 14:08:33 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ class RedBlackTree
 			root = LEAF_NULL;
 		};
 
-		// RedBlackTree(): root(ft::_nullptr), m_comp(key_compare)
+		// RedBlackTree(): root(ft::_nullptr), m_comp(key_compare), m_alloc(allocator_type)
 		// {
 		// 	//TODO: need to instantiate _alloc
 		// }
@@ -127,12 +127,83 @@ class RedBlackTree
 		// 	return (*this);
 		// }
 
+		//!
 		
+		iterator begin()
+		{
+			return (iterator(minimum(root)));
+		}
+
+		const_iterator begin() const
+		{
+			return (const_iterator(minimum(root)));
+		}
+	
+		iterator end()
+		{
+			//BUG: vraiment pas sur du ++
+			iterator it = iterator(maximum(root));
+			it++;
+			return (it);
+			// return (iterator(LEAF_NULL));
+		}
+
+		const_iterator end() const
+		{
+			//BUG: vraiment pas sur du ++
+			const_iterator it = const_iterator(maximum(root));
+			it++;
+			return (it);
+			// return (const_iterator(LEAF_NULL));
+		}
+
+		reverse_iterator rbegin()
+		{
+			return (reverse_iterator(maximum(root)));
+		}
+
+		const_reverse_iterator rbegin() const
+		{
+			return (const_reverse_iterator(maximum(root)));
+		}
+
+		reverse_iterator rend()
+		{
+			//BUG: vraiment pas sur du ++
+			reverse_iterator it = reverse_iterator(minimum(root));
+			//BUG: doit on faire -- ducoup ??
+			it++;
+			return (it);
+			// return (reverse_iterator(LEAF_NULL));
+		}
+
+		const_reverse_iterator rend() const
+		{
+			//BUG: vraiment pas sur du ++
+			const_reverse_iterator it = const_reverse_iterator(minimum(root));
+			//BUG: doit on faire -- ducoup ??
+			it++;
+			return (it);
+			// return (const_reverse_iterator(LEAF_NULL));
+		}
+
+		bool empty() const
+		{
+			return (root == LEAF_NULL);
+		}
+
+		void	delete_tree()
+		{
+			clear(root);
+			m_alloc.destroy(LEAF_NULL);
+			m_alloc.deallocate(LEAF_NULL, sizeof(Node));
+		}
 
 	private:
 		//!Utils functions
 		// NodePtr root;
 		// NodePtr LEAF_NULL;
+
 
 		void	clear(NodePtr node)
 		{
