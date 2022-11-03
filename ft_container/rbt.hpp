@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 14:08:33 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 14:31:10 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ class RedBlackTree
 		// 	return (*this);
 		// }
 
-		//!
+		//!================================Functions================================
 		
 		iterator begin()
 		{
@@ -190,6 +190,17 @@ class RedBlackTree
 		bool empty() const
 		{
 			return (root == LEAF_NULL);
+		}
+
+		// size_type size() const
+		// {
+		// 	return (size(root));
+		// }
+
+		size_type count(const value_type &k) const
+		{
+			//voir si ca boucle pas inf
+			return (searchCase(root, k));
 		}
 
 		void	delete_tree()
@@ -264,7 +275,23 @@ class RedBlackTree
 			https://www.happycoders.eu/algorithms/binary-search-tree-java/#Binary_Search_Tree_Example
 		*/
 
-		NodePtr searchTreeHelper(NodePtr node, int key)
+		size_type searchCase(NodePtr node, value_type key)
+		{
+			if (key == node->data)
+			{
+				return 1;
+			}
+			if (node == LEAF_NULL)
+				return 0;
+
+			if (key < node->data)
+			{
+				return searchTreeHelper(node->left, key);
+			}
+			return searchTreeHelper(node->right, key);
+		}
+
+		NodePtr searchTreeHelper(NodePtr node, value_type key)
 		{
 			if (node == LEAF_NULL || key == node->data)
 			{

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 14:09:59 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 14:28:38 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,30 @@ namespace ft
 			
 			size_type count (const key_type& k) const
 			{
+				if (m_size == 0)
+					return (0);
 				return (m_root.count(k));
 			}
+
+
+			//!================================ Insert ======================================================
+			//*single element
+			pair<iterator,bool> insert (const value_type& val)
+			{
+				pair<iterator, bool> ret;
+				ret.first = m_root.insert(val);
+				ret.second = ret.first != end();
+				if (ret.second)
+					m_size++;
+				return (ret);
+			}
+			
+			//*with hint
+			iterator insert (iterator position, const value_type& val);
+			
+			//*ranges
+			template <class InputIterator>
+			void insert (InputIterator first, InputIterator last);
 
 
 			
