@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/02 17:27:09 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 10:38:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "utils.hpp"
 # include "nullptr.hpp"
 # include "node_rbt.hpp"
+# include "iterator_map.hpp"
 # include <iostream>
 # include <string>
 
@@ -33,6 +34,16 @@ template <class value_type, class key_compare, class allocator_type>
 class RedBlackTree
 {
 	public:
+
+		//TODO: pas sur du const 
+		typedef typename ft::IteratorMap<value_type, key_compare>			iterator;
+		typedef typename ft::IteratorMap<const value_type, key_compare>		const_iterator;
+		typedef	typename ft::reverse_iterator<iterator>						reverse_iterator;
+		typedef	typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef typename std::size_t										size_type;
+		typedef typename std::ptrdiff_t										difference_type;
+
+	
 		struct Node
 		{
 
