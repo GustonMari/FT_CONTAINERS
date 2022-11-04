@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 14:31:10 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/04 14:28:57 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,57 @@ class RedBlackTree
 	public:
 
 		//TODO: pas sur du const 
-		typedef typename ft::IteratorMap<value_type, key_compare>			iterator;
-		typedef typename ft::IteratorMap<const value_type, key_compare>		const_iterator;
-		typedef	typename ft::reverse_iterator<iterator>						reverse_iterator;
-		typedef	typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
-		typedef typename std::size_t										size_type;
-		typedef typename std::ptrdiff_t										difference_type;
 
 	
-		struct Node
+		// struct Node
+		class Node
 		{
+			public:
+					
+				Node(const value_type & new_data): data(new_data), parent(ft::_nullptr), left(ft::_nullptr), right(ft::_nullptr), color(RED)
+				{ 
+					CCOUT(BGRN, "node constructor 2")
+				}
+				
+				Node(const value_type & new_data, Node * ptr_left, Node * ptr_right): data(new_data), parent(ft::_nullptr), left(ptr_left), right(ptr_right), color(RED)
+				{
+					CCOUT(BGRN, "node constructor 3 = " << data.first)
+					
+					// this->data = new_data;
+					
+					// this->color = color;
+					// this->parent = ft::_nullptr;
+					// this->left = LEAF_NULL;
+					// this->right = LEAF_NULL;
+				}
+				value_type data;
+				Node *parent;
+				Node *left;
+				Node *right;
+				int color;
 
-			Node(const value_type & new_data): data(new_data), parent(ft::_nullptr), left(ft::_nullptr), right(ft::_nullptr), color(RED) {}
-			
-			Node(const value_type & new_data, Node * ptr_left, Node * ptr_right): parent(ft::_nullptr), left(ptr_left), right(ptr_right), color(RED)
-			{
-				this->data = new_data;
-				// this->color = color;
-				// this->parent = ft::_nullptr;
-				// this->left = LEAF_NULL;
-				// this->right = LEAF_NULL;
-			}
-			value_type data;
-			Node *parent;
-			Node *left;
-			Node *right;
-			int color;
+				typedef value_type 	value_type_data;
 		};
 	
 		typedef Node *NodePtr;
 		typedef typename allocator_type::template rebind<Node>::other node_allocator_type; //BUG comment marche reelmend le rebind??
+		//TODO: vraiment pas sur pour les const :/
+
+		typedef typename std::allocator<Node>::pointer 							pointer;
+		// typedef typename ft::IteratorMap<Node, key_compare> 					iterator;
+		// typedef typename ft::IteratorMap<Node, key_compare> 					const_iterator;
+		// typedef typename ft::reverse_iterator<iterator> 						reverse_iterator;
+		// typedef typename ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
+		// typedef typename ft::IteratorMap<value_type, key_compare>			*iterator;
+		// typedef typename ft::IteratorMap<const value_type, key_compare>		*const_iterator;
+		// typedef	typename ft::reverse_iterator<iterator>						*reverse_iterator;
+		// typedef	typename ft::reverse_iterator<const_iterator>				*const_reverse_iterator;		
+		typedef typename ft::IteratorMap<Node, key_compare>						iterator;
+		// typedef typename ft::IteratorMap<Node, key_compare>						const_iterator;
+		// typedef	typename ft::reverse_iterator<iterator>							reverse_iterator;
+		// typedef	typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+		typedef typename std::size_t										size_type;
+		typedef typename std::ptrdiff_t										difference_type;
 		
 
 	private:
@@ -87,7 +108,8 @@ class RedBlackTree
 			//TODO: need to instantiate _alloc so need to replace the new
 			m_alloc = allocator_type();
 			m_comp = key_compare();
-			LEAF_NULL = m_alloc.allocate(sizeof(Node));
+			// LEAF_NULL = m_alloc.allocate(sizeof(Node));
+			LEAF_NULL = m_alloc.allocate(1);
 			m_alloc.construct(LEAF_NULL, Node(value_type()));
 			// LEAF_NULL = new Node;
 			
@@ -116,15 +138,20 @@ class RedBlackTree
 
 
 		// //!Operators
-		// RedBlackTree &operator=(const RedBlackTree &x)
+		RedBlackTree &operator=(const RedBlackTree &x)
+		{
+			if (this != &x)
+			{
+				m_root = x.m_root;
+				m_comp = x.m_comp;
+				m_alloc = x.m_alloc;
+			}
+			return (*this);
+		}
+
+		// void operator*(void)
 		// {
-		// 	if (this != &x)
-		// 	{
-		// 		m_root = x.m_root;
-		// 		m_comp = x.m_comp;
-		// 		m_alloc = x.m_alloc;
-		// 	}
-		// 	return (*this);
+		// 	std::cout << "operator*" << std::endl;
 		// }
 
 		//!================================Functions================================
@@ -134,10 +161,10 @@ class RedBlackTree
 			return (iterator(minimum(root)));
 		}
 
-		const_iterator begin() const
-		{
-			return (const_iterator(minimum(root)));
-		}
+		// const_iterator begin() const
+		// {
+		// 	return (const_iterator(minimum(root)));
+		// }
 	
 		iterator end()
 		{
@@ -148,44 +175,44 @@ class RedBlackTree
 			// return (iterator(LEAF_NULL));
 		}
 
-		const_iterator end() const
-		{
-			//BUG: vraiment pas sur du ++
-			const_iterator it = const_iterator(maximum(root));
-			it++;
-			return (it);
-			// return (const_iterator(LEAF_NULL));
-		}
+		// const_iterator end() const
+		// {
+		// 	//BUG: vraiment pas sur du ++
+		// 	const_iterator it = const_iterator(maximum(root));
+		// 	it++;
+		// 	return (it);
+		// 	// return (const_iterator(LEAF_NULL));
+		// }
 
-		reverse_iterator rbegin()
-		{
-			return (reverse_iterator(maximum(root)));
-		}
+		// reverse_iterator rbegin()
+		// {
+		// 	return (reverse_iterator(maximum(root)));
+		// }
 
-		const_reverse_iterator rbegin() const
-		{
-			return (const_reverse_iterator(maximum(root)));
-		}
+		// const_reverse_iterator rbegin() const
+		// {
+		// 	return (const_reverse_iterator(maximum(root)));
+		// }
 
-		reverse_iterator rend()
-		{
-			//BUG: vraiment pas sur du ++
-			reverse_iterator it = reverse_iterator(minimum(root));
-			//BUG: doit on faire -- ducoup ??
-			it++;
-			return (it);
-			// return (reverse_iterator(LEAF_NULL));
-		}
+		// reverse_iterator rend()
+		// {
+		// 	//BUG: vraiment pas sur du ++
+		// 	reverse_iterator it = reverse_iterator(minimum(root));
+		// 	//BUG: doit on faire -- ducoup ??
+		// 	it++;
+		// 	return (it);
+		// 	// return (reverse_iterator(LEAF_NULL));
+		// }
 
-		const_reverse_iterator rend() const
-		{
-			//BUG: vraiment pas sur du ++
-			const_reverse_iterator it = const_reverse_iterator(minimum(root));
-			//BUG: doit on faire -- ducoup ??
-			it++;
-			return (it);
-			// return (const_reverse_iterator(LEAF_NULL));
-		}
+		// const_reverse_iterator rend() const
+		// {
+		// 	//BUG: vraiment pas sur du ++
+		// 	const_reverse_iterator it = const_reverse_iterator(minimum(root));
+		// 	//BUG: doit on faire -- ducoup ??
+		// 	it++;
+		// 	return (it);
+		// 	// return (const_reverse_iterator(LEAF_NULL));
+		// }
 
 		bool empty() const
 		{
@@ -726,7 +753,8 @@ class RedBlackTree
 		//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 		
 		//TODO: need to change int for the key to value_type??
-		void insert(value_type key)
+		// value_type insert(value_type key)
+		pointer insert(value_type key)
 		{
 			//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
 			// NodePtr node = new Node;
@@ -777,17 +805,37 @@ class RedBlackTree
 			if (node->parent == ft::_nullptr)
 			{
 				node->color = BLACK;
-				return;
+			
+			
+			// iterator(node);
+			// ft::pair<iterator, bool> ret = ft::make_pair(iterator, true);
+			// ft::pair<iterator, bool> ret = ft::make_pair(iterator(node), true);
+			// iterator ret = iterator(node);
+			// CCOUT(BYEL, ret)
+			// ft::pair<iterator::value_type, bool> ret = ft::make_pair(iterator(node), true);
+			// CCOUT(BYEL,"a = " << ret.first << " b = " << ret.second);
+			// CCOUT(BMAG, *(ret.first) );
+			// return ft::make_pair<iterator, bool>(iterator(node), true);
+				// return (ft::make_pair(iterator(node), true));
+				// return (node->data);
+				return (node);
+				// return;
 			}
 			
 			//*If the grandparent is null, there is nothing to do (case 3)
 			if (node->parent->parent == ft::_nullptr)
 			{
-				return;
+				return (node);
+				// return (ft::make_pair(iterator(node), true));
+				// return (ft::make_pair(iterator(node), true));
+				// return (node->data);
+				// return;
 			}
 
 			//*Recalibrate the tree after insertion
 			insertFix(node);
+				// return (ft::make_pair(iterator(node), true));
+			return (node);
 		}
 
 		// void insert(int key)

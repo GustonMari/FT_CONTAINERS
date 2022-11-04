@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:53:55 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 10:36:34 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/04 14:03:47 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ namespace ft
 	{
 		public:
 			// typedef typename RedBlackTree<T, k>			pointer;
-			typedef T														value_type;
+			// typedef typename T   									*iterator;
+			typedef typename T::value_type_data								value_type;
 			typedef k														key_type;
 			// typedef T*														;
 			// typedef T*														pointer;
@@ -35,23 +36,30 @@ namespace ft
 			
 			// typedef k*														key_pointer;
 			// key_pointer									node;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, T>::iterator_catgory		iterator_category;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, T>::pointer				pointer;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, T>::reference			reference;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, T>::difference_type		difference_type;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::iterator_category	iterator_category;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::pointer				pointer;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::reference			reference;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::difference_type		difference_type;
 		
-		private:
 			pointer	 														node;
+			// iterator														node;
+		private:
 		
 		public:
 
 
 			//! ============================ Constructor ============================
-			IteratorMap(): node(NULL) {};
+			IteratorMap(): node(NULL) {
+				CCOUT(BCYN, "1")
+			};
 			// IteratorMap(key_pointer x): node(x) {};
 			// IteratorMap(const IteratorMap &x): node(x.node) {};
-			IteratorMap(pointer x): node(x) {};
-			IteratorMap(const pointer &x): node(x.node) {};
+			IteratorMap(pointer & x): node(x.node) {
+				CCOUT(BCYN, "2")
+			};
+			IteratorMap(const pointer &x): node(x.node) {
+				CCOUT(BCYN, "3")
+			};
 			~IteratorMap() {};
 			
 			//! ============================ Operators ============================
@@ -74,11 +82,13 @@ namespace ft
 			
 			reference operator*() const
 			{
+				CCOUT(UMAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 				return (this->node->data);
 			}
 			
 			pointer operator->() const
 			{
+				CCOUT(UMAG, "fffffffffffffffffffffffffffffffffffffffaaa")
 				return (&(this->node->data));
 			}
 			
@@ -171,6 +181,9 @@ namespace ft
 					this->node = tmp;
 				}
 			}
+			
+
 	};
+
 }
 #endif

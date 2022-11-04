@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 14:28:38 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/04 10:10:29 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ namespace ft
 			~map()
 			{
 				//TODO: double free ???
-				clear();
+				if (m_size != 0)
+					clear();
 			}
 
 			//!=============================== Operators ======================================================
@@ -150,13 +151,16 @@ namespace ft
 
 			//!================================ Insert ======================================================
 			//*single element
-			pair<iterator,bool> insert (const value_type& val)
+			// void insert (const value_type& val)
+			ft::pair<iterator,bool> insert (const value_type& val)
 			{
-				pair<iterator, bool> ret;
-				ret.first = m_root.insert(val);
-				ret.second = ret.first != end();
-				if (ret.second)
-					m_size++;
+				ft::pair<iterator, bool> ret;
+				ret = m_root.insert(val);
+
+				CCOUT(BYEL, (ret.first));
+				// ret.second = ret.first != end();
+				// if (ret.second)
+				// 	m_size++;
 				return (ret);
 			}
 			

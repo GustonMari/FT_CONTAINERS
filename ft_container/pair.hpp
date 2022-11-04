@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:20:53 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/21 15:58:35 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/03 15:13:54 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 namespace ft
 {
-	template <class T1, class T2>
+	template <typename T1, typename T2>
 	struct pair
 	{
 		typedef T1	first_type;

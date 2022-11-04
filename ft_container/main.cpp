@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 11:52:33 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/04 14:31:57 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "map.hpp"
 # include "stack.hpp"
 #include "rbt.hpp"
+#include "pair.hpp"
 #ifndef TESTED_NAMESPACE
 # define TESTED_NAMESPACE ft
 #endif
@@ -42,10 +43,19 @@ using namespace TESTED_NAMESPACE;
 
 // using namespace NAMESPACE;
 int main() {
-	ft::map<int, int> m;
+	// ft::map<int, int> m;
+
+	// m.insert(ft::pair<int, int>(1, 5));
+
+	// ft::IteratorMap<int, int> it;
+	// ft::IteratorMap<int, int> it2;
+	
+	// it = it2;
+	// CCOUT(BYEL, *it << " it2 =  " << *it2);
+	RedBlackTree<ft::pair<int, bool>, less<ft::pair<int, bool> >, std::allocator<std::pair<int, int> > > bst;
 	// RedBlackTree<int, int, std::allocator<std::pair<int, int> > > bst;
 	// (void)bst;
-	// bst.insert(10);
+	CCOUT(BYEL, bst.insert(ft::pair<int, bool>(101, true))->data.first);
 	// bst.insert(6);
 	// bst.insert(14);
 	// bst.insert(4);
