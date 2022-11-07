@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 10:58:04 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 13:56:01 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace ft
 			//TODO: vraiment pas sur pour les const :/
 
 			typedef typename std::allocator<Node<value_type> >::pointer 							pointer;	
-			// typedef typename ft::IteratorMap<Node, key_compare>						iterator;
+			// typedef typename ft::IteratorMap<value_type, Node<value_type> >						_iterator;
 			// typedef typename ft::IteratorMap<Node, key_compare>						const_iterator;
 			// typedef	typename ft::reverse_iterator<iterator>							reverse_iterator;
 			// typedef	typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
@@ -149,10 +149,15 @@ namespace ft
 
 			//!================================Functions================================
 			
-			// iterator begin()
+			// _iterator begin()
 			// {
-			// 	return (iterator(minimum(root)));
+			// 	return (_iterator(minimum(root)));
 			// }
+
+			NodePtr begin()
+			{
+				return ((minimum(root)));
+			}
 
 			// const_iterator begin() const
 			// {

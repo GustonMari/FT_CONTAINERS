@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 13:15:07 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 13:55:53 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ namespace ft
 
 			iterator begin(void)
 			{
-				return (m_root.begin());
+				return (iterator(m_root.begin()));
 			}
 
 			// const_iterator begin(void) const

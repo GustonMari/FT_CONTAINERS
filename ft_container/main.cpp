@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 13:21:50 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:11:29 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ int main() {
 	ft::map<int, int> m;
 
 	m.insert(ft::pair<int, int>(1, 1));
-	m.insert(ft::pair<int, int>(8, 8));
-	m.insert(ft::pair<int, int>(10, 10));
-	m.insert(ft::pair<int, int>(12, 12));
-	m.insert(ft::pair<int, int>(14, 14));
-	m.insert(ft::pair<int, int>(6, 6));
+	// m.insert(ft::pair<int, int>(8, 8));
+	// m.insert(ft::pair<int, int>(10, 10));
+	// m.insert(ft::pair<int, int>(12, 12));
+	// m.insert(ft::pair<int, int>(14, 14));
+	// m.insert(ft::pair<int, int>(6, 6));
 
-	// ft::map<int, int>::iterator it = m.begin();
+	ft::map<int, int>::iterator it = m.begin();
+	// std::cout << *it << std::endl;
 	// std::cout << it->first << std::endl;
 	m.print_tree();
 	// ft::IteratorMap<int, int> it;

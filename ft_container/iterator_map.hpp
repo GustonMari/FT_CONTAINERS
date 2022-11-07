@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:53:55 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 13:13:24 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:10:49 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ namespace ft
 	class IteratorMap
 	{
 		public:
-			typedef T										value_type;
+			typedef T										value_type; // pair type
 			typedef Node									node_type;
 			// typedef T*										pointer;
 			// typedef T&										reference;
 			
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::iterator_category	iterator_category;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::pointer			pointer;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, node_type >::pointer			pointer;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::reference			reference;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::difference_type		difference_type;
 		
@@ -41,6 +41,7 @@ namespace ft
 			node_type	*_end;
 			node_type	*_begin;
 			node_type	*_root;
+			typedef value_type	*_value_type_ptr;
 			
 		public:
 
@@ -50,10 +51,10 @@ namespace ft
 				CCOUT(BCYN, "1")
 			};
 
-			IteratorMap(pointer & x): _node(x._node) {
+			IteratorMap(pointer & x): _node(x) {
 				CCOUT(BCYN, "2")
 			};
-			IteratorMap(const pointer &x): _node(x._node) {
+			IteratorMap(const pointer &x): _node(x) {
 				CCOUT(BCYN, "3")
 			};
 			~IteratorMap() {};
@@ -82,10 +83,11 @@ namespace ft
 				return (this->_node->data);
 			}
 			
-			pointer operator->() const
+			_value_type_ptr operator->() const
 			{
 				CCOUT(UMAG, "fffffffffffffffffffffffffffffffffffffffaaa")
 				return (&(this->_node->data));
+				// return (&(this->_node->data));
 			}
 			
 			//TODO: l'incrementation et l decrementationne sont pas bonnes
