@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 13:55:53 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:26:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ namespace ft
 		public:
 
 		
-			typedef Key														key_type;
-			typedef T														mapped_type;
-			typedef ft::pair<const Key, mapped_type>						value_type;
-			typedef Compare													key_compare;
-			typedef Allocator												allocator_type;
-			typedef RedBlackTree<value_type, key_compare, allocator_type>	_Rep_type;
-			typedef typename Allocator::pointer		 						pointer;
-			typedef typename Allocator::const_pointer						const_pointer;
-			typedef typename Allocator::reference							reference;
-			typedef typename Allocator::const_reference						const_reference;
-			typedef typename ft::IteratorMap<value_type, Node<value_type> >		iterator;
+			typedef Key																	key_type;
+			typedef T																	mapped_type;
+			typedef ft::pair<const Key, mapped_type>									value_type;
+			typedef Compare																key_compare;
+			typedef Allocator															allocator_type;
+			typedef RedBlackTree<value_type, key_compare, allocator_type>				_Rep_type;
+			typedef typename Allocator::pointer		 									pointer;
+			typedef typename Allocator::const_pointer									const_pointer;
+			typedef typename Allocator::reference										reference;
+			typedef typename Allocator::const_reference									const_reference;
+			typedef typename ft::IteratorMap<value_type, Node<value_type> >				iterator;
+			typedef typename ft::IteratorMap<const value_type, Node<value_type> >		const_iterator;
 			// typedef typename IteratorMap::iterator							iterator;
 			// typedef typename IteratorMap::const_iterator						const_iterator;
 			//TODO: a quoi serve size_type  et difference_type ? size_t et ptrdiff_t ?
-			typedef typename _Rep_type::size_type						size_type;
-			typedef typename _Rep_type::difference_type					difference_type;
+			typedef typename _Rep_type::size_type										size_type;
+			typedef typename _Rep_type::difference_type									difference_type;
 			// typedef typename IteratorMap::reverse_iterator	 				reverse_iterator;
 			// typedef typename IteratorMap::const_reverse_iterator			const_reverse_iterator;
 
@@ -120,7 +121,7 @@ namespace ft
 
 			// const_iterator begin(void) const
 			// {
-			// 	return (m_root.begin());
+			// 	return (const_iterator(m_root.begin()));
 			// }
 
 			// iterator end(void)
