@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:53:55 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/04 14:03:47 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/04 17:45:42 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 	{
 		public:
 			// typedef typename RedBlackTree<T, k>			pointer;
-			// typedef typename T   									*iterator;
+			// typedef typename T   											*iterator;
 			typedef typename T::value_type_data								value_type;
 			typedef k														key_type;
 			// typedef T*														;
@@ -37,13 +37,15 @@ namespace ft
 			// typedef k*														key_pointer;
 			// key_pointer									node;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::iterator_category	iterator_category;
-			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::pointer				pointer;
+			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::pointer			pointer;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::reference			reference;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::difference_type		difference_type;
 		
-			pointer	 														node;
 			// iterator														node;
 		private:
+			// typedef typename RedBlackTree<ft::pair<int, bool>, less<ft::pair<int, bool> >, std::allocator<std::pair<int, int> > >::Node *nodetree;
+			// nodetree														node;
+			pointer														node;
 		
 		public:
 
