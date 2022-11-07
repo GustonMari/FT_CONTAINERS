@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:53:55 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/04 17:45:42 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 13:13:24 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,46 @@
 # define ITERATOR_MAP_HPP
 # include "iterator_traits.hpp"
 # include "rbt.hpp"
+# include "node.hpp"
 
 //?https://cdmana.com/2021/12/202112300642463009.html
 //?https://www.cs.fsu.edu/~lacher/courses/COP4530/lectures/binary_search_trees3/index.html?$$$slide08t.html$$$
 
 namespace ft
 {
-	template <class T, class k>
+	template <class T, class Node>
 	class IteratorMap
 	{
 		public:
-			// typedef typename RedBlackTree<T, k>			pointer;
-			// typedef typename T   											*iterator;
-			typedef typename T::value_type_data								value_type;
-			typedef k														key_type;
-			// typedef T*														;
-			// typedef T*														pointer;
-			// typedef T&														reference;
-			// typedef const T*												const_pointer;
-			// typedef const T&												const_reference;
+			typedef T										value_type;
+			typedef Node									node_type;
+			// typedef T*										pointer;
+			// typedef T&										reference;
 			
-			// typedef k*														key_pointer;
-			// key_pointer									node;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::iterator_category	iterator_category;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::pointer			pointer;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::reference			reference;
 			typedef typename ft::iterator< std::bidirectional_iterator_tag, value_type >::difference_type		difference_type;
 		
-			// iterator														node;
 		private:
-			// typedef typename RedBlackTree<ft::pair<int, bool>, less<ft::pair<int, bool> >, std::allocator<std::pair<int, int> > >::Node *nodetree;
-			// nodetree														node;
-			pointer														node;
-		
+			node_type	*_node;
+			// node_type	*_ptr;
+			node_type	*_end;
+			node_type	*_begin;
+			node_type	*_root;
+			
 		public:
 
 
 			//! ============================ Constructor ============================
-			IteratorMap(): node(NULL) {
+			IteratorMap(): _node(NULL) {
 				CCOUT(BCYN, "1")
 			};
-			// IteratorMap(key_pointer x): node(x) {};
-			// IteratorMap(const IteratorMap &x): node(x.node) {};
-			IteratorMap(pointer & x): node(x.node) {
+
+			IteratorMap(pointer & x): _node(x._node) {
 				CCOUT(BCYN, "2")
 			};
-			IteratorMap(const pointer &x): node(x.node) {
+			IteratorMap(const pointer &x): _node(x._node) {
 				CCOUT(BCYN, "3")
 			};
 			~IteratorMap() {};
@@ -68,30 +62,30 @@ namespace ft
 			
 			IteratorMap &operator=(const IteratorMap &x)
 			{
-				this->node = x.node;
+				this->_node = x._node;
 				return (*this);
 			}
 			
 			bool operator==(const IteratorMap &x) const
 			{
-				return (this->node == x.node);
+				return (this->_node == x._node);
 			}
 			
 			bool operator!=(const IteratorMap &x) const
 			{
-				return (this->node != x.node);
+				return (this->_node != x._node);
 			}
 			
 			reference operator*() const
 			{
 				CCOUT(UMAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-				return (this->node->data);
+				return (this->_node->data);
 			}
 			
 			pointer operator->() const
 			{
 				CCOUT(UMAG, "fffffffffffffffffffffffffffffffffffffffaaa")
-				return (&(this->node->data));
+				return (&(this->_node->data));
 			}
 			
 			//TODO: l'incrementation et l decrementationne sont pas bonnes
@@ -122,14 +116,7 @@ namespace ft
 				return (tmp);
 			}
 			
-			// IteratorMap(T *ptr);
-			// IteratorMap(T *ptr, bool is_end);
-			// T *getPtr() const;
-			// bool getIsEnd() const;
-			// void setIsEnd(bool is_end);
 		private:
-			// T *_ptr;
-			// bool _is_end;
 
 			
 			
@@ -137,50 +124,50 @@ namespace ft
 			{
 				//* do nothing on a null iterator
 				//TODO: pas sur de cette condition en dessous
-				if (this->node == NULL)
+				if (this->_node == NULL)
 					return ;
-				//* if node is right threaded
-				if (this->node->right != NULL)
+				//* if _node is right threaded
+				if (this->_node->right != NULL)
 				{
-					this->node = this->node->right;
-					//* if node is left threaded, go to the leftmost node
-					while (this->node->left != NULL)
-						this->node = this->node->left;
+					this->_node = this->_node->right;
+					//* if _node is left threaded, go to the leftmost _node
+					while (this->_node->left != NULL)
+						this->_node = this->_node->left;
 				}
-				//* if node is left threaded
+				//* if _node is left threaded
 				else
 				{
-					//* if node is right threaded, go to the rightmost node
-					pointer *tmp = this->node->parent;
-					while (tmp != NULL && this->node == tmp->right)
+					//* if _node is right threaded, go to the rightmost _node
+					pointer *tmp = this->_node->parent;
+					while (tmp != NULL && this->_node == tmp->right)
 					{
-						this->node = tmp;
+						this->_node = tmp;
 						tmp = tmp->parent;
 					}
-					this->node = tmp;
+					this->_node = tmp;
 				}
 			}
 
 			void	decrement()
 			{
 				//TODO: pas sur de cette condition en dessous
-				if (this->node == NULL)
+				if (this->_node == NULL)
 					return ;
-				if (this->node->left != NULL)
+				if (this->_node->left != NULL)
 				{
-					this->node = this->node->left;
-					while (this->node->right != NULL)
-						this->node = this->node->right;
+					this->_node = this->_node->left;
+					while (this->_node->right != NULL)
+						this->_node = this->_node->right;
 				}
 				else
 				{
-					pointer *tmp = this->node->parent;
-					while (tmp != NULL && this->node == tmp->left)
+					pointer *tmp = this->_node->parent;
+					while (tmp != NULL && this->_node == tmp->left)
 					{
-						this->node = tmp;
+						this->_node = tmp;
 						tmp = tmp->parent;
 					}
-					this->node = tmp;
+					this->_node = tmp;
 				}
 			}
 			

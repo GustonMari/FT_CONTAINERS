@@ -6,9 +6,12 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:46:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 10:48:07 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/07 12:53:21 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef NODE_HPP
+# define NODE_HPP
 
 // struct Node
 namespace ft
@@ -26,13 +29,6 @@ namespace ft
 			Node(const value_type & new_data, Node * ptr_left, Node * ptr_right): data(new_data), parent(ft::_nullptr), left(ptr_left), right(ptr_right), color(RED)
 			{
 				CCOUT(BGRN, "node constructor 3 = " << data.first)
-				
-				// this->data = new_data;
-				
-				// this->color = color;
-				// this->parent = ft::_nullptr;
-				// this->left = LEAF_NULL;
-				// this->right = LEAF_NULL;
 			}
 			value_type data;
 			Node *parent;
@@ -42,3 +38,5 @@ namespace ft
 			typedef value_type 	value_type_data;
 	};
 }
+
+#endif
