@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 13:56:01 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 11:29:46 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,15 +164,10 @@ namespace ft
 			// 	return (const_iterator(minimum(root)));
 			// }
 		
-			// iterator end()
-			// {
-			// 	//BUG: vraiment pas sur du ++
-			// 	iterator it = iterator(maximum(root));
-			// 	// CCOUT(BRED, &it)
-			// 	it++;
-			// 	return (it);
-			// 	// return (iterator(LEAF_NULL));
-			// }
+			NodePtr end()
+			{
+				return (maximum(root));
+			}
 
 			// const_iterator end() const
 			// {
@@ -888,6 +883,11 @@ namespace ft
 			// 	//*Recalibrate the tree after insertion
 			// 	insertFix(node);
 			// }
+
+			NodePtr	get_leaf_null()
+			{
+				return (LEAF_NULL);
+			}
 
 			NodePtr getRoot()
 			{

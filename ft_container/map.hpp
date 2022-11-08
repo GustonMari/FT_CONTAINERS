@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/07 14:26:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 13:55:20 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ namespace ft
 
 			iterator begin(void)
 			{
-				return (iterator(m_root.begin()));
+				return (iterator(m_root.begin(), m_root.get_leaf_null()));
 			}
 
 			// const_iterator begin(void) const
@@ -124,10 +124,13 @@ namespace ft
 			// 	return (const_iterator(m_root.begin()));
 			// }
 
-			// iterator end(void)
-			// {
-			// 	return (m_root.end());
-			// }
+			iterator end(void)
+			{
+				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
+				iterator it(m_root.end(), m_root.get_leaf_null());
+				++it;
+				return (it);
+			}
 
 			// const_iterator end(void) const
 			// {
