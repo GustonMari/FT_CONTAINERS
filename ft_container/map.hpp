@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 13:55:20 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 14:44:20 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ namespace ft
 			//TODO: a quoi serve size_type  et difference_type ? size_t et ptrdiff_t ?
 			typedef typename _Rep_type::size_type										size_type;
 			typedef typename _Rep_type::difference_type									difference_type;
-			// typedef typename IteratorMap::reverse_iterator	 				reverse_iterator;
-			// typedef typename IteratorMap::const_reverse_iterator			const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>	 							reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 
 		private:
 			_Rep_type		m_root;
@@ -155,36 +155,50 @@ namespace ft
 				return (m_root.count(k));
 			}
 
+			size_type size(void) const
+			{
+				return (m_size);
+			}
+
+			size_type max_size(void) const
+			{
+				return (m_alloc.max_size());
+			}
+
+			iterator find (const key_type& k)
+			{
+				if (m_size == 0)
+					return (end());
+				return (iterator(m_root.find(k), m_root.get_leaf_null()));
+			}
+
 
 			//!================================ Insert ======================================================
 			//*single element
-			// void insert (const value_type& val)
+			void insert (const value_type& val)
 			// ft::pair<iterator,bool> insert (const value_type& val)
+			{
+				
+				m_root.insert(val);
+				// m.find(val.first);
+					// m_size++;
+				// return (ret);
+			}
+
+			// void insert (const value_type& val)
+			// // ft::pair<iterator,bool> insert (const value_type& val)
 			// {
-			// 	ft::pair<iterator, bool> ret;
+			// 	// ft::pair<iterator, bool> ret;
 			// 	m_root.insert(val);
+			// 	m_size++;
 			// 	// ret = ft::make_pair<iterator, bool>(m_root.insert(val)->data.first, true);
 
 			// 	// CCOUT(BYEL, (ret.first));
 			// 	// ret.second = ret.first != end();
 			// 	// if (ret.second)
 			// 	// 	m_size++;
-			// 	return (ret);
+			// 	// return (ret);
 			// }
-
-			void insert (const value_type& val)
-			// ft::pair<iterator,bool> insert (const value_type& val)
-			{
-				// ft::pair<iterator, bool> ret;
-				m_root.insert(val);
-				// ret = ft::make_pair<iterator, bool>(m_root.insert(val)->data.first, true);
-
-				// CCOUT(BYEL, (ret.first));
-				// ret.second = ret.first != end();
-				// if (ret.second)
-				// 	m_size++;
-				// return (ret);
-			}
 			
 			//*with hint
 			// iterator insert (iterator position, const value_type& val);

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 13:29:14 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 14:45:48 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,8 @@ int main() {
 	m.insert(ft::pair<int, int>(14, 14));
 	m.insert(ft::pair<int, int>(6, 6));
 
-	// ft::map<int, int>::iterator ito = m.begin();
-	// ++ito;
-	// ++ito;
-	// CCOUT(BRED, "ito->first = " << ito->first)
-	// std::cout << m.begin()->first << std::endl;
-	// it++;
-	m.print_tree();
-	for (ft::map<int, int>::iterator it = m.begin(); it != m.end(); it++)
-	{
-		CCOUT(BGRN, "1")
-		std::cout << "aaaaaaaa = " << it->first << " et " << it->second << std::endl;
-	}
+	ft::map<int, int>::iterator it = m.begin();
+
 	m.print_tree();
 	// ft::IteratorMap<int, int> it;
 	// ft::IteratorMap<int, int> it2;

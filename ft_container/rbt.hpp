@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 11:29:46 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 14:47:40 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -899,6 +899,7 @@ namespace ft
 				deleteNodeHelper(this->root, data);
 			}
 
+			//TODO: to delete
 			void printTree()
 			{
 				if (root)
