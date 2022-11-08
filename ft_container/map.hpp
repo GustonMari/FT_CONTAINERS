@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 18:07:42 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:17:10 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,24 +190,14 @@ namespace ft
 				this->m_size++;
 				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null()), true);
 			}
-
-			// void insert (const value_type& val)
-			// // ft::pair<iterator,bool> insert (const value_type& val)
-			// {
-			// 	// ft::pair<iterator, bool> ret;
-			// 	m_root.insert(val);
-			// 	m_size++;
-			// 	// ret = ft::make_pair<iterator, bool>(m_root.insert(val)->data.first, true);
-
-			// 	// CCOUT(BYEL, (ret.first));
-			// 	// ret.second = ret.first != end();
-			// 	// if (ret.second)
-			// 	// 	m_size++;
-			// 	// return (ret);
-			// }
 			
+			//TODO: check if it works
 			//*with hint
-			// iterator insert (iterator position, const value_type& val);
+			iterator insert (iterator position, const value_type& val)
+			{
+				insert(val);
+				return (iterator(m_root.searchTree(val.first), m_root.get_leaf_null()));
+			}
 			
 			//*ranges
 			// template <class InputIterator>
