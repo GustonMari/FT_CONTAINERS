@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 14:44:20 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:07:42 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ namespace ft
 		public:
 
 		
-			typedef Key																	key_type;
-			typedef T																	mapped_type;
-			typedef ft::pair<const Key, mapped_type>									value_type;
-			typedef Compare																key_compare;
-			typedef Allocator															allocator_type;
-			typedef RedBlackTree<value_type, key_compare, allocator_type>				_Rep_type;
-			typedef typename Allocator::pointer		 									pointer;
-			typedef typename Allocator::const_pointer									const_pointer;
-			typedef typename Allocator::reference										reference;
-			typedef typename Allocator::const_reference									const_reference;
-			typedef typename ft::IteratorMap<value_type, Node<value_type> >				iterator;
-			typedef typename ft::IteratorMap<const value_type, Node<value_type> >		const_iterator;
+			typedef Key																					key_type;
+			typedef T																					mapped_type;
+			typedef ft::pair<const Key, mapped_type>													value_type;
+			typedef Compare																				key_compare;
+			typedef Allocator																			allocator_type;
+			typedef RedBlackTree<value_type, key_compare, allocator_type, const Key, mapped_type>		_Rep_type;
+			typedef typename Allocator::pointer		 													pointer;
+			typedef typename Allocator::const_pointer													const_pointer;
+			typedef typename Allocator::reference														reference;
+			typedef typename Allocator::const_reference													const_reference;
+			typedef typename ft::IteratorMap<value_type, Node<value_type> >								iterator;
+			typedef typename ft::IteratorMap<const value_type, Node<value_type> >						const_iterator;
 			// typedef typename IteratorMap::iterator							iterator;
 			// typedef typename IteratorMap::const_iterator						const_iterator;
 			//TODO: a quoi serve size_type  et difference_type ? size_t et ptrdiff_t ?
-			typedef typename _Rep_type::size_type										size_type;
-			typedef typename _Rep_type::difference_type									difference_type;
-			typedef typename ft::reverse_iterator<iterator>	 							reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+			typedef typename _Rep_type::size_type														size_type;
+			typedef typename _Rep_type::difference_type													difference_type;
+			typedef typename ft::reverse_iterator<iterator>	 											reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
 
 		private:
 			_Rep_type		m_root;
@@ -108,9 +108,14 @@ namespace ft
 			{
 				// if (m_root)
 				// {
-					m_root.delete_tree();
+					if (m_size != 0)
+					{
+						m_root.delete_tree();
+						m_size = 0;
+					}
+					// m_root.delete_tree();
 					// m_root = NULL;
-					m_size = 0;
+					// m_size = 0;
 				// }
 			}
 
@@ -165,24 +170,25 @@ namespace ft
 				return (m_alloc.max_size());
 			}
 
-			iterator find (const key_type& k)
+			iterator find(const key_type& k)
 			{
 				if (m_size == 0)
 					return (end());
-				return (iterator(m_root.find(k), m_root.get_leaf_null()));
+				Node<value_type> *node = m_root.searchTree(k);
+				if (node == m_root.get_leaf_null())
+					return (end());
+				return (iterator(node, m_root.get_leaf_null()));
 			}
-
 
 			//!================================ Insert ======================================================
 			//*single element
-			void insert (const value_type& val)
-			// ft::pair<iterator,bool> insert (const value_type& val)
+			// void insert (const value_type& val)
+			ft::pair<iterator,bool> insert (const value_type& val)
 			{
-				
-				m_root.insert(val);
-				// m.find(val.first);
-					// m_size++;
-				// return (ret);
+				if (m_root.insert(val) == NULL)
+					return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null()), false);
+				this->m_size++;
+				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null()), true);
 			}
 
 			// void insert (const value_type& val)

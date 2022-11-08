@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 14:47:40 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:09:01 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 	
 	// using namespace std;
 	// template <class value_type, class key_compare, class allocator_type>
-	template <class value_type, class key_compare, class allocator_type>
+	template <class value_type, class key_compare, class allocator_type, class _first, class _second>
 	class RedBlackTree
 	{
 		public:
@@ -80,6 +80,7 @@ namespace ft
 			// typedef	typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 			typedef typename std::size_t										size_type;
 			typedef typename std::ptrdiff_t										difference_type;
+			// typedef typename 
 			
 
 		private:
@@ -124,9 +125,9 @@ namespace ft
 
 			~RedBlackTree()
 			{
-				clear(root);
-				m_alloc.destroy(LEAF_NULL);
-				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
+				// clear(root);
+				// m_alloc.destroy(LEAF_NULL);
+				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 
@@ -221,6 +222,7 @@ namespace ft
 			size_type count(const value_type &k) const
 			{
 				//voir si ca boucle pas inf
+				//TODO: vraiment pas sur de ca
 				return (searchCase(root, k));
 			}
 
@@ -307,19 +309,22 @@ namespace ft
 
 				if (key < node->data)
 				{
-					return searchTreeHelper(node->left, key);
+					return searchCase(node->left, key);
 				}
-				return searchTreeHelper(node->right, key);
+				return searchCase(node->right, key);
 			}
 
-			NodePtr searchTreeHelper(NodePtr node, value_type key)
+			NodePtr searchTreeHelper(NodePtr node, const _first key)
 			{
-				if (node == LEAF_NULL || key == node->data)
+				if (key == node->data.first)
 				{
 					return node;
 				}
-
-				if (key < node->data)
+				if (node == LEAF_NULL)
+				{
+					return LEAF_NULL;
+				}
+				if (key < node->data.first)
 				{
 					return searchTreeHelper(node->left, key);
 				}
@@ -626,7 +631,7 @@ namespace ft
 				postOrderHelper(this->root);
 			}
 
-			NodePtr searchTree(int k)
+			NodePtr searchTree(const _first k)
 			{
 				return searchTreeHelper(this->root, k);
 			}
@@ -766,15 +771,19 @@ namespace ft
 				{
 					y = x;
 					//*Move depending on the value of the data
-					if (node->data < x->data)
+					if (node->data < x->data) // TODO utiliser comp pas <
 					{
 						//*If the data is smaller than the current node, go left
 						x = x->left;
 					}
-					else
+					else if (node->data > x->data)
 					{
 						//*If the data is bigger than the current node, go right
 						x = x->right;
+					}
+					else
+					{
+						return NULL;
 					}
 				}
 

@@ -47,7 +47,7 @@ swap			[ ]		[ ]
 clear			[x]		[ ]
 key_comp		[ ]		[ ]
 value_comp		[ ]		[ ]
-find			[ ]		[ ]
+find			[ ]		[ ] //ne marche vraiment pas
 count			[x]		[ ]
 lower_bound		[ ]		[ ]
 upper_bound		[ ]		[ ]
