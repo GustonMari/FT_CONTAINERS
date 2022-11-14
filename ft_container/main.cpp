@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 13:53:38 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 13:56:03 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main() {
 	m.insert(TESTED_NAMESPACE::pair<int, int>(6, 6));
 
 	// m.erase(m.begin());
-	CCOUT(BRED, m[15].first)
+	CCOUT(BRED, m[1587])
 	// if (ito == m.end())
 	// 	std::cout << "not found" << std::endl;
 	// else
@@ -66,7 +66,7 @@ int main() {
 	// std::cout << it->first << " -- " << it->second << std::endl;
 	// CCOUT(BGRN, "find =" << m.find(8))
 
-	m.print_tree();
+	// m.print_tree();
 	// ft::IteratorMap<int, int> it;
 	// ft::IteratorMap<int, int> it2;
 	
