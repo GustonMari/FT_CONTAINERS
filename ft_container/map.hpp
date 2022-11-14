@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 18:17:10 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 11:26:50 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,14 +195,44 @@ namespace ft
 			//*with hint
 			iterator insert (iterator position, const value_type& val)
 			{
+				(void)position;
 				insert(val);
 				return (iterator(m_root.searchTree(val.first), m_root.get_leaf_null()));
 			}
 			
 			//*ranges
-			// template <class InputIterator>
-			// void insert (InputIterator first, InputIterator last);
+			template <class InputIterator>
+			void insert (InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
+			}
 
+			//!================================ Erase ======================================================
+			//*single element
+			void erase (iterator position)
+			{
+				if (m_size == 0)
+					return ;
+				m_root.deleteNode(*position);
+				m_size--;
+			}
+
+			//*key value
+			size_type erase (const key_type& k)
+			{
+				if (m_size == 0)
+					return (0);
+				if (m_root.deleteNode(k) == NULL)
+					return (0);
+				m_size--;
+				return (1);
+			}
+
+			//!================================ Utils ======================================================
 			//TODO:to delete this function
 			void	print_tree()
 			{
