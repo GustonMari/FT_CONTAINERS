@@ -32,7 +32,7 @@ MAP				Do		Test
 
 destructor		[x]		[ ]
 constructor		[x]		[ ]
-operator=		[ ]		[ ]
+operator=		[x]		[ ]
 begin			[x]		[ ] //ATTENTION REALLY NEED TO DO THE CONST VERSION
 end				[x]		[ ]
 rebgin			[x]		[ ]
@@ -40,10 +40,10 @@ rend			[x]		[ ]
 empty			[x]		[ ]
 size			[x]		[ ]
 max_size		[x]		[ ]
-operator[]		[ ]		[ ]
+operator[]		[x]		[ ]
 insert			[x]		[ ]
 erase			[x]		[ ] //NEED BETTER TEST
-swap			[ ]		[ ]
+swap			[x]		[ ]
 clear			[x]		[ ]
 key_comp		[x]		[ ]
 value_comp		[ ]		[ ]
