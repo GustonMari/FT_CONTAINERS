@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 12:58:45 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 13:38:13 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,67 @@ namespace ft
 			// 	return (value_compare(m_comp));
 			// }
 			
-			//!================================  ======================================================
+			//!================================ Lower Bound ======================================================
+			
+			//TODO: this maybe is not working because "The function uses its internal comparison object (key_comp) to determine this, returning an iterator to the first element for which key_comp(element_key,k) would return false."
+			
+			iterator	lower_bound(const key_type& k)
+			{
+				iterator it = find(k);
+				if (it == end())
+					return (end());
+				return (it);
+			}
+
+			//TODO: need to do const version of lower_bound
+			// const_iterator	lower_bound(const key_type& k) const
+			// {
+			// 	const_iterator it = find(k);
+			// 	if (it == end())
+			// 		return (end());
+			// 	return (it);
+			// }
+
+			//!================================ Upper Bound ======================================================
+			
+			iterator	upper_bound(const key_type& k)
+			{
+				iterator it = find(k);
+				if (it == end())
+					return (end());
+				it++;
+				return (it);
+			}
+
+			//TODO: need to do const version of upper_bound
+			// const_iterator	upper_bound(const key_type& k) const
+			// {
+			// 	const_iterator it = find(k);
+			// 	if (it == end())
+			// 		return (end());
+			// 	it++;
+			// 	return (it);
+			// }
+			
+			//!================================ Equal Range ======================================================
+			
+			pair<iterator, iterator>	equal_range(const key_type& k)
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
+
+			//TODO: need to do const version of equal_range
+			// pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
+			// {
+			// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			// }
+
+			//!================================ Get allocator ======================================================
+			
+			allocator_type get_allocator() const
+			{
+				return (m_alloc);
+			}
 			
 			//!================================ Utils ======================================================
 			//TODO:to delete this function

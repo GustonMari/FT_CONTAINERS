@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 12:47:05 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 13:27:00 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ using namespace TESTED_NAMESPACE;
 
 // using namespace NAMESPACE;
 int main() {
-	ft::map<int, int> m;
+	TESTED_NAMESPACE::map<int, int> m;
 
-	m.insert(ft::pair<int, int>(18, 1));
-	m.insert(ft::pair<int, int>(8, 8));
-	m.insert(ft::pair<int, int>(10, 10));
-	m.insert(ft::pair<int, int>(12, 12));
-	m.insert(ft::pair<int, int>(14, 14));
-	m.insert(ft::pair<int, int>(6, 6));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(18, 1));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(8, 8));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(10, 10));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(12, 12));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(14, 14));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(6, 6));
 
 	// m.erase(m.begin());
-	m.erase(120);
+	CCOUT(BRED, (m.lower_bound(7))->first)
 	// if (ito == m.end())
 	// 	std::cout << "not found" << std::endl;
 	// else

@@ -47,10 +47,10 @@ swap			[ ]		[ ]
 clear			[x]		[ ]
 key_comp		[x]		[ ]
 value_comp		[ ]		[ ]
-find			[ ]		[ ] //ne marche vraiment pas
+find			[x]		[ ] //need to do the const version
 count			[x]		[ ]
-lower_bound		[ ]		[ ]
-upper_bound		[ ]		[ ]
-equal_range		[ ]		[ ]
-get_allocator	[ ]		[ ]
+lower_bound		[x]		[ ] //need to do the const version
+upper_bound		[x]		[ ] //need to do the const version
+equal_range		[x]		[ ] //need to do the const version
+get_allocator	[x]		[ ]
 iterator		[ ]		[ ]
