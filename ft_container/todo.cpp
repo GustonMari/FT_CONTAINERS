@@ -43,7 +43,7 @@ max_size		[x]		[ ]
 operator[]		[x]		[ ]
 insert			[x]		[ ]
 erase			[x]		[ ] //NEED BETTER TEST
-swap			[x]		[ ]
+swap			[x]		[ ] //NEED TO TEST
 clear			[x]		[ ]
 key_comp		[x]		[ ]
 value_comp		[ ]		[ ]
