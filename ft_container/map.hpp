@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 13:38:13 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 13:48:29 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,16 @@ namespace ft
 					insert(x.begin(), x.end());
 				}
 				return (*this);
+			}
+
+			value_type	&operator[](const key_type &k)
+			{
+				iterator it = find(k);
+				if (it == end())
+				{
+					it = insert(ft::make_pair(k, mapped_type())).first;
+				}
+				return (*it);
 			}
 
 			//!=============================== Functions ======================================================
