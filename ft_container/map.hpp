@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 11:26:50 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 12:58:45 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ namespace ft
 					return (end());
 				return (iterator(node, m_root.get_leaf_null()));
 			}
+			//TODO:neeed to do const_iterator version of find
 
 			//!================================ Insert ======================================================
 			//*single element
@@ -226,12 +227,49 @@ namespace ft
 			{
 				if (m_size == 0)
 					return (0);
-				if (m_root.deleteNode(k) == NULL)
+				iterator it = find(k);
+				if (it == end())
 					return (0);
+				erase(it);
 				m_size--;
 				return (1);
 			}
 
+			//*range
+			void erase (iterator first, iterator last)
+			{
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
+			}
+			//!================================ Swap ======================================================
+			
+			//TODO: make non-memeber function and member functions
+			// void swap (map& x)
+			// {
+			// 	ft::swap(m_root, x.m_root);
+			// 	ft::swap(m_size, x.m_size);
+			// }
+
+			//!================================ Key Compare ======================================================
+			
+			key_compare key_comp(void) const
+			{
+				return (m_comp);
+			}
+
+			//!================================ Value Compare ======================================================
+
+			//TODO: need to create a value compare class
+			// value_compare value_comp(void) const
+			// {
+			// 	return (value_compare(m_comp));
+			// }
+			
+			//!================================  ======================================================
+			
 			//!================================ Utils ======================================================
 			//TODO:to delete this function
 			void	print_tree()

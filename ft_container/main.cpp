@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 11:27:11 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/14 12:47:05 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main() {
 	m.insert(ft::pair<int, int>(6, 6));
 
 	// m.erase(m.begin());
-	m.erase(18);
+	m.erase(120);
 	// if (ito == m.end())
 	// 	std::cout << "not found" << std::endl;
 	// else

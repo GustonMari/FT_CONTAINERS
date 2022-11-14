@@ -42,10 +42,10 @@ size			[x]		[ ]
 max_size		[x]		[ ]
 operator[]		[ ]		[ ]
 insert			[x]		[ ]
-erase			[ ]		[ ] //NEED BETTER TEST
+erase			[x]		[ ] //NEED BETTER TEST
 swap			[ ]		[ ]
 clear			[x]		[ ]
-key_comp		[ ]		[ ]
+key_comp		[x]		[ ]
 value_comp		[ ]		[ ]
 find			[ ]		[ ] //ne marche vraiment pas
 count			[x]		[ ]
