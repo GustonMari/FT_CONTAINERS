@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/15 15:54:54 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 16:32:45 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ namespace ft
 			typedef typename Allocator::reference														reference;
 			typedef typename Allocator::const_reference													const_reference;
 			typedef typename ft::IteratorMap<value_type, Node<value_type> >								iterator;
-			typedef typename ft::IteratorMap<const value_type, Node<value_type> >						const_iterator;
+			// typedef typename ft::IteratorMap<const value_type, Node<value_type> >						const_iterator;
+			typedef typename ft::const_IteratorMap<const value_type, Node<value_type> >					const_iterator;
 			// typedef typename IteratorMap::iterator							iterator;
 			// typedef typename IteratorMap::const_iterator						const_iterator;
 			//TODO: a quoi serve size_type  et difference_type ? size_t et ptrdiff_t ?
