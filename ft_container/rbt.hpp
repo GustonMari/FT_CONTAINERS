@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/08 18:09:01 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 13:37:21 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,14 @@ namespace ft
 				m_comp = key_compare();
 				// LEAF_NULL = m_alloc.allocate(sizeof(Node));
 				LEAF_NULL = m_alloc.allocate(1);
+				// m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				// LEAF_NULL = new Node;
 				
 				LEAF_NULL->color = BLACK;
 				LEAF_NULL->left = ft::_nullptr;
 				LEAF_NULL->right = ft::_nullptr;
+				// root = LEAF_NULL;
 				root = LEAF_NULL;
 			};
 
@@ -136,7 +138,7 @@ namespace ft
 			{
 				if (this != &x)
 				{
-					m_root = x.m_root;
+					root = x.root;
 					m_comp = x.m_comp;
 					m_alloc = x.m_alloc;
 				}

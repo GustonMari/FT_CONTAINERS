@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 14:46:43 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 13:22:48 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ namespace ft
 
 			iterator begin(void)
 			{
-				return (iterator(m_root.begin(), m_root.get_leaf_null()));
+				return (iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
 			// const_iterator begin(void) const
@@ -144,8 +144,11 @@ namespace ft
 			iterator end(void)
 			{
 				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
-				iterator it(m_root.end(), m_root.get_leaf_null());
-				++it;
+				iterator it(m_root.end(), m_root.get_leaf_null(), m_root.getRoot());
+				//TODO: vraiment a remettre apres pour avoir le vrai end
+				// ++it;
+				// it.setEnd();
+				it++;
 				return (it);
 			}
 
@@ -189,7 +192,7 @@ namespace ft
 				Node<value_type> *node = m_root.searchTree(k);
 				if (node == m_root.get_leaf_null())
 					return (end());
-				return (iterator(node, m_root.get_leaf_null()));
+				return (iterator(node, m_root.get_leaf_null(), m_root.getRoot()));
 			}
 			//TODO:neeed to do const_iterator version of find
 
@@ -199,9 +202,9 @@ namespace ft
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				if (m_root.insert(val) == NULL)
-					return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null()), false);
+					return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), false);
 				this->m_size++;
-				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null()), true);
+				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), true);
 			}
 			
 			//TODO: check if it works
@@ -210,7 +213,7 @@ namespace ft
 			{
 				(void)position;
 				insert(val);
-				return (iterator(m_root.searchTree(val.first), m_root.get_leaf_null()));
+				return (iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 			
 			//*ranges
@@ -351,7 +354,8 @@ namespace ft
 			
 		private:
 
-			template <class T> 
+			// template <class T> 
+			// TODO: pas sur que le type soit T
 			void real_swap ( T& a, T& b )
 			{
 				T	c(a);

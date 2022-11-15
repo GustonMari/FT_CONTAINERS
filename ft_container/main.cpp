@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/14 13:56:03 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:01:56 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,25 @@ using namespace TESTED_NAMESPACE;
 int main() {
 	TESTED_NAMESPACE::map<int, int> m;
 
-	m.insert(TESTED_NAMESPACE::pair<int, int>(18, 1));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(18, 18));
 	m.insert(TESTED_NAMESPACE::pair<int, int>(8, 8));
 	m.insert(TESTED_NAMESPACE::pair<int, int>(10, 10));
 	m.insert(TESTED_NAMESPACE::pair<int, int>(12, 12));
 	m.insert(TESTED_NAMESPACE::pair<int, int>(14, 14));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(6, 6));
+	m.insert(TESTED_NAMESPACE::pair<int, int>(5, 5));
 
+	// TESTED_NAMESPACE::map<int, int>::iterator it = m.find(10);
+	m.print_tree();
+	TESTED_NAMESPACE::map<int, int>::iterator it = m.end();
+	it--;
+	it--;
+	it--;
+	CCOUT(BRED, it->first);
+	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.begin(); it != m.end(); it++)
+	// 	std::cout << it->first << " " << it->second << std::endl;
+	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.end(); it != m.begin(); --it)
+		// std::cout << it->first << " " << it->second << std::endl;
 	// m.erase(m.begin());
-	CCOUT(BRED, m[1587])
 	// if (ito == m.end())
 	// 	std::cout << "not found" << std::endl;
 	// else
@@ -66,7 +76,6 @@ int main() {
 	// std::cout << it->first << " -- " << it->second << std::endl;
 	// CCOUT(BGRN, "find =" << m.find(8))
 
-	// m.print_tree();
 	// ft::IteratorMap<int, int> it;
 	// ft::IteratorMap<int, int> it2;
 	
