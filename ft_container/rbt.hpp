@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/15 13:37:21 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 15:53:38 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,37 +38,6 @@ namespace ft
 	class RedBlackTree
 	{
 		public:
-		
-			// // struct Node
-			// class Node
-			// {
-			// 	public:
-						
-			// 		Node(const value_type & new_data): data(new_data), parent(ft::_nullptr), left(ft::_nullptr), right(ft::_nullptr), color(RED)
-			// 		{ 
-			// 			CCOUT(BGRN, "node constructor 2")
-			// 		}
-					
-			// 		Node(const value_type & new_data, Node * ptr_left, Node * ptr_right): data(new_data), parent(ft::_nullptr), left(ptr_left), right(ptr_right), color(RED)
-			// 		{
-			// 			CCOUT(BGRN, "node constructor 3 = " << data.first)
-						
-			// 			// this->data = new_data;
-						
-			// 			// this->color = color;
-			// 			// this->parent = ft::_nullptr;
-			// 			// this->left = LEAF_NULL;
-			// 			// this->right = LEAF_NULL;
-			// 		}
-			// 		value_type data;
-			// 		Node *parent;
-			// 		Node *left;
-			// 		Node *right;
-			// 		int color;
-
-			// 		typedef value_type 	value_type_data;
-			// };
-		
 			typedef Node<value_type> *NodePtr;
 			typedef typename allocator_type::template rebind<Node<value_type> >::other node_allocator_type; //BUG comment marche reelmend le rebind??
 			//TODO: vraiment pas sur pour les const :/
@@ -152,74 +121,32 @@ namespace ft
 
 			//!================================Functions================================
 			
-			// _iterator begin()
-			// {
-			// 	return (_iterator(minimum(root)));
-			// }
 
 			NodePtr begin()
 			{
 				return ((minimum(root)));
 			}
 
-			// const_iterator begin() const
-			// {
-			// 	return (const_iterator(minimum(root)));
-			// }
+			NodePtr const_begin()
+			{
+				return ((const_minimum(root)));
+			}
+
 		
 			NodePtr end()
 			{
 				return (maximum(root));
 			}
 
-			// const_iterator end() const
-			// {
-			// 	//BUG: vraiment pas sur du ++
-			// 	const_iterator it = const_iterator(maximum(root));
-			// 	it++;
-			// 	return (it);
-			// 	// return (const_iterator(LEAF_NULL));
-			// }
-
-			// reverse_iterator rbegin()
-			// {
-			// 	return (reverse_iterator(maximum(root)));
-			// }
-
-			// const_reverse_iterator rbegin() const
-			// {
-			// 	return (const_reverse_iterator(maximum(root)));
-			// }
-
-			// reverse_iterator rend()
-			// {
-			// 	//BUG: vraiment pas sur du ++
-			// 	reverse_iterator it = reverse_iterator(minimum(root));
-			// 	//BUG: doit on faire -- ducoup ??
-			// 	it++;
-			// 	return (it);
-			// 	// return (reverse_iterator(LEAF_NULL));
-			// }
-
-			// const_reverse_iterator rend() const
-			// {
-			// 	//BUG: vraiment pas sur du ++
-			// 	const_reverse_iterator it = const_reverse_iterator(minimum(root));
-			// 	//BUG: doit on faire -- ducoup ??
-			// 	it++;
-			// 	return (it);
-			// 	// return (const_reverse_iterator(LEAF_NULL));
-			// }
+			NodePtr	const_end() const
+			{
+				return (const_maximum(root));
+			}
 
 			bool empty() const
 			{
 				return (root == LEAF_NULL);
 			}
-
-			// size_type size() const
-			// {
-			// 	return (size(root));
-			// }
 
 			size_type count(const value_type &k) const
 			{
@@ -647,6 +574,15 @@ namespace ft
 				return node;
 			}
 
+			NodePtr const_minimum(NodePtr node) const
+			{
+				while (node->left != LEAF_NULL)
+				{
+					node = node->left;
+				}
+				return node;
+			}
+
 			NodePtr maximum(NodePtr node)
 			{
 				while (node->right != LEAF_NULL)
@@ -655,6 +591,16 @@ namespace ft
 				}
 				return node;
 			}
+
+			NodePtr const_maximum(NodePtr node) const
+			{
+				while (node->right != LEAF_NULL)
+				{
+					node = node->right;
+				}
+				return node;
+			}
+
 
 			NodePtr successor(NodePtr x)
 			{
@@ -900,7 +846,17 @@ namespace ft
 				return (LEAF_NULL);
 			}
 
+			NodePtr	const_get_leaf_null() const
+			{
+				return (LEAF_NULL);
+			}
+
 			NodePtr getRoot()
+			{
+				return this->root;
+			}
+
+			NodePtr const_getRoot() const
 			{
 				return this->root;
 			}

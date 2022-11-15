@@ -46,11 +46,11 @@ erase			[x]		[ ] //NEED BETTER TEST
 swap			[x]		[ ] //NEED TO TEST
 clear			[x]		[ ]
 key_comp		[x]		[ ]
-value_comp		[ ]		[ ]
+value_comp		[x]		[ ]
 find			[x]		[ ] //need to do the const version
 count			[x]		[ ]
 lower_bound		[x]		[ ] //need to do the const version
 upper_bound		[x]		[ ] //need to do the const version
 equal_range		[x]		[ ] //need to do the const version
 get_allocator	[x]		[ ]
-iterator		[ ]		[ ]
+iterator		[x]		[ ]

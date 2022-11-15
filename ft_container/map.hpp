@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/15 13:22:48 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 15:54:54 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define MAP_HPP
 # include <memory>
 # include <vector>
+# include <functional>
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
@@ -23,6 +24,7 @@
 # include "rbt.hpp"
 # include "iterator_map.hpp"
 #include "node.hpp"
+
 
 // #include <map>
 // std::map<int, int> m;
@@ -55,6 +57,22 @@ namespace ft
 			typedef typename _Rep_type::difference_type													difference_type;
 			typedef typename ft::reverse_iterator<iterator>	 											reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
+
+			class value_compare : public std::binary_function<value_type, value_type, bool>
+			{
+				friend class map;
+				protected:
+					Compare comp;
+					value_compare(Compare c) : comp(c) {}
+				public:
+					typedef bool result_type;
+					typedef value_type first_argument_type;
+					typedef value_type second_argument_type;
+					bool operator()(const value_type& x, const value_type& y) const
+					{
+						return comp(x.first, y.first);
+					}
+			};
 
 		private:
 			_Rep_type		m_root;
@@ -138,29 +156,25 @@ namespace ft
 
 			// const_iterator begin(void) const
 			// {
-			// 	return (const_iterator(m_root.begin()));
+			// 	return (const_iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
 			// }
 
+			
 			iterator end(void)
 			{
 				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
 				iterator it(m_root.end(), m_root.get_leaf_null(), m_root.getRoot());
-				//TODO: vraiment a remettre apres pour avoir le vrai end
-				// ++it;
-				// it.setEnd();
 				it++;
 				return (it);
 			}
-
-			// const_iterator end(void) const
-			// {
-			// 	return (m_root.end());
-			// }
 			
-			// reverse_iterator rbegin(void)
-			// {
-			// 	return (m_root.rbegin());
-			// }
+			const_iterator end(void) const
+			{
+				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
+				const_iterator it(m_root.const_end(), m_root.const_get_leaf_null(), m_root.const_getRoot());
+				it++;
+				return (it);
+			}
 			
 			bool empty(void) const
 			{
@@ -277,11 +291,10 @@ namespace ft
 
 			//!================================ Value Compare ======================================================
 
-			//TODO: need to create a value compare class
-			// value_compare value_comp(void) const
-			// {
-			// 	return (value_compare(m_comp));
-			// }
+			value_compare value_comp(void) const
+			{
+				return (value_compare(m_comp));
+			}
 			
 			//!================================ Lower Bound ======================================================
 			

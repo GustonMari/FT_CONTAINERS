@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/15 14:01:56 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/15 15:32:53 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int main() {
 	m.insert(TESTED_NAMESPACE::pair<int, int>(5, 5));
 
 	// TESTED_NAMESPACE::map<int, int>::iterator it = m.find(10);
-	m.print_tree();
-	TESTED_NAMESPACE::map<int, int>::iterator it = m.end();
+	// m.print_tree();
+	TESTED_NAMESPACE::map<int, int>::const_iterator it = m.end();
 	it--;
 	it--;
 	it--;
