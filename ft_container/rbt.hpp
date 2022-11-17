@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 14:59:53 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 15:07:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -565,6 +565,11 @@ namespace ft
 			}
 
 			NodePtr searchTree(const _first k)
+			{
+				return searchTreeHelper(this->root, k);
+			}
+
+			NodePtr const_searchTree(const _first k) const
 			{
 				return searchTreeHelper(this->root, k);
 			}

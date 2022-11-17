@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 15:04:43 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 15:10:49 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,16 @@ namespace ft
 				if (node == m_root.get_leaf_null())
 					return (end());
 				return (iterator(node, m_root.get_leaf_null(), m_root.getRoot()));
+			}
+
+			const_iterator find(const key_type& k) const
+			{
+				if (m_size == 0)
+					return (end());
+				Node<value_type> *node = m_root.const_searchTree(k);
+				if (node == m_root.const_get_leaf_null())
+					return (end());
+				return (const_iterator(node, m_root.const_get_leaf_null(), m_root.const_getRoot()));
 			}
 			//TODO:neeed to do const_iterator version of find
 
