@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:24:54 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 13:47:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 14:30:36 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 namespace ft
 {
-	//*
+	//* is needed for < operators
 	template <class InputIterator1, class InputIterator2>
 	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
 	{

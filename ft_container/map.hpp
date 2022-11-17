@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 13:49:27 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 14:55:02 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ namespace ft
 			// {
 			// }
 
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(),  m_size(0), m_alloc(alloc),  m_comp(comp)
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp), m_size(0)
 			{
 			}
 		
 			// //*range
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(),  m_comp(comp), m_size(std::distance(first, last)), m_alloc(alloc)
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(), m_alloc(alloc),  m_comp(comp), m_size(std::distance(first, last))
 			{
 				insert(first, last);
 			}
@@ -155,10 +155,10 @@ namespace ft
 				return (iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
-			// const_iterator begin(void) const
-			// {
-			// 	return (const_iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
-			// }
+			const_iterator begin(void) const
+			{
+				return (const_iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
+			}
 
 			
 			iterator end(void)
@@ -176,7 +176,32 @@ namespace ft
 				it++;
 				return (it);
 			}
-			
+
+			// reverse_iterator rbegin(void)
+			// {
+			// 	return (reverse_iterator(iterator(m_root.end(), m_root.get_leaf_null(), m_root.getRoot())));
+			// }
+
+			reverse_iterator rbegin(void)
+			{
+				return (reverse_iterator(m_root.end()));
+			}
+
+			const_reverse_iterator rbegin(void) const
+			{
+				return (const_reverse_iterator(m_root.end()));
+			}
+
+			reverse_iterator rend(void)
+			{
+				return (reverse_iterator(m_root.begin()));
+			}
+
+			const_reverse_iterator rend(void) const
+			{
+				return (const_reverse_iterator(m_root.begin()));
+			}
+
 			bool empty(void) const
 			{
 				//ou utiliser la fonction empty dans rbt
