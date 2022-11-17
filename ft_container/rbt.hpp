@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/15 15:53:38 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 13:40:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "node_rbt.hpp"
 # include "iterator_map.hpp"
 # include "node.hpp"
+# include "less.hpp"
 # include <iostream>
 # include <string>
 
@@ -253,7 +254,8 @@ namespace ft
 				{
 					return LEAF_NULL;
 				}
-				if (key < node->data.first)
+				// if (key < node->data.first)
+				if (m_comp(key, node->data.first))
 				{
 					return searchTreeHelper(node->left, key);
 				}
@@ -368,8 +370,10 @@ namespace ft
 					{
 						z = node;
 					}
-
-					if (node->data <= key)
+					//BUG:
+					// if (node->data <= key)
+					// if (!(node->data > key))
+					if (!m_comp(key, node->data.first))
 					{
 						node = node->right;
 					}
@@ -524,11 +528,11 @@ namespace ft
 					// std::cout << root->data << "(" << sColor << ")" << std::endl;
 					if (root->color == RED)
 					{
-						std::cout << BRED << root->data.first << "(" << "RED" << ")" << CRESET<< std::endl;
+						std::cout << BRED << root->data.first << "(" << "RED" << ")" << "--->" << root->data.second << CRESET<< std::endl;
 					}
 					else
 					{
-						std::cout << BBLU << root->data.first << "(" << "BLACK" << ")" << CRESET << std::endl;
+						std::cout << BBLU << root->data.first << "(" << "BLACK" << ")" << "--->" << root->data.second << CRESET << std::endl;
 					}
 					printHelper(root->left, indent, false);
 					printHelper(root->right, indent, true);
@@ -719,12 +723,14 @@ namespace ft
 				{
 					y = x;
 					//*Move depending on the value of the data
-					if (node->data < x->data) // TODO utiliser comp pas <
+					// if (node->data < x->data) // TODO utiliser comp pas <
+					if (m_comp(node->data.first, x->data.first)) // TODO utiliser comp pas <
 					{
 						//*If the data is smaller than the current node, go left
 						x = x->left;
 					}
-					else if (node->data > x->data)
+					// else if (node->data > x->data)
+					else if (m_comp(x->data.first, node->data.first))
 					{
 						//*If the data is bigger than the current node, go right
 						x = x->right;
@@ -743,7 +749,8 @@ namespace ft
 					root = node;
 				}
 				//* place node to left of right of y depending on the value of the data
-				else if (node->data < y->data)
+				// else if (node->data < y->data)
+				else if (m_comp(node->data.first, y->data.first))
 				{
 					y->left = node;
 				}

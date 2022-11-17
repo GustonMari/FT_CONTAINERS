@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 09:33:32 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 13:41:24 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,22 @@ using namespace TESTED_NAMESPACE;
 
 // using namespace NAMESPACE;
 int main() {
-	TESTED_NAMESPACE::map<int, int> m;
+	// TESTED_NAMESPACE::map<int, std::string> m;
 
-	m.insert(TESTED_NAMESPACE::pair<int, int>(18, 18));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(8, 8));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(10, 10));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(12, 12));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(14, 14));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(5, 5));
+	// m.insert(TESTED_NAMESPACE::pair<int, std::string>(18, "salut"));
+	// m.insert(TESTED_NAMESPACE::pair<int, std::string>(8,"ca"));
+	// m.insert(TESTED_NAMESPACE::pair<int, std::string>(10, "va"));
+	// m.insert(TESTED_NAMESPACE::pair<int, int>(12, 12));
+	// m.insert(TESTED_NAMESPACE::pair<int, int>(14, 14));
+	// m.insert(TESTED_NAMESPACE::pair<int, int>(5, 5));
 
 	// TESTED_NAMESPACE::map<int, int>::iterator it = m.find(10);
 	// m.print_tree();
-	TESTED_NAMESPACE::map<int, int>::const_iterator it = m.end();
-	it--;
-	it--;
-	it--;
-	CCOUT(BRED, it->first);
+	// TESTED_NAMESPACE::map<int, int>::const_iterator it = m.end();
+	// it--;
+	// it--;
+	// it--;
+	// CCOUT(BRED, it->first);
 	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.begin(); it != m.end(); it++)
 	// 	std::cout << it->first << " " << it->second << std::endl;
 	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.end(); it != m.begin(); --it)

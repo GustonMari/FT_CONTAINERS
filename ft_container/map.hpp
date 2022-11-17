@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 09:40:56 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 13:49:27 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "rbt.hpp"
 # include "iterator_map.hpp"
 #include "node.hpp"
+#include "lexicographical_compare.hpp"
 
 
 // #include <map>
@@ -32,7 +33,7 @@
 
 namespace ft
 {
-	template <class Key, class T, class Compare = less<Key>, class Allocator = std::allocator<pair<const Key,T> > >
+	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<pair<const Key,T> > >
 	class map
 	{
 		public:
@@ -86,13 +87,17 @@ namespace ft
 			//!=============================== Constructors ======================================================
 
 			//*empty
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp),  m_size(0)
+			// explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp),  m_size(0)
+			// {
+			// }
+
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(),  m_size(0), m_alloc(alloc),  m_comp(comp)
 			{
 			}
 		
 			// //*range
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(), m_size(std::distance(first, last)), m_comp(comp), m_alloc(alloc)
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(),  m_comp(comp), m_size(std::distance(first, last)), m_alloc(alloc)
 			{
 				insert(first, last);
 			}
@@ -138,17 +143,11 @@ namespace ft
 		
 			void	clear()
 			{
-				// if (m_root)
-				// {
 					if (m_size != 0)
 					{
 						m_root.delete_tree();
 						m_size = 0;
 					}
-					// m_root.delete_tree();
-					// m_root = NULL;
-					// m_size = 0;
-				// }
 			}
 
 			iterator begin(void)
@@ -173,7 +172,6 @@ namespace ft
 			const_iterator end(void) const
 			{
 				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
-				// const_iterator it(m_root.const_end(), m_root.const_get_leaf_null(), m_root.const_getRoot());
 				const_iterator it(m_root.end(), m_root.get_leaf_null(), m_root.getRoot());
 				it++;
 				return (it);
@@ -281,6 +279,7 @@ namespace ft
 			//TODO: make non-memeber function and member functions
 			void swap (map& x)
 			{
+				//TODO: need to swap m_comp and m_alloc ??
 				real_swap(m_root, x.m_root);
 				real_swap(m_size, x.m_size);
 			}
