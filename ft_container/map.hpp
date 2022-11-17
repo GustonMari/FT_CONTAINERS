@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 14:55:02 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 15:04:43 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,14 +150,14 @@ namespace ft
 					}
 			}
 
-			iterator begin(void)
+			iterator begin(void) 
 			{
 				return (iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
 			const_iterator begin(void) const
 			{
-				return (const_iterator(m_root.begin(), m_root.get_leaf_null(), m_root.getRoot()));
+				return (const_iterator(m_root.const_begin(), m_root.const_get_leaf_null(), m_root.const_getRoot()));
 			}
 
 			
@@ -172,7 +172,7 @@ namespace ft
 			const_iterator end(void) const
 			{
 				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
-				const_iterator it(m_root.end(), m_root.get_leaf_null(), m_root.getRoot());
+				const_iterator it(m_root.const_end(), m_root.const_get_leaf_null(), m_root.const_getRoot());
 				it++;
 				return (it);
 			}
@@ -336,13 +336,13 @@ namespace ft
 			}
 
 			//TODO: need to do const version of lower_bound
-			// const_iterator	lower_bound(const key_type& k) const
-			// {
-			// 	const_iterator it = find(k);
-			// 	if (it == end())
-			// 		return (end());
-			// 	return (it);
-			// }
+			const_iterator	lower_bound(const key_type& k) const
+			{
+				const_iterator it = find(k);
+				if (it == end())
+					return (end());
+				return (it);
+			}
 
 			//!================================ Upper Bound ======================================================
 			
@@ -356,14 +356,14 @@ namespace ft
 			}
 
 			//TODO: need to do const version of upper_bound
-			// const_iterator	upper_bound(const key_type& k) const
-			// {
-			// 	const_iterator it = find(k);
-			// 	if (it == end())
-			// 		return (end());
-			// 	it++;
-			// 	return (it);
-			// }
+			const_iterator	upper_bound(const key_type& k) const
+			{
+				const_iterator it = find(k);
+				if (it == end())
+					return (end());
+				it++;
+				return (it);
+			}
 			
 			//!================================ Equal Range ======================================================
 			
@@ -373,10 +373,10 @@ namespace ft
 			}
 
 			//TODO: need to do const version of equal_range
-			// pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
-			// {
-			// 	return (ft::make_pair(lower_bound(k), upper_bound(k)));
-			// }
+			pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
+			{
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
+			}
 
 			//!================================ Get allocator ======================================================
 			

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 13:40:39 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/17 14:59:53 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ namespace ft
 				return ((minimum(root)));
 			}
 
-			NodePtr const_begin()
+			NodePtr const_begin() const
 			{
 				return ((const_minimum(root)));
 			}
