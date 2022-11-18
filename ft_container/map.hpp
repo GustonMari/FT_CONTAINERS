@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 15:10:49 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 09:38:26 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ namespace ft
 			}
 			
 			// //*copy
-			map (const map& x): m_root(), m_size(x.m_size), m_comp(x.m_comp), m_alloc(x.m_alloc)
+			map (const map& x): m_root(), m_alloc(x.m_alloc), m_comp(x.m_comp), m_size(x.m_size)
 			{
 				insert(x.begin(), x.end());
 			}

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 15:07:39 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 10:35:26 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ namespace ft
 				return (root == LEAF_NULL);
 			}
 
-			size_type count(const value_type &k) const
+			// size_type count(const value_type &k) const
+			size_type count(const _first &k) const
 			{
 				//voir si ca boucle pas inf
 				//TODO: vraiment pas sur de ca
@@ -228,16 +229,18 @@ namespace ft
 				https://www.happycoders.eu/algorithms/binary-search-tree-java/#Binary_Search_Tree_Example
 			*/
 
-			size_type searchCase(NodePtr node, value_type key)
+			// size_type searchCase(NodePtr node, value_type key)
+			size_type searchCase(NodePtr node, _first key) const
 			{
-				if (key == node->data)
+				if (key == node->data.first)
 				{
 					return 1;
 				}
 				if (node == LEAF_NULL)
 					return 0;
 
-				if (key < node->data)
+				// if (key < node->data.first)
+				if (m_comp(key, node->data.first))
 				{
 					return searchCase(node->left, key);
 				}
@@ -260,6 +263,24 @@ namespace ft
 					return searchTreeHelper(node->left, key);
 				}
 				return searchTreeHelper(node->right, key);
+			}
+
+			NodePtr const_searchTreeHelper(NodePtr node, const _first key) const
+			{
+				if (key == node->data.first)
+				{
+					return node;
+				}
+				if (node == LEAF_NULL)
+				{
+					return LEAF_NULL;
+				}
+				// if (key < node->data.first)
+				if (m_comp(key, node->data.first))
+				{
+					return const_searchTreeHelper(node->left, key);
+				}
+				return const_searchTreeHelper(node->right, key);
 			}
 
 
@@ -373,7 +394,7 @@ namespace ft
 					//BUG:
 					// if (node->data <= key)
 					// if (!(node->data > key))
-					if (!m_comp(key, node->data.first))
+					if (!m_comp(key.first, node->data.first))
 					{
 						node = node->right;
 					}
@@ -571,7 +592,7 @@ namespace ft
 
 			NodePtr const_searchTree(const _first k) const
 			{
-				return searchTreeHelper(this->root, k);
+				return const_searchTreeHelper(this->root, k);
 			}
 
 			NodePtr minimum(NodePtr node)
