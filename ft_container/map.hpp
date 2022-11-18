@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/18 16:58:52 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 17:07:57 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,8 @@ namespace ft
 			bool empty(void) const
 			{
 				//ou utiliser la fonction empty dans rbt
-				return (m_size == 0);
+				// return (m_size == 0);
+				return (m_root.empty());
 			}
 			
 			size_type count (const key_type& k) const
