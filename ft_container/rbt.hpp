@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/18 10:35:26 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:50:58 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,23 @@ namespace ft
 
 
 			// //!Operators
-			RedBlackTree &operator=(const RedBlackTree &x)
-			{
-				if (this != &x)
-				{
-					root = x.root;
-					m_comp = x.m_comp;
-					m_alloc = x.m_alloc;
-				}
-				return (*this);
-			}
+			// RedBlackTree &operator=(const RedBlackTree &x)
+			// {
+			// 	if (this != &x)
+			// 	{
+			// 		// root = x.root;
+			// 		// m_comp = x.m_comp;
+			// 		// m_alloc = x.m_alloc;
+			// 		delete_tree(root);
+			// 		m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));					
+			// 		LEAF_NULL->color = BLACK;
+			// 		LEAF_NULL->left = ft::_nullptr;
+			// 		LEAF_NULL->right = ft::_nullptr;
+			// 		root = LEAF_NULL;
+					
+			// 	}
+			// 	return (*this);
+			// }
 
 			// void operator*(void)
 			// {
@@ -164,19 +171,26 @@ namespace ft
 				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
+			void
+			clear (void) {
+				clear_internal (root);
+				root = LEAF_NULL;
+			}
+
+			
 		private:
 			//!Utils functions
 			// NodePtr root;
 			// NodePtr LEAF_NULL;
 
 
-			void	clear(NodePtr node)
+			void	clear_internal(NodePtr node)
 			{
 				if (node == LEAF_NULL)
 					return ; 
 			
-				clear(node->left); 
-				clear(node->right); 
+				clear_internal(node->left); 
+				clear_internal(node->right); 
 			
 				m_alloc.destroy(node);
 				m_alloc.deallocate(node, 1);
@@ -276,6 +290,7 @@ namespace ft
 					return LEAF_NULL;
 				}
 				// if (key < node->data.first)
+				CCOUT(BRED, key << " < " << node->data.first);
 				if (m_comp(key, node->data.first))
 				{
 					return const_searchTreeHelper(node->left, key);
@@ -597,6 +612,8 @@ namespace ft
 
 			NodePtr minimum(NodePtr node)
 			{
+				if (node == LEAF_NULL)
+					return node;
 				while (node->left != LEAF_NULL)
 				{
 					node = node->left;
@@ -606,6 +623,8 @@ namespace ft
 
 			NodePtr const_minimum(NodePtr node) const
 			{
+				if (node == LEAF_NULL)
+					return node;
 				while (node->left != LEAF_NULL)
 				{
 					node = node->left;
@@ -615,6 +634,8 @@ namespace ft
 
 			NodePtr maximum(NodePtr node)
 			{
+				if (node == LEAF_NULL)
+					return node;
 				while (node->right != LEAF_NULL)
 				{
 					node = node->right;
@@ -624,6 +645,8 @@ namespace ft
 
 			NodePtr const_maximum(NodePtr node) const
 			{
+				if (node == LEAF_NULL)
+					return node;
 				while (node->right != LEAF_NULL)
 				{
 					node = node->right;
@@ -800,79 +823,51 @@ namespace ft
 				if (node->parent->parent == ft::_nullptr)
 				{
 					return (node);
-					// return (ft::make_pair(iterator(node), true));
-					// return (ft::make_pair(iterator(node), true));
-					// return (node->data);
-					// return;
 				}
 
 				//*Recalibrate the tree after insertion
 				insertFix(node);
-					// return (ft::make_pair(iterator(node), true));
 				return (node);
 			}
 
-			// void insert(int key)
-			// {
-			// 	//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
-			// 	NodePtr node = new Node;
-			// 	node->parent = ft::_nullptr;
-			// 	node->data = key;
-			// 	node->left = LEAF_NULL;
-			// 	node->right = LEAF_NULL;
-			// 	node->color = RED;
-			// 	NodePtr y = ft::_nullptr;
-			// 	NodePtr x = this->root;
-
-			// 	while (x != LEAF_NULL)
-			// 	{
-			// 		y = x;
-			// 		//*Move depending on the value of the data
-			// 		if (node->data < x->data)
-			// 		{
-			// 			//*If the data is smaller than the current node, go left
-			// 			x = x->left;
-			// 		}
-			// 		else
-			// 		{
-			// 			//*If the data is bigger than the current node, go right
-			// 			x = x->right;
-			// 		}
-			// 	}
-
-			// 	//*inserting the new node
-			// 	node->parent = y;
-			// 	//*If the tree is empty, the new node is the root (case 1)
-			// 	if (y == ft::_nullptr)
-			// 	{
-			// 		root = node;
-			// 	}
-			// 	//* place node to left of right of y depending on the value of the data
-			// 	else if (node->data < y->data)
-			// 	{
-			// 		y->left = node;
-			// 	}
-			// 	else
-			// 	{
-			// 		y->right = node;
-			// 	}
-
-			// 	//*If the new node is a root node, color it black and return (case 2)
-			// 	if (node->parent == ft::_nullptr)
-			// 	{
-			// 		node->color = BLACK;
-			// 		return;
-			// 	}
+			NodePtr	lower_bound_rbt(NodePtr node, _first k) const
+			{
+				NodePtr tmp = LEAF_NULL;
 				
-			// 	//*If the grandparent is null, there is nothing to do (case 3)
-			// 	if (node->parent->parent == ft::_nullptr)
-			// 	{
-			// 		return;
-			// 	}
+				if (node == LEAF_NULL)
+					return (node);
+				while (node != LEAF_NULL)
+				{
+					if (m_comp(node->data.first, k) == false)
+					{
+						tmp = node;
+						node = node->left;
+					}
+					else
+						node = node->right;
+				}
+				return (tmp);
+			}
 
-			// 	//*Recalibrate the tree after insertion
-			// 	insertFix(node);
-			// }
+			NodePtr	upper_bound_rbt(NodePtr node, _first k) const
+			{
+				NodePtr tmp = LEAF_NULL;
+				
+				if (node == LEAF_NULL)
+					return (node);
+				while (node != LEAF_NULL)
+				{
+					if (m_comp(k, node->data.first) == true)
+					{
+						tmp = node;
+						node = node->left;
+					}
+					else
+						node = node->right;
+				}
+				return (tmp);
+			}
+
 
 			NodePtr	get_leaf_null()
 			{

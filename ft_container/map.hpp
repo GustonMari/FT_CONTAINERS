@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/18 09:38:26 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:58:52 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <memory>
 # include <vector>
 # include <functional>
+# include <limits>
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
@@ -29,7 +30,7 @@
 
 // #include <map>
 // std::map<int, int> m;
-
+// m.lower_bound(1);
 
 namespace ft
 {
@@ -95,17 +96,18 @@ namespace ft
 			{
 			}
 		
-			// //*range
+			//*range
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(), m_alloc(alloc),  m_comp(comp), m_size(std::distance(first, last))
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): m_root(), m_alloc(alloc),  m_comp(comp) , m_size(0)
 			{
 				insert(first, last);
 			}
 			
-			// //*copy
-			map (const map& x): m_root(), m_alloc(x.m_alloc), m_comp(x.m_comp), m_size(x.m_size)
+			//*copy
+			map (const map& x)/* : m_root(), m_alloc(x.m_alloc), m_comp(x.m_comp), m_size(x.m_size) */
 			{
-				insert(x.begin(), x.end());
+				// insert(x.begin(), x.end());
+				*this = x;
 			}
 
 			//!=============================== Destructor ======================================================
@@ -122,7 +124,10 @@ namespace ft
 				if (this != &x)
 				{
 					clear();
+					m_alloc = x.m_alloc;
+					m_comp = x.m_comp;
 					insert(x.begin(), x.end());
+					m_size = x.m_size;
 				}
 				return (*this);
 			}
@@ -145,7 +150,7 @@ namespace ft
 			{
 					if (m_size != 0)
 					{
-						m_root.delete_tree();
+						m_root.clear();
 						m_size = 0;
 					}
 			}
@@ -184,22 +189,23 @@ namespace ft
 
 			reverse_iterator rbegin(void)
 			{
-				return (reverse_iterator(m_root.end()));
+				// return (reverse_iterator(m_root.end()));
+				return (reverse_iterator(end()));
 			}
 
 			const_reverse_iterator rbegin(void) const
 			{
-				return (const_reverse_iterator(m_root.end()));
+				return (const_reverse_iterator(end()));
 			}
 
 			reverse_iterator rend(void)
 			{
-				return (reverse_iterator(m_root.begin()));
+				return (reverse_iterator(begin()));
 			}
 
 			const_reverse_iterator rend(void) const
 			{
-				return (const_reverse_iterator(m_root.begin()));
+				return (const_reverse_iterator(begin()));
 			}
 
 			bool empty(void) const
@@ -222,7 +228,8 @@ namespace ft
 
 			size_type max_size(void) const
 			{
-				return (m_alloc.max_size());
+				// return (m_alloc.max_size());
+				return (std::numeric_limits<difference_type>::max() / sizeof(Node<value_type>));
 			}
 
 			iterator find(const key_type& k)
@@ -339,40 +346,25 @@ namespace ft
 			
 			iterator	lower_bound(const key_type& k)
 			{
-				iterator it = find(k);
-				if (it == end())
-					return (end());
-				return (it);
+				return (iterator(m_root.lower_bound_rbt(m_root.getRoot(), k), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
 			//TODO: need to do const version of lower_bound
 			const_iterator	lower_bound(const key_type& k) const
 			{
-				const_iterator it = find(k);
-				if (it == end())
-					return (end());
-				return (it);
+				return (const_iterator(m_root.lower_bound_rbt(m_root.const_getRoot(), k), m_root.const_get_leaf_null(), m_root.const_getRoot()));
 			}
 
 			//!================================ Upper Bound ======================================================
 			
 			iterator	upper_bound(const key_type& k)
 			{
-				iterator it = find(k);
-				if (it == end())
-					return (end());
-				it++;
-				return (it);
+				return (iterator(m_root.upper_bound_rbt(m_root.getRoot(), k), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
-			//TODO: need to do const version of upper_bound
 			const_iterator	upper_bound(const key_type& k) const
 			{
-				const_iterator it = find(k);
-				if (it == end())
-					return (end());
-				it++;
-				return (it);
+				return (const_iterator(m_root.upper_bound_rbt(m_root.const_getRoot(), k), m_root.const_get_leaf_null(), m_root.const_getRoot()));
 			}
 			
 			//!================================ Equal Range ======================================================
@@ -404,11 +396,11 @@ namespace ft
 			
 		private:
 
-			// template <class T> 
+			template <class L> 
 			// TODO: pas sur que le type soit T
-			void real_swap ( T& a, T& b )
+			void real_swap ( L& a, L& b )
 			{
-				T	c(a);
+				L	c(a);
 				a = b;
 				b = c;
 			}

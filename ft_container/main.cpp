@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 14:49:59 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:58:17 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,59 +42,113 @@
 using namespace TESTED_NAMESPACE;
 
 // using namespace NAMESPACE;
-int main() {
-	TESTED_NAMESPACE::map<int, int> m;
+// #include "containers_test/srcs/map/common.hpp"
+#define _pair TESTED_NAMESPACE::pair
 
 
-	m.insert(TESTED_NAMESPACE::pair<int, int>(18, 18));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(8, 8));
-	m.insert(TESTED_NAMESPACE::pair<int, int>(10, 10));
-	// m.insert(TESTED_NAMESPACE::pair<int, int>(12, 12));
-	// m.insert(TESTED_NAMESPACE::pair<int, int>(14, 14));
-	// m.insert(TESTED_NAMESPACE::pair<int, int>(5, 5));
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+{
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
+}
 
-	TESTED_NAMESPACE::map<int, int>::const_iterator it = m.begin();
-	// m.print_tree();
-	// TESTED_NAMESPACE::map<int, int>::const_iterator it = m.end();
-	// it--;
-	// it--;
-	// it--;
-	// CCOUT(BRED, it->first);
-	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.begin(); it != m.end(); it++)
-	// 	std::cout << it->first << " " << it->second << std::endl;
-	// for (TESTED_NAMESPACE::map<int, int>::iterator it = m.end(); it != m.begin(); --it)
-		// std::cout << it->first << " " << it->second << std::endl;
-	// m.erase(m.begin());
-	// if (ito == m.end())
-	// 	std::cout << "not found" << std::endl;
-	// else
-	// 	std::cout << "found" << std::endl;
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
+{
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
+	if (print_content)
+	{
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
 
-	// for (ft::map<int, int>::iterator it = m.begin(); it != ito; it++)
-	// 	std::cout << it->first << " " << it->second << std::endl;
-	// ft::map<int, int>::iterator it = m.find(8);
+template <typename T1, typename T2>
+void	printReverse(TESTED_NAMESPACE::map<T1, T2> &mp)
+{
+	typename TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
 
-	// std::cout << it->first << " -- " << it->second << std::endl;
-	// CCOUT(BGRN, "find =" << m.find(8))
+	std::cout << "printReverse:" << std::endl;
+	while (it != ite) {
+		it--;
+		std::cout << "-> " << printPair(it, false) << std::endl;
+	}
+	std::cout << "_______________________________________________" << std::endl;
+}
 
-	// ft::IteratorMap<int, int> it;
-	// ft::IteratorMap<int, int> it2;
-	
-	// it = it2;
-	// CCOUT(BYEL, *it << " it2 =  " << *it2);
-	// RedBlackTree<ft::pair<int, bool>, less<ft::pair<int, bool> >, std::allocator<std::pair<int, int> > > bst;
-	// bst.insert(ft::pair<int, bool>(101, true));
-	// bst.insert(ft::pair<int, bool>(102, true));
-	// bst.insert(ft::pair<int, bool>(103, true));
-	// bst.insert(ft::pair<int, bool>(104, true));
-	// bst.insert(ft::pair<int, bool>(105, true));
-	// bst.insert(ft::pair<int, bool>(106, true));
-	// bst.insert(ft::pair<int, bool>(107, true));
-	// bst.insert(ft::pair<int, bool>(108, true));
-	// bst.insert(ft::pair<int, bool>(109, true));
-	// bst.printTree();
-	// // std::cout << std::endl
-	// // 	<< "After deleting" << std::endl;
-	// // bst.deleteNode(40);
-	// // bst.printTree();
+
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+#include <list>
+
+#define T1 int
+#define T2 int
+typedef _pair<const T1, T2> T3;
+
+int		main(void)
+{
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(lst_size - i, i));
+
+	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
+	TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+
+	TESTED_NAMESPACE::map<T1, T2> mp_range(it, --(--ite));
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 5;
+
+	it = mp.begin(); ite = --(--mp.end());
+	TESTED_NAMESPACE::map<T1, T2> mp_copy(mp);
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 7;
+
+	std::cout << "\t-- PART ONE --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
+
+	mp = mp_copy;
+	mp_copy = mp_range;
+	mp_range.clear();
+
+	std::cout << "\t-- PART TWO --" << std::endl;
+	// printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
+	return (0);
 }
