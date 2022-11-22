@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/22 13:24:25 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/22 14:39:31 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,19 @@ namespace ft
 				return (searchCase(root, k));
 			}
 
+			void	destroy_leaf()
+			{
+				// CCOUT(BRED, "destroy_leaf");
+				m_alloc.destroy(LEAF_NULL);
+				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
+			}
+
 			void	delete_tree()
 			{
 				delete_tree_internal(root);
-				m_alloc.destroy(LEAF_NULL);
-				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
+				m_root = LEAF_NULL;
+				// m_alloc.destroy(LEAF_NULL);
+				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 			void
@@ -195,7 +203,7 @@ namespace ft
 				delete_tree_internal(node->right); 
 			
 				m_alloc.destroy(node);
-				m_alloc.deallocate(node, 1);
+				m_alloc.deallocate(node, sizeof(Node<value_type>));
 				// m_alloc.destroy(LEAF_NULL);
 				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
