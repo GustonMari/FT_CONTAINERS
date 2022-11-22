@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/22 14:39:18 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/22 16:30:33 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ namespace ft
 			// void insert (const value_type& val)
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
-				if (m_root.insert(val) == NULL)
+				if (m_root.insert(val) == ft::_nullptr)
 					return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), false);
 				this->m_size++;
 				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), true);

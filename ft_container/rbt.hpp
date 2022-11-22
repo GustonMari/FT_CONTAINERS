@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/22 14:39:31 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/22 16:30:25 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ namespace ft
 				m_alloc = allocator_type();
 				m_comp = key_compare();
 				// LEAF_NULL = m_alloc.allocate(sizeof(Node));
-				LEAF_NULL = m_alloc.allocate(1);
+				LEAF_NULL = m_alloc.allocate(sizeof(Node<value_type>));
 				// m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				// LEAF_NULL = new Node;
@@ -217,7 +217,7 @@ namespace ft
 				clear_internal(node->right); 
 			
 				m_alloc.destroy(node);
-				m_alloc.deallocate(node, 1);
+				m_alloc.deallocate(node, sizeof(Node<value_type>));
 			}
 
 			void initializeNULLNode(NodePtr node, NodePtr parent)
@@ -770,7 +770,7 @@ namespace ft
 			pointer insert(value_type key)
 			{
 				//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
-				NodePtr node = m_alloc.allocate(1);
+				NodePtr node = m_alloc.allocate(sizeof(Node<value_type>));
 				m_alloc.construct(node, Node<value_type>(key, LEAF_NULL, LEAF_NULL));
 				NodePtr y = ft::_nullptr;
 				NodePtr x = this->root;
@@ -793,6 +793,8 @@ namespace ft
 					}
 					else
 					{
+						m_alloc.destroy(node);
+						m_alloc.deallocate(node, sizeof(Node<value_type>));
 						return ft::_nullptr;
 					}
 				}
