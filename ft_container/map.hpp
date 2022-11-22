@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/18 17:07:57 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/22 13:20:11 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,11 @@ namespace ft
 			{
 				//TODO: double free ???
 				if (m_size != 0)
-					clear();
+				{
+					// m_root.clear();
+					m_root.delete_tree();
+					// clear();
+				}
 			}
 
 			//!=============================== Operators ======================================================
@@ -291,8 +295,8 @@ namespace ft
 			{
 				if (m_size == 0)
 					return ;
-				m_root.deleteNode(*position);
-				m_size--;
+				if (m_root.deleteNode(*position))
+					m_size--;
 			}
 
 			//*key value
@@ -304,17 +308,18 @@ namespace ft
 				if (it == end())
 					return (0);
 				erase(it);
-				m_size--;
 				return (1);
 			}
 
 			//*range
 			void erase (iterator first, iterator last)
 			{
+				iterator it = first;
 				while (first != last)
 				{
-					erase(first);
+					it = first;
 					first++;
+					erase(it->first);
 				}
 			}
 			//!================================ Swap ======================================================

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/18 16:50:58 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/22 13:24:25 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ namespace ft
 				// m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				// LEAF_NULL = new Node;
+				
+				//BUG TODO: attention la ligne en dessous est surement fausses et nique tout
+				LEAF_NULL->parent = ft::_nullptr;
 				
 				LEAF_NULL->color = BLACK;
 				LEAF_NULL->left = ft::_nullptr;
@@ -166,7 +169,7 @@ namespace ft
 
 			void	delete_tree()
 			{
-				clear(root);
+				delete_tree_internal(root);
 				m_alloc.destroy(LEAF_NULL);
 				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
@@ -182,7 +185,20 @@ namespace ft
 			//!Utils functions
 			// NodePtr root;
 			// NodePtr LEAF_NULL;
-
+			void	delete_tree_internal(NodePtr node)
+			{
+				// clear(root);
+				if (node == LEAF_NULL)
+					return ; 
+			
+				delete_tree_internal(node->left); 
+				delete_tree_internal(node->right); 
+			
+				m_alloc.destroy(node);
+				m_alloc.deallocate(node, 1);
+				// m_alloc.destroy(LEAF_NULL);
+				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
+			}
 
 			void	clear_internal(NodePtr node)
 			{
@@ -290,7 +306,6 @@ namespace ft
 					return LEAF_NULL;
 				}
 				// if (key < node->data.first)
-				CCOUT(BRED, key << " < " << node->data.first);
 				if (m_comp(key, node->data.first))
 				{
 					return const_searchTreeHelper(node->left, key);
@@ -395,7 +410,7 @@ namespace ft
 
 			//? https://www.youtube.com/watch?v=lU99loSvD8s&ab_channel=MichaelSambol
 			//TODO: replace int with value_type juste en dessous ??
-			void deleteNodeHelper(NodePtr node, value_type key)
+			bool deleteNodeHelper(NodePtr node, value_type key)
 			{
 				NodePtr z = LEAF_NULL;
 				NodePtr x, y;
@@ -408,8 +423,7 @@ namespace ft
 					}
 					//BUG:
 					// if (node->data <= key)
-					// if (!(node->data > key))
-					if (!m_comp(key.first, node->data.first))
+					if (m_comp(node->data.first, key.first))
 					{
 						node = node->right;
 					}
@@ -422,7 +436,7 @@ namespace ft
 				if (z == LEAF_NULL)
 				{
 					std::cout << "Key not found in the tree" << std::endl;
-					return;
+					return (false);
 				}
 
 				y = z;
@@ -474,6 +488,7 @@ namespace ft
 				{
 					deleteFix(x);
 				}
+				return (true);
 			}
 
 			// *For balancing the tree after insertion
@@ -560,8 +575,6 @@ namespace ft
 						indent += "|  ";
 					}
 
-					// std::string sColor = root->color ? "RED" : "BLACK";
-					// std::cout << root->data << "(" << sColor << ")" << std::endl;
 					if (root->color == RED)
 					{
 						std::cout << BRED << root->data.first << "(" << "RED" << ")" << "--->" << root->data.second << CRESET<< std::endl;
@@ -576,29 +589,21 @@ namespace ft
 			}
 
 			public:
-			// RedBlackTree()
+
+			// void preorder()
 			// {
-			// 	LEAF_NULL = new Node;
-			// 	LEAF_NULL->color = BLACK;
-			// 	LEAF_NULL->left = ft::_nullptr;
-			// 	LEAF_NULL->right = ft::_nullptr;
-			// 	root = LEAF_NULL;
+			// 	preOrderHelper(this->root);
 			// }
 
-			void preorder()
-			{
-				preOrderHelper(this->root);
-			}
+			// void inorder()
+			// {
+			// 	inOrderHelper(this->root);
+			// }
 
-			void inorder()
-			{
-				inOrderHelper(this->root);
-			}
-
-			void postorder()
-			{
-				postOrderHelper(this->root);
-			}
+			// void postorder()
+			// {
+			// 	postOrderHelper(this->root);
+			// }
 
 			NodePtr searchTree(const _first k)
 			{
@@ -757,14 +762,8 @@ namespace ft
 			pointer insert(value_type key)
 			{
 				//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
-				// NodePtr node = new Node;
 				NodePtr node = m_alloc.allocate(1);
 				m_alloc.construct(node, Node<value_type>(key, LEAF_NULL, LEAF_NULL));
-				// node->parent = ft::_nullptr;
-				// node->data = key;
-				// node->left = LEAF_NULL;
-				// node->right = LEAF_NULL;
-				// node->color = RED;
 				NodePtr y = ft::_nullptr;
 				NodePtr x = this->root;
 
@@ -786,7 +785,7 @@ namespace ft
 					}
 					else
 					{
-						return NULL;
+						return ft::_nullptr;
 					}
 				}
 
@@ -812,11 +811,7 @@ namespace ft
 				if (node->parent == ft::_nullptr)
 				{
 					node->color = BLACK;
-				
-				
-					// iterator(node);
 					return (node);
-					// return;
 				}
 				
 				//*If the grandparent is null, there is nothing to do (case 3)
@@ -889,9 +884,9 @@ namespace ft
 				return this->root;
 			}
 
-			void deleteNode(value_type data)
+			bool deleteNode(value_type data)
 			{
-				deleteNodeHelper(this->root, data);
+				return (deleteNodeHelper(this->root, data));
 			}
 
 			//TODO: to delete
