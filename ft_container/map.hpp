@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 10:55:06 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 18:57:59 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,12 +395,6 @@ namespace ft
 				return (m_alloc);
 			}
 			
-			//!================================ Utils ======================================================
-			//TODO:to delete this function
-			void	print_tree()
-			{
-				m_root.printTree();
-			}
 			
 		private:
 
@@ -412,6 +406,13 @@ namespace ft
 				a = b;
 				b = c;
 			}
+
+			// !================================ Utils ======================================================
+			TODO:to delete this function
+			// void	print_tree()
+			// {
+				// m_root.printTree();
+			// }
 	};
 }
 

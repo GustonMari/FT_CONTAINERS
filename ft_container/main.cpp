@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 18:31:27 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 18:57:44 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,6 +335,17 @@ int main(int ac, char **av)
 		TESTED_NAMESPACE::map<int, int> map6(map5.begin(), map5.end(), map5.key_comp(), map5.get_allocator());
 		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); it++)
 			std::cout << it->first << " " << it->second << std::endl;
+
+		CCOUT(UMAG, "                                         CLEAR\n");
+
+		COUT("size: " << map6.size());
+		map6.clear();
+		COUT("size: " << map6.size());
+		COUT("empty: " << map.empty());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); it++)
+			std::cout << it->first << " " << it->second << std::endl;
+		
+		
 	}
 }
 
