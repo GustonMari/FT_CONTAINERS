@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 19:10:09 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 20:35:22 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,11 +362,17 @@ int main(int ac, char **av)
 		
 		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); ++it)
 			std::cout << it->first << " " << it->second << std::endl;
+		COUT("reverse iterator");
 		for (TESTED_NAMESPACE::map<int, int>::reverse_iterator it = map6.rbegin(); it != map6.rend(); ++it)
 			std::cout << it->first << " " << it->second << std::endl;
-		for (TESTED_NAMESPACE::map<int, int>::const_iterator it = map6.end(); it != map6.begin(); --it)
-			std::cout << it->first << " " << it->second << std::endl;
-			
+		COUT("const it + decrement"); //!becareful this test can take things in memory so its normal that output is not the same
+		// for (TESTED_NAMESPACE::map<int, int>::const_iterator it = map6.end(); it != map6.begin(); --it)
+		// 	std::cout << it->first << " " << it->second << std::endl;
+		
+		TESTED_NAMESPACE::map<int, int>::const_iterator it_decrement = map6.end();
+		--it_decrement;
+		for (; it_decrement != map6.begin(); --it_decrement)
+			std::cout << it_decrement->first << " " << it_decrement->second << std::endl;
 		
 	}
 }
