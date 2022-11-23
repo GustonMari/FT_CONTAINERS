@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 14:07:06 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:50:07 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,30 +106,30 @@ int main(int ac, char **av)
 
 		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
 		
-		// myvector.push_back(92);
-		// myvector.push_back(93);
-		// myvector.push_back(-94);
-		// myvector.push_back(-95);
-		// myvector.push_back(-96);
-		// myvector.push_back(-97);
+		myvector.push_back(92);
+		myvector.push_back(93);
+		myvector.push_back(-94);
+		myvector.push_back(-95);
+		myvector.push_back(-96);
+		myvector.push_back(-97);
 
-		// COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
-		// COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
+		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
 
-		// myvector6.push_back("wesh");
-		// myvector6.push_back("hell nooo");
-		// myvector6.push_back("c mort frr");
-		// myvector6.push_back("wougada");
+		myvector6.push_back("wesh");
+		myvector6.push_back("hell nooo");
+		myvector6.push_back("c mort frr");
+		myvector6.push_back("wougada");
 		
-		// COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
+		COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
 		
 
-		// CCOUT(UMAG, "                                         ITERATORS\n");
+		CCOUT(UMAG, "                                         ITERATORS\n");
 
-		// for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.end(); it != myvector.begin(); --it)
-		// 	std::cout << *it << std::endl;
+		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.end(); it != myvector.begin(); --it)
+			std::cout << *it << std::endl;
 
-		// for (TESTED_NAMESPACE::vector<int>::reverse_iterator it = myvector.rbegin(); it != myvector.rend(); ++it)
-		// 	std::cout << *it << std::endl;
+		for (TESTED_NAMESPACE::vector<int>::reverse_iterator it = myvector.rbegin(); it != myvector.rend(); ++it)
+			std::cout << *it << std::endl;
 	}
 }

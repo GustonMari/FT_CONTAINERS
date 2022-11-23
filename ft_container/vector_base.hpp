@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 14:45:05 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:36:48 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,10 @@ namespace ft {
 					pointer tmp = m_alloc.allocate(n);
 					for (size_type i = 0; i < m_size; i++)
 						m_alloc.construct(tmp + i, m_start[i]);
-					destroy_vector();
+					// destroy_vector();
+					for (size_type i = 0; i < m_size; i++)
+						m_alloc.destroy(m_start + i);
+					m_alloc.deallocate(m_start, m_capacity);
 					m_start = tmp;
 					m_capacity = n;
 				}

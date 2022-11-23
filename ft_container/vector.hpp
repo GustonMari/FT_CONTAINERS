@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 14:10:42 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:49:36 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,13 +344,25 @@ namespace ft {
 			template <class InputIterator>
 			void	assign(InputIterator first, ENABLE_IF(InputIterator) last)
 			{
-				// if (this == &last)
-				// 	return ;
+				// // if (this == &last)
+				// // 	return ;
+				// this->clear();
+				// // for (InputIterator tmp = first; !(tmp == last); tmp++)
+				// // 	this->push_back(*tmp);
+				// for (; (first != last); first++)
+				// 	this->push_back(*first);
+
+				difference_type	nb = std::distance(first, last);
 				this->clear();
-				// for (InputIterator tmp = first; !(tmp == last); tmp++)
-				// 	this->push_back(*tmp);
-				for (; (first != last); first++)
-					this->push_back(*first);
+				reserve(nb);
+				// this->clear();
+				this->m_size = nb;
+				for (difference_type i = 0; i < nb; i++)
+				{
+					this->m_alloc.construct(this->m_start + i, *first);
+					first++;
+				}
+				this->m_size = nb;
 			}
 
 			//TODO: need to redo assign for better speed benchmark result 
@@ -425,7 +437,7 @@ namespace ft {
 			{
 				if (this != &x)
 				{
-					// this->clear();
+					this->clear();
 					//ft::vector_base<Tp, Allocator>::operator=(x);
 					this->assign(x.begin(), x.end());
 					

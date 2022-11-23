@@ -54,3 +54,36 @@ after assignation size: 5 capacity: 5
 size: 6 capacity: 10
 size: 7 capacity: 10
 size: 8 capacity: 10
+size: 14 capacity: 20
+size: 5 capacity: 5
+size: 9 capacity: 10
+[4;35m                                         ITERATORS
+[0m
+0
+-97
+-96
+-95
+-94
+93
+92
+91
+90
+89
+42
+42
+42
+42
+-97
+-96
+-95
+-94
+93
+92
+91
+90
+89
+42
+42
+42
+42
+42
