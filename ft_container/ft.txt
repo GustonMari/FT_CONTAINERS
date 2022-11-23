@@ -5,9 +5,9 @@
 
 [4;35mNO ARGS = ALL
 0 - VECTOR
-1 - SET
+1 - STACK
 2 - MAP
-3 - STACK
+3 - SET
 4 - PAIR
 [0m
 
@@ -127,7 +127,6 @@ size: 16 capacity: 20
 -97
 size: 18 capacity: 20
 before insert with 3 args --- size: 18 capacity: 20
-ntmmmm
 after insert with 3 args --- size: 23 capacity: 36
 42
 42
@@ -161,3 +160,197 @@ before erase --- size: 23 capacity: 36
 -96
 -97
 after erase --- size: 22 capacity: 36
+erase --- size: 0 capacity: 5
+[4;35m                                         SWAP
+[0m
+42
+42
+42
+swap --- size: 3 capacity: 5
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+89
+90
+91
+92
+93
+-94
+-95
+-96
+-97
+12
+12
+swap --- size: 24 capacity: 36
+[4;35m                                         CLEAR
+[0m
+swap --- size: 0 capacity: 10
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+89
+90
+91
+92
+93
+-94
+-95
+-96
+-97
+12
+12
+[4;35m                                         AT
+[0m
+at --- size: 24 capacity: 36
+42
+at --- size: 24 capacity: 36
+back: 12
+front: 42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+42
+89
+90
+91
+92
+93
+-94
+-95
+-96
+-97
+12
+12
+[4;35m                                         POP BACK
+[0m
+pop back --- size: 5 capacity: 5
+0
+0
+0
+0
+pop back --- size: 4 capacity: 5
+[4;35m                                         ASSIGN
+[0m
+assign --- size: 4 capacity: 5
+42
+42
+42
+42
+42
+assign --- size: 5 capacity: 5
+42
+42
+42
+42
+42
+assign --- size: 5 capacity: 5
+42
+42
+42
+assign --- size: 3 capacity: 5
+[4;35m                                         RESIZE
+[0m
+resize --- size: 3 capacity: 5
+42
+42
+42
+0
+0
+0
+0
+0
+0
+0
+resize --- size: 10 capacity: 10
+[4;35m                                         OPERATOR []
+[0m
+operator [] --- size: 10 capacity: 10
+operator [] --- size: 10 capacity: 10
+
+
+
+
+[0;103m                                         STACK TESTS                                         [0m
+
+
+
+
+[4;35m                                         CONSTRUCTORS
+[0m
+empty: 1
+size: 0
+[4;35m                                         TEST
+[0m
+size: 3
+top: 389
+size: 2
+top: 478
+size: 2
+top: 478
+size: 2
+top: 478
+empty: 0
+
+
+
+
+[0;103m                                         MAP TESTS                                         [0m
+
+
+
+
+[4;35m                                         CONSTRUCTORS
+[0m
+42 42
+389 389
+443 443
+478 478
+42 42
+389 389
+443 443
+478 478
+42 42
+389 389
+443 443
+478 478
+42 42
+389 389
+443 443
+478 478
+42 42
+389 389
+443 443
+478 478
+42 42
+389 389
+443 443
+478 478

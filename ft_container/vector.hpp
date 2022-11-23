@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 15:59:20 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 17:23:00 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef typename : You are not actually creating a new data type,
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <memory>
+# include <sstream>
+
 
 // # include <vector>
 # include "iterator_traits.hpp"
@@ -162,19 +164,22 @@ namespace ft {
 
 			reference at(size_type n)
 			{
-				// if (n < 0)
-				// 	throw std::out_of_range("vector_base::at: out of range");
+				std::stringstream str;
+				str << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << this->m_size << ")";
+				
 				if (n >= size())
-					throw std::out_of_range("vector_base::at: out of range");
+					throw std::out_of_range(str.str());
 				return (this->m_start[n]);
 			}
 
 			const_reference at(size_type n) const
 			{
-				// if (n < 0)
-				// 	throw std::out_of_range("vector_base::at: out of range");
+				std::stringstream str;
+				str << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << this->m_size << ")";
+				
 				if (n >= size())
-					throw std::out_of_range("vector_base::at: out of range");
+					throw std::out_of_range(str.str());
+					// throw std::out_of_range("vector::_M_range_check: __n (which is " << n <<") >= this->size() (which is " << this->m_size << ")");
 				return (this->m_start[n]);
 			}
 

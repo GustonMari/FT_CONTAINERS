@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:10:19 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 14:25:24 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 18:18:27 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "enable_if.hpp"
 #include <stack>
 
-std::stack<int> st;
 
 
 namespace ft
