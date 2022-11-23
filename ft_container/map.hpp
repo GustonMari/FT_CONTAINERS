@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/22 16:30:33 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 10:55:06 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ namespace ft
 			
 			size_type count (const key_type& k) const
 			{
-				if (m_size == 0)
+				if (m_size == 0 || find(k) == end())
 					return (0);
 				return (m_root.count(k));
 			}
