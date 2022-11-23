@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 20:35:22 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 21:02:23 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,7 +357,7 @@ int main(int ac, char **av)
 		COUT(map6[-30]);
 		COUT(map6[478]);
 		map6[478] = 42;
-		
+
 		CCOUT(UMAG, "                                         ITERATORS\n");
 		
 		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); ++it)
@@ -368,12 +368,56 @@ int main(int ac, char **av)
 		COUT("const it + decrement"); //!becareful this test can take things in memory so its normal that output is not the same
 		// for (TESTED_NAMESPACE::map<int, int>::const_iterator it = map6.end(); it != map6.begin(); --it)
 		// 	std::cout << it->first << " " << it->second << std::endl;
-		
+
 		TESTED_NAMESPACE::map<int, int>::const_iterator it_decrement = map6.end();
 		--it_decrement;
 		for (; it_decrement != map6.begin(); --it_decrement)
 			std::cout << it_decrement->first << " " << it_decrement->second << std::endl;
-		
+
+		CCOUT(UMAG, "                                         COUNT\n");
+		COUT(map6.count(42));
+		COUT(map6.count(4782));
+		COUT(map6.count(-478));
+		// COUT(map6.count(10000000000)); //BUG: FUCK apres un peu logique mais comment la std traite ca ??
+
+		CCOUT(UMAG, "                                         SIZE\n");
+		COUT(map6.size());
+		COUT(map6.max_size());
+		COUT(map6.empty());
+		COUT(map.size());
+		COUT(map.max_size());
+		COUT(map.empty());
+		COUT(map4.size());
+		COUT(map4.max_size());
+		COUT(map4.empty());
+		COUT(map2.size());
+		COUT(map2.max_size());
+		COUT(map2.empty());
+		COUT(map3.size());
+		COUT(map3.max_size());
+		COUT(map3.empty());
+
+		CCOUT(UMAG, "                                         FIND\n");
+		//TODO: when find is not found, it return end() and not begin() like std
+		COUT(map6.find(42)->first);
+		// COUT(map6.find(4782)->first); //BUG: dont return same value it return the size of the map but need to segfault when the key is string wttff
+		// COUT(map6.find(-478)->first);
+		// COUT(map6.find(100000)->first);
+		COUT(map6.find(478)->first);
+		COUT(map6.find(478)->second);
+		COUT(map6.find(478)->first);
+		// COUT(map6.find(-470)->second);
+		TESTED_NAMESPACE::map<std::string, int> map7;
+		map7["42"] = 42;
+		map7["-42"] = -42;
+		map7["0"] = 0;
+		COUT(map7.find("42")->first);
+		COUT(map7.find("42")->second);
+		COUT(map7.find("-42")->first);
+		COUT(map7.find("-42")->second);
+		// COUT(map7.find("jdfhjdfh")->first); //BUG : segfault on the real one but not on mine
+		// COUT(map7.find("jdfhjdfh")->second);
+	
 	}
 }
 
