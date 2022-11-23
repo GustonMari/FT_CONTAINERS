@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 11:17:40 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:07:06 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "lexicographical_compare.hpp"
 # include "pair.hpp"
 # include "utils.hpp"
-// # include "_colors.hpp"
+# include "_colors.hpp"
 # include "map.hpp"
 # include "stack.hpp"
 #include "rbt.hpp"
@@ -41,132 +41,95 @@
 
 using namespace TESTED_NAMESPACE;
 
-# define VRED "\033[0;31m"
-# define CVRED std::cout << "\033[0;31m"
-# define GREEN "\033[0;92m"
-# define CGREEN std::cout << "\033[0;92m"
-# define MAG "\033[0;95m"
-# define CMAG std::cout << "\033[0;95m"
-# define CYAN "\033[0;96m"
-# define CCYAN std::cout << "\033[0;96m"
-# define BLUE "\033[0;94m"
-# define CBLUE std::cout << "\033[0;94m"
-# define YELLOW "\033[0;93m"
-# define CYELLOW std::cout << "\033[0;93m"
-# define GREY "\033[0;90m"
-# define CGREY std::cout << "\033[0;90m"
-# define END "\033[0m"
-# define ENDL "\033[0m" << std::endl
 
-void print_vector(vector<int> v)
+int main(int ac, char **av)
 {
-	vector<int>::iterator it1;
-	vector<int>::iterator it2;
+	(void)ac;
+	(void)av;
+	CCOUT(YELHB, "                                         GMARY'S TESTS                                         ");
+	COUT("\n\n\n")
+	CCOUT(UMAG, "NO ARGS = ALL\n0 - VECTOR\n1 - SET\n2 - MAP\n3 - STACK\n4 - PAIR\n");
+	std::string arg;
+	if (ac == 2)
+		arg = av[1];
+	else
+		arg = "all";
 
-	it1 = v.begin();
-	it2 = v.end();
-
-	CCYAN << "Vector=[";
-	while (it1 < it2)
+	if (arg == "0" || arg == "vector" || arg == "all")
 	{
-		CYELLOW << *it1;
-		CBLUE << ", ";
-		it1++;
+
+		COUT("\n\n\n")
+		CCOUT(YELHB, "                                         VECTOR TESTS                                         ");
+		COUT("\n\n\n")
+		
+
+		CCOUT(UMAG, "                                         CONSTRUCTORS\n");
+		
+
+		TESTED_NAMESPACE::vector<int> myvector;
+		TESTED_NAMESPACE::vector<int> myvector2(5);
+		TESTED_NAMESPACE::vector<int> myvector3(5, 42);
+		TESTED_NAMESPACE::vector<int> myvector4(myvector3);
+		TESTED_NAMESPACE::vector<int> myvector5(myvector3.begin(), myvector3.end());
+		TESTED_NAMESPACE::vector<std::string> myvector6(5, "hello");
+
+		COUT("size: " << myvector2.size() << " capacity: " << myvector2.capacity());
+		COUT("size: " << myvector3.size() << " capacity: " << myvector3.capacity());
+		COUT("size: " << myvector4.size() << " capacity: " << myvector4.capacity());
+		COUT("size: " << myvector5.size() << " capacity: " << myvector5.capacity());
+
+		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector3.begin(); it != myvector3.end(); it++)
+			std::cout << *it << std::endl;
+
+		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector4.begin(); it != myvector4.end(); it++)
+			std::cout << *it << std::endl;
+
+		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector5.begin(); it != myvector5.end(); it++)
+			std::cout << *it << std::endl;
+
+		CCOUT(UMAG, "                                         ASSIGNATION\n");
+
+		COUT("before assignation size: " << myvector.size() << " capacity: " << myvector.capacity());
+		myvector = myvector3;
+		COUT("after assignation size: " << myvector.size() << " capacity: " << myvector.capacity());
+
+		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
+			std::cout << *it << std::endl;
+
+		CCOUT(UMAG, "                                         PUSH BACK\n");
+		
+		myvector.push_back(89);
+		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		myvector.push_back(90);
+		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		myvector.push_back(91);
+
+		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		
+		// myvector.push_back(92);
+		// myvector.push_back(93);
+		// myvector.push_back(-94);
+		// myvector.push_back(-95);
+		// myvector.push_back(-96);
+		// myvector.push_back(-97);
+
+		// COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		// COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
+
+		// myvector6.push_back("wesh");
+		// myvector6.push_back("hell nooo");
+		// myvector6.push_back("c mort frr");
+		// myvector6.push_back("wougada");
+		
+		// COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
+		
+
+		// CCOUT(UMAG, "                                         ITERATORS\n");
+
+		// for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.end(); it != myvector.begin(); --it)
+		// 	std::cout << *it << std::endl;
+
+		// for (TESTED_NAMESPACE::vector<int>::reverse_iterator it = myvector.rbegin(); it != myvector.rend(); ++it)
+		// 	std::cout << *it << std::endl;
 	}
-	CCYAN << "]" << ENDL;
-}
-
-int main()
-{
-	CGREEN << "INITIALIZATION" << ENDL;
-	CMAG << "operations..." << ENDL;
-	vector<int> fill(10, 42);
-	vector<int> tmp;
-	vector<int>::iterator it1;
-	vector<int>::iterator it2;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "ERASE" << ENDL;
-	CMAG << "operations..." << ENDL;
-	it1 = fill.begin();
-	it1 += 5;
-	it2 = fill.end();
-	it2 -=2;
-
-	fill.erase(it1, it2);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "POP_BACK/PUSH_BACK" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.pop_back();
-	fill.push_back(13);
-	fill.push_back(69);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "OPERATOR[]" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill[3] = -13;
-	fill[5] = 123456789;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-	
-	CGREEN << "SWAP" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.swap(tmp);
-	fill.swap(tmp);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "FRONT/BACK/AT" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.front() = -42;
-	fill.back() /= -2;
-	fill.at(1) = 0;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "INSERT" << ENDL;
-	CMAG << "operations..." << ENDL;
-	it1 = fill.begin();
-	it1 += 2;
-
-	fill.insert(it1, 3, 987654321);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-
-	CGREEN << "RESIZE" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.resize(20);
-	fill.resize(13);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	try
-	{
-		CGREEN << "AT(error)" << ENDL;
-		CMAG << "operations..." << ENDL;
-		fill.at(-1) = -1;
-	}
-	catch (std::out_of_range& oor)
-	{
-		(void)oor;
-		std::cout << "OOR error caught\n";
-	}
-	try
-	{
-		fill.at(15) = -1;
-	}
-	catch (std::out_of_range& oor)
-	{
-		(void)oor;
-		std::cout << "OOR error caught\n";
-	}
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	return (0);
 }

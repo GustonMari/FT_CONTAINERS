@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/27 14:26:05 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:10:42 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -425,7 +425,7 @@ namespace ft {
 			{
 				if (this != &x)
 				{
-					this->clear();
+					// this->clear();
 					//ft::vector_base<Tp, Allocator>::operator=(x);
 					this->assign(x.begin(), x.end());
 					
