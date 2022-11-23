@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 18:57:44 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 19:10:09 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,9 +345,29 @@ int main(int ac, char **av)
 		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); it++)
 			std::cout << it->first << " " << it->second << std::endl;
 		
+		CCOUT(UMAG, "                                         OPERATOR\n");
+
+		map6 = map;
+		COUT("size: " << map6.size());
+		COUT("size: " << map6.size());
+		COUT("empty: " << map.empty());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); it++)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map6[42]);
+		COUT(map6[-30]);
+		COUT(map6[478]);
+		map6[478] = 42;
+		
+		CCOUT(UMAG, "                                         ITERATORS\n");
+		
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		for (TESTED_NAMESPACE::map<int, int>::reverse_iterator it = map6.rbegin(); it != map6.rend(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		for (TESTED_NAMESPACE::map<int, int>::const_iterator it = map6.end(); it != map6.begin(); --it)
+			std::cout << it->first << " " << it->second << std::endl;
+			
 		
 	}
 }
 
-
-//faire tes at => out of range
