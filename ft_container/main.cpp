@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 15:35:49 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 15:57:45 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,22 +145,28 @@ int main(int ac, char **av)
 		COUT("size: " << myvector6.size() << " capacity: " << myvector6.capacity());
 		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
 			std::cout << *it << std::endl;
-		myvector.insert(myvector.begin(), 2, 42);
+		
 		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		myvector.insert(myvector.begin(), 2, 42);
 		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
 			std::cout << *it << std::endl;
 		COUT("size: " << myvector.size() << " capacity: " << myvector.capacity());
+		
+		COUT("before insert with 3 args --- size: " << myvector.size() << " capacity: " << myvector.capacity());
 		myvector.insert(myvector.begin(), myvector3.begin(), myvector3.end());
+		COUT("after insert with 3 args --- size: " << myvector.size() << " capacity: " << myvector.capacity());
+		
 		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector3.begin(); it != myvector3.end(); it++)
 			std::cout << *it << std::endl;
 		COUT("size: " << myvector3.size() << " capacity: " << myvector3.capacity());
 		
 		CCOUT(UMAG, "                                         ERASE\n");
 
+		COUT("before erase --- size: " << myvector.size() << " capacity: " << myvector.capacity());
 		myvector.erase(myvector.begin());
 		for (TESTED_NAMESPACE::vector<int>::iterator it = myvector.begin(); it != myvector.end(); it++)
 			std::cout << *it << std::endl;
-		COUT("erase --- size: " << myvector.size() << " capacity: " << myvector.capacity());
+		COUT("after erase --- size: " << myvector.size() << " capacity: " << myvector.capacity());
 		// myvector3.erase(myvector3.begin(), myvector3.end());
 		// for (TESTED_NAMESPACE::vector<int>::iterator it = myvector3.begin(); it != myvector3.end(); it++)
 		// 	std::cout << *it << std::endl;

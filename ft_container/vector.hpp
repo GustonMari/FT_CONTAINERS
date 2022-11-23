@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 14:49:36 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/23 15:59:20 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,9 +318,14 @@ namespace ft {
 				if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
 				{
 					if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
-						this->reserve(this->m_capacity * 2);
+					{
+						// this->reserve(this->m_capacity * 2);
+						this->reserve(this->m_size * 2);
+					}
 					else
+					{
 						this->reserve(this->m_size + (std::distance(first, last)));
+					}
 				}
 				
 				for (int i = 0; last != first; first++)
