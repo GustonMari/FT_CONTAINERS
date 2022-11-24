@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 15:39:48 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 17:41:21 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <iterator>
 # include <string>
 # include <set>
+# include <unistd.h>
 # include "enable_if.hpp"
 # include "vector_base.hpp"
 # include "vector.hpp"
@@ -49,14 +50,15 @@ int main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
+	
 	CCOUT(YELHB, "                                         GMARY'S TESTS                                         ");
 	COUT("\n\n\n")
 	CCOUT(UMAG, "NO ARGS = ALL\n0 - VECTOR\n1 - STACK\n2 - MAP\n3 - SET\n4 - PAIR\n");
 	std::string arg;
 	std::string special_arg;
+	sleep(1);
 	if (ac == 3)
 	{
-		COUT("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 		arg = av[1];
 		special_arg = av[2];
 	}

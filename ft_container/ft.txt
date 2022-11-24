@@ -1,80 +1,402 @@
-size: 10
-max_size: 230584300921369395
-
-Content is:
-- value: 3
-- value: 6
-- value: 9
-- value: 12
-- value: 15
-- value: 18
-- value: 21
-- value: 24
-- value: 27
-- value: 30
-###############################################
-	-- [0] (const) --
-with key [-10]:
-lower_bound: value: 3
-upper_bound: value: 3
-equal_range: 1
-	-- [1] (const) --
-with key [1]:
-lower_bound: value: 3
-upper_bound: value: 3
-equal_range: 1
-	-- [2] (const) --
-with key [5]:
-lower_bound: value: 6
-upper_bound: value: 6
-equal_range: 1
-	-- [3] (const) --
-with key [10]:
-lower_bound: value: 12
-upper_bound: value: 12
-equal_range: 1
-	-- [4] (const) --
-with key [50]:
-lower_bound: end()
-upper_bound: end()
-equal_range: 1
-size: 10
-max_size: 230584300921369395
-
-Content is:
-- value: 3
-- value: 6
-- value: 9
-- value: 12
-- value: 15
-- value: 18
-- value: 21
-- value: 24
-- value: 27
-- value: 30
-###############################################
-	-- [5] --
-with key [5]:
-lower_bound: value: 6
-upper_bound: value: 6
-equal_range: 1
-	-- [6] --
-with key [7]:
-lower_bound: value: 9
-upper_bound: value: 9
-equal_range: 1
-size: 10
-max_size: 230584300921369395
-
-Content is:
-- value: 3
-- value: 6
-- value: 9
-- value: 12
-- value: 15
-- value: 18
-- value: 21
-- value: 24
-- value: 27
-- value: 30
-###############################################
+[1;34m14) RESERVE[0m
+Capacity before = 0
+Capacity after = 1
+Capacity before = 1
+Capacity after = 2
+Capacity before = 2
+Capacity after = 4
+Capacity before = 4
+Capacity after = 4
+Capacity before = 4
+Capacity after = 8
+Capacity before = 8
+Capacity after = 8
+Capacity before = 8
+Capacity after = 8
+Capacity before = 8
+Capacity after = 8
+Capacity before = 8
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 16
+Capacity before = 16
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 32
+Capacity before = 32
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 64
+Capacity before = 64
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+Capacity before = 128
+Capacity after = 128
+-------
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 50
+Capacity before = 50
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100
+Capacity before = 100
+Capacity after = 100

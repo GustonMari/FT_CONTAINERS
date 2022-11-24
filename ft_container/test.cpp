@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:22:04 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 17:09:19 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 17:56:26 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,102 +46,28 @@
 using namespace TESTED_NAMESPACE;
 
 
-#define _pair TESTED_NAMESPACE::pair
-
-template <typename T>
-std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
-{
-	o << "value: " << *iterator;
-	if (nl)
-		o << std::endl;
-	return ("");
-}
-
-template <typename T_SET>
-void	printSize(T_SET const &st, bool print_content = 1)
-{
-	std::cout << "size: " << st.size() << std::endl;
-	std::cout << "max_size: " << st.max_size() << std::endl;
-	if (print_content)
-	{
-		typename T_SET::const_iterator it = st.begin(), ite = st.end();
-		std::cout << std::endl << "Content is:" << std::endl;
-		for (; it != ite; ++it)
-			std::cout << "- " << printPair(it, false) << std::endl;
-	}
-	std::cout << "###############################################" << std::endl;
-}
-
-template <typename T1>
-void	printReverse(TESTED_NAMESPACE::set<T1> &st)
-{
-	typename TESTED_NAMESPACE::set<T1>::iterator it = st.end(), ite = st.begin();
-
-	std::cout << "printReverse:" << std::endl;
-	while (it-- != ite)
-		std::cout << "-> " << printPair(it, false) << std::endl;
-	std::cout << "_______________________________________________" << std::endl;
-}
-
-
-#include <list>
-
-#define T1 int
-typedef TESTED_NAMESPACE::set<T1>::iterator ft_iterator;
-typedef TESTED_NAMESPACE::set<T1>::const_iterator ft_const_iterator;
-
-static int iter = 0;
-
-template <typename SET>
-void	ft_bound(SET &st, const T1 &param)
-{
-	ft_iterator ite = st.end(), it[2];
-	_pair<ft_iterator, ft_iterator> ft_range;
-
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
-	ft_range = st.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
-
-template <typename SET>
-void	ft_const_bound(const SET &st, const T1 &param)
-{
-	ft_const_iterator ite = st.end(), it[2];
-	_pair<ft_const_iterator, ft_const_iterator> ft_range;
-
-	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
-	ft_range = st.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
-
 int		main(void)
 {
-	std::list<T1> lst;
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back((i + 1) * 3);
-	TESTED_NAMESPACE::set<T1> st(lst.begin(), lst.end());
-	printSize(st);
+	TESTED_NAMESPACE::vector<int> test_one;
+	std::cout << BBLU << "14) RESERVE" << CRESET << std::endl;
 
-	ft_const_bound(st, -10);
-	ft_const_bound(st, 1);
-	ft_const_bound(st, 5);
-	ft_const_bound(st, 10);
-	ft_const_bound(st, 50);
+		for (int i = 0; i < 100; i++)
+		{
+			std::cout << "Capacity before = " << test_one.capacity() << std::endl;
+			test_one.push_back(i);
+			std::cout << "Capacity after = " << test_one.capacity() << std::endl;
+		}
+		std::cout << "-------" << std::endl;
+		test_one.clear();
+		TESTED_NAMESPACE::vector<int> test_two;
 
-	printSize(st);
-
-	ft_bound(st, 5);
-	ft_bound(st, 7);
-
-	printSize(st);
+		test_two.reserve(50);
+		for (int i = 0; i < 100; i++)
+		{
+			std::cout << "Capacity before = " << test_two.capacity() << std::endl;
+			test_two.push_back(i);
+			std::cout << "Capacity after = " << test_two.capacity() << std::endl;
+		}
+		test_two.clear();
 	return (0);
 }
