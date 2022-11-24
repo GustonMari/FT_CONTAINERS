@@ -58,3 +58,17 @@ $RESULT
 		fi
 	}
 	fi
+
+	if [ "$1" == "impossible" ]; then
+	{
+		echo -e "\033[4;34m-----------------MAP---------------- \033[0m"
+		#simple test
+		../ft_container/./ft_containers 6 impossible > ft_tester.txt
+		../ft_container/./std_containers 6 impossible > std_tester.txt
+		if diff ft_tester.txt std_tester.txt ; then
+			echo -e "\033[32;1mPassed\033[0m";
+		else
+			echo -e "\033[1;31mFailed\033[0m";
+		fi
+	}
+	fi

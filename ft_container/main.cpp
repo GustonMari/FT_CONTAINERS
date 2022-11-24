@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 14:42:24 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 15:00:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int main(int ac, char **av)
 	std::string special_arg;
 	if (ac == 3)
 	{
+		COUT("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 		arg = av[1];
 		special_arg = av[2];
 	}
@@ -487,7 +488,30 @@ int main(int ac, char **av)
 
 		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, int>::iterator, TESTED_NAMESPACE::map<int, int>::iterator> pair1 = map4.equal_range(42);
 		COUT(pair1.first->first);	
+	}
+	if (special_arg == "impossible")
+	{
+		TESTED_NAMESPACE::map<int, int> map;
+		map.insert(TESTED_NAMESPACE::pair<int, int>(42, 42));
+		map.insert(TESTED_NAMESPACE::pair<int, int>(478, 478));
+		map.insert(TESTED_NAMESPACE::pair<int, int>(389, 389));
+		map.insert(TESTED_NAMESPACE::pair<int, int>(443, 443));
 
+		for (TESTED_NAMESPACE::map<int, int>::const_iterator it = map.end(); it != map.begin(); --it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map.find(4782)->first);
+
+		TESTED_NAMESPACE::map<int, int> map8;
+		TESTED_NAMESPACE::map<int, int>::iterator map8_it;
+
+		COUT((map8.insert(map8_it, TESTED_NAMESPACE::pair<int, int>(33333, 33333)))->first);
+
+
+		TESTED_NAMESPACE::map<std::string, int> map7;
+		map7["42"] = 42;
+		map7["-42"] = -42;
+		map7["0"] = 0;
+		COUT(map7.find("jdfhjdfh")->first);
 	}
 }
 
