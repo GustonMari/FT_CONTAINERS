@@ -6,21 +6,30 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:10:22 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 16:16:46 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 17:17:38 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SET_HPP
 # define SET_HPP
 
-# include "iterator_map.hpp"
-# include "node.hpp"
+# include <memory>
+# include <vector>
+# include <functional>
+# include <limits>
+# include "iterator_traits.hpp"
+# include "reverse_iterator.hpp"
+# include "vector_base.hpp"
 # include "utils.hpp"
-# include "_colors.hpp"
-# include "rbt.hpp"
-# include <set>
+# include "pair.hpp"
+# include "less.hpp"
+# include "set_rbt.hpp"
+# include "iterator_map.hpp"
+#include "node.hpp"
+#include "lexicographical_compare.hpp"
+// # include <set>
 
-std::set<int, int> myp;
+// std::set<int, int> myp;
 
 namespace ft
 {
@@ -34,7 +43,7 @@ namespace ft
 			typedef Compare																				key_compare;
 			typedef Compare																				value_compare;
 			typedef Allocator																			allocator_type;
-			typedef RedBlackTree<value_type, key_compare, allocator_type, const T, T>			_Rep_type;
+			typedef Set_RedBlackTree<value_type, key_compare, allocator_type, const T, T>				_Rep_type;
 			typedef typename Allocator::pointer		 													pointer;
 			typedef typename Allocator::const_pointer													const_pointer;
 			typedef typename Allocator::reference														reference;
@@ -207,9 +216,9 @@ namespace ft
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				if (m_root.insert(val) == ft::_nullptr)
-					return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), false);
+					return ft::make_pair(iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()), false);
 				this->m_size++;
-				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), true);
+				return ft::make_pair(iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()), true);
 			}
 			
 			//TODO: check if it works
@@ -218,7 +227,7 @@ namespace ft
 			{
 				(void)position;
 				insert(val);
-				return (iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()));
+				return (iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 			
 			//*ranges
@@ -262,7 +271,8 @@ namespace ft
 				{
 					it = first;
 					first++;
-					erase(it->first);
+					erase(*it);
+					// erase(it->first);
 				}
 			}
 			//!================================ Swap ======================================================
