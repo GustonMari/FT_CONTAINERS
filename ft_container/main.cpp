@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 21:02:23 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 14:42:24 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,7 +417,77 @@ int main(int ac, char **av)
 		COUT(map7.find("-42")->second);
 		// COUT(map7.find("jdfhjdfh")->first); //BUG : segfault on the real one but not on mine
 		// COUT(map7.find("jdfhjdfh")->second);
-	
+		CCOUT(UMAG, "                                         INSERT\n");
+		TESTED_NAMESPACE::map<int, int> map8;
+		TESTED_NAMESPACE::map<int, int>::iterator map8_it = map8.begin();
+
+		COUT((map8.insert(map8_it, TESTED_NAMESPACE::pair<int, int>(33333, 33333)))->first);
+		COUT(map3.size());
+		COUT(map3.max_size());
+		// TESTED_NAMESPACE::map<int, int> map8; //!this test is also impossible to create
+		// TESTED_NAMESPACE::map<int, int>::iterator map8_it;
+
+		// COUT((map8.insert(map8_it, TESTED_NAMESPACE::pair<int, int>(33333, 33333)))->first);
+		map8.insert(TESTED_NAMESPACE::pair<int, int>(42, 42));
+		map8.insert(TESTED_NAMESPACE::pair<int, int>(2222, 2222));
+		map8.insert(TESTED_NAMESPACE::pair<int, int>(-86, -86));
+		COUT(map3.size());
+		COUT(map3.max_size());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map8.begin(); it != map8.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map3.size());
+		COUT(map3.max_size());
+		map8.insert(map8.begin(), map8.end());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map8.begin(); it != map8.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		map8.insert(map8.end(), map8.end());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map8.begin(); it != map8.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		
+		CCOUT(UMAG, "                                         ERASE\n");
+		TESTED_NAMESPACE::map<int, int> map9(map8);
+		map9.erase(map9.begin());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map9.begin(); it != map9.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map9.size());
+		COUT(map9.max_size());
+		map9.erase(42);
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map9.begin(); it != map9.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map9.size());
+		COUT(map9.max_size());
+		map9.erase(map9.begin(), map9.end());
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map9.begin(); it != map9.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map9.size());
+		COUT(map9.max_size());
+		
+		CCOUT(UMAG, "                                         SWAP\n");
+		
+		map6.swap(map4);
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map6.begin(); it != map6.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		for (TESTED_NAMESPACE::map<int, int>::iterator it = map4.begin(); it != map4.end(); ++it)
+			std::cout << it->first << " " << it->second << std::endl;
+		COUT(map6.size());
+		COUT(map6.max_size());
+		COUT(map4.size());
+		COUT(map4.max_size());
+
+		CCOUT(UMAG, "                                         LOWER BOUND\n");
+		
+		COUT(map4.lower_bound(42)->first);
+		COUT(map4.lower_bound(478)->first);
+		COUT(map4.lower_bound(-47855)->first);
+		COUT(map4.upper_bound(42)->first);
+		// COUT(map4.upper_bound(478)->first); //!test cannot be possible because its undefined behavior
+		COUT(map4.upper_bound(-47855)->first);
+		
+		CCOUT(UMAG, "                                         EQUAL RANGE\n");
+
+		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, int>::iterator, TESTED_NAMESPACE::map<int, int>::iterator> pair1 = map4.equal_range(42);
+		COUT(pair1.first->first);	
+
 	}
 }
 
