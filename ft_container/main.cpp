@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 15:00:39 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/24 15:39:48 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <list>
 # include <iterator>
 # include <string>
+# include <set>
 # include "enable_if.hpp"
 # include "vector_base.hpp"
 # include "vector.hpp"
@@ -31,8 +32,10 @@
 # include "_colors.hpp"
 # include "map.hpp"
 # include "stack.hpp"
-#include "rbt.hpp"
-#include "pair.hpp"
+# include "rbt.hpp"
+# include "pair.hpp"
+# include "set.hpp"
+
 #ifndef TESTED_NAMESPACE
 # define TESTED_NAMESPACE ft
 #endif
