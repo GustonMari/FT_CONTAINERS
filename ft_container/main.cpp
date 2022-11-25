@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 17:41:21 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/25 15:37:06 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int main(int ac, char **av)
 		arg = "all";
 
 	//! NORMAL TESTS FOR VECTOR
+//!====================================================================================================================================================
 	if (arg == "0" || arg == "vector" || arg == "all")
 	{
 
@@ -278,6 +279,7 @@ int main(int ac, char **av)
 			std::cout << e.what() << std::endl;
 		}
 	}
+//!====================================================================================================================================================
 	if (arg == "1" || arg == "stack" || arg == "all")
 	{
 
@@ -312,6 +314,7 @@ int main(int ac, char **av)
 		COUT("empty: " << mystack.empty());
 		
 	}
+//!====================================================================================================================================================
 	if (arg == "2" || arg == "map" || arg == "all" )
 	{
 		COUT("\n\n\n")
@@ -494,6 +497,207 @@ int main(int ac, char **av)
 		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, int>::iterator, TESTED_NAMESPACE::map<int, int>::iterator> pair1 = map4.equal_range(42);
 		COUT(pair1.first->first);	
 	}
+//!====================================================================================================================================================
+	if (arg == "3" || arg == "set" || arg == "all" )
+	{
+		COUT("\n\n\n")
+		CCOUT(YELHB, "                                         SET TESTS                                         ");
+		COUT("\n\n\n")
+		
+		CCOUT(UMAG, "                                         CONSTRUCTORS\n");
+		TESTED_NAMESPACE::set<int> set;
+		set.insert(42);
+		set.insert(478);
+		set.insert(389);
+		set.insert(443);
+		for (TESTED_NAMESPACE::set<int>::iterator it = set.begin(); it != set.end(); it++)
+			std::cout << *it << std::endl;
+		TESTED_NAMESPACE::set<int> set2(set);
+		for (TESTED_NAMESPACE::set<int>::iterator it = set2.begin(); it != set2.end(); it++)
+			std::cout << *it << std::endl;
+		TESTED_NAMESPACE::set<int> set3(set2.begin(), set2.end());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set3.begin(); it != set3.end(); it++)
+			std::cout << *it << std::endl;
+		TESTED_NAMESPACE::set<int> set4(set3.begin(), set3.end(), set3.key_comp());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set4.begin(); it != set4.end(); it++)
+			std::cout << *it << std::endl;
+		TESTED_NAMESPACE::set<int> set5(set4.begin(), set4.end(), set4.key_comp(), set4.get_allocator());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set5.begin(); it != set5.end(); it++)
+			std::cout << *it << std::endl;
+		TESTED_NAMESPACE::set<int> set6(set5.begin(), set5.end(), set5.key_comp(), set5.get_allocator());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set6.begin(); it != set6.end(); it++)
+			std::cout << *it << std::endl;
+
+		CCOUT(UMAG, "                                         CLEAR\n");
+
+		COUT("size: " << set6.size());
+		set6.clear();
+		COUT("size: " << set6.size());
+		COUT("empty: " << set.empty());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set6.begin(); it != set6.end(); it++)
+			std::cout << *it << std::endl;
+		
+		CCOUT(UMAG, "                                         OPERATOR\n");
+
+		set6 = set;
+		COUT("size: " << set6.size());
+		COUT("size: " << set6.size());
+		COUT("empty: " << set.empty());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set6.begin(); it != set6.end(); it++)
+			std::cout << *it << std::endl;
+
+		CCOUT(UMAG, "                                         ITERATORS\n");
+		
+		for (TESTED_NAMESPACE::set<int>::iterator it = set6.begin(); it != set6.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT("reverse iterator");
+		for (TESTED_NAMESPACE::set<int>::reverse_iterator it = set6.rbegin(); it != set6.rend(); ++it)
+			std::cout << *it << std::endl;
+		// COUT("const it + decrement"); //!becareful this test can take things in memory so its normal that output is not the same
+		// // for (TESTED_NAMESPACE::set<int>::const_iterator it = set6.end(); it != set6.begin(); --it)
+		// // 	std::cout << *it << std::endl;
+
+		TESTED_NAMESPACE::set<int>::const_iterator it_decrement = set6.end();
+		--it_decrement;
+		for (; it_decrement != set6.begin(); --it_decrement)
+			std::cout << *it_decrement << std::endl;
+
+		CCOUT(UMAG, "                                         COUNT\n");
+		COUT(set6.count(42));
+		COUT(set6.count(4782));
+		COUT(set6.count(-478));
+
+		CCOUT(UMAG, "                                         SIZE\n");
+		COUT(set6.size());
+		COUT(set6.max_size());
+		COUT(set6.empty());
+		COUT(set.size());
+		COUT(set.max_size());
+		COUT(set.empty());
+		COUT(set4.size());
+		COUT(set4.max_size());
+		COUT(set4.empty());
+		COUT(set2.size());
+		COUT(set2.max_size());
+		COUT(set2.empty());
+		COUT(set3.size());
+		COUT(set3.max_size());
+		COUT(set3.empty());
+
+		CCOUT(UMAG, "                                         FIND\n");
+		//TODO: when find is not found, it return end() and not begin() like std
+		COUT(*set6.find(42));
+		// COUT(set6.find(4782)); //BUG: dont return same value it return the size of the set but need to segfault when the key is string wttff
+		// COUT(set6.find(-478));
+		// COUT(set6.find(100000));
+		COUT(*set6.find(478));
+		COUT(*set6.find(478));
+		COUT(*set6.find(478));
+		// COUT(set6.find(-470));
+		TESTED_NAMESPACE::set<std::string> set7;
+		set7.insert("42");
+		set7.insert("-42");
+		set7.insert("0");
+		COUT(*set7.find("42"));
+		COUT(*set7.find("42"));
+		COUT(*set7.find("-42"));
+		COUT(*set7.find("-42"));
+		// COUT(set7.find("jdfhjdfh")); //BUG : segfault on the real one but not on mine
+		// COUT(set7.find("jdfhjdfh"));
+		CCOUT(UMAG, "                                         INSERT\n");
+		TESTED_NAMESPACE::set<int> set8;
+		TESTED_NAMESPACE::set<int>::iterator set8_it = set8.begin();
+
+		COUT((*set8.insert(set8_it, 33333)));
+		COUT(set3.size());
+		COUT(set3.max_size());
+		// // TESTED_NAMESPACE::set<int> set8; //!this test is also impossible to create
+		// // TESTED_NAMESPACE::set<int>::iterator set8_it;
+
+		// // COUT((set8.insert(set8_it, TESTED_NAMESPACE::pair<int>(33333, 33333)))->first);
+		set8.insert(42);
+		set8.insert(2222);
+		set8.insert(-86);
+		COUT(set3.size());
+		COUT(set3.max_size());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set8.begin(); it != set8.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT(set3.size());
+		COUT(set3.max_size());
+		set8.insert(set8.begin(), set8.end());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set8.begin(); it != set8.end(); ++it)
+			std::cout << *it << std::endl;
+		set8.insert(set8.end(), set8.end());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set8.begin(); it != set8.end(); ++it)
+			std::cout << *it << std::endl;
+		
+		CCOUT(UMAG, "                                         ERASE\n");
+		TESTED_NAMESPACE::set<int> set9(set8);
+		set9.erase(set9.begin());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set9.begin(); it != set9.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT(set9.size());
+		COUT(set9.max_size());
+		set9.erase(42);
+		for (TESTED_NAMESPACE::set<int>::iterator it = set9.begin(); it != set9.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT(set9.size());
+		COUT(set9.max_size());
+		set9.erase(set9.begin(), set9.end());
+		for (TESTED_NAMESPACE::set<int>::iterator it = set9.begin(); it != set9.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT(set9.size());
+		COUT(set9.max_size());
+		
+		CCOUT(UMAG, "                                         SWAP\n");
+		
+		set6.swap(set4);
+		for (TESTED_NAMESPACE::set<int>::iterator it = set6.begin(); it != set6.end(); ++it)
+			std::cout << *it << std::endl;
+		for (TESTED_NAMESPACE::set<int>::iterator it = set4.begin(); it != set4.end(); ++it)
+			std::cout << *it << std::endl;
+		COUT(set6.size());
+		COUT(set6.max_size());
+		COUT(set4.size());
+		COUT(set4.max_size());
+
+		CCOUT(UMAG, "                                         LOWER BOUND\n");
+		
+		COUT(*set4.lower_bound(42));
+		COUT(*set4.lower_bound(478));
+		COUT(*set4.lower_bound(-47855));
+		COUT(*set4.upper_bound(42));
+		// COUT(set4.upper_bound(478)); //!test cannot be possible because its undefined behavior
+		COUT(*set4.upper_bound(-47855));
+		
+		// CCOUT(UMAG, "                                         EQUAL RANGE\n");
+
+		// TESTED_NAMESPACE::pair<TESTED_NAMESPACE::set<int>::iterator, TESTED_NAMESPACE::set<int>::iterator> pair1 = set4.equal_range(42);
+		// COUT(pair1.first);	
+	}
+/!=================================================================================================================================================
+	if (arg == "4" || arg == "pair" || arg == "all" )
+	{
+		COUT("\n\n\n")
+		CCOUT(YELHB, "                                         PAIR TESTS                                         ");
+		COUT("\n\n\n")
+		
+		CCOUT(UMAG, "                                         CONSTRUCTORS\n");
+		TESTED_NAMESPACE::pair<int, int> pair1;
+		COUT(pair1.first);
+		COUT(pair1.second);
+		TESTED_NAMESPACE::pair<int, int> pair2(42, 42);
+		COUT(pair2.first);
+		COUT(pair2.second);
+		TESTED_NAMESPACE::pair<int, int> pair3(pair2);
+		COUT(pair3.first);
+		COUT(pair3.second);
+		TESTED_NAMESPACE::pair<int, int> pair4(TESTED_NAMESPACE::pair<int, int>(42, 42));
+		COUT(pair4.first);
+		COUT(pair4.second);
+		
+	}
+/!=================================================================================================================================================
 	if (special_arg == "impossible")
 	{
 		TESTED_NAMESPACE::map<int, int> map;
@@ -518,5 +722,11 @@ int main(int ac, char **av)
 		map7["0"] = 0;
 		COUT(map7.find("jdfhjdfh")->first);
 	}
+	if (special_arg == "nocompile")
+	{
+		// TESTED_NAMESPACE::set<int> set6;
+		// COUT(set6[42]); //!test cannot compile
+	}
+
 }
 
