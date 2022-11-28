@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 15:55:45 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 16:11:04 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,45 @@
 #define T_SIZE_TYPE typename TESTED_NAMESPACE::vector<T>::size_type
 
 using namespace TESTED_NAMESPACE;
+
+int leak_i = 0;
+
+class LeakClass
+{
+	public:
+
+		LeakClass()
+		{
+			ptr = new int;
+		}
+
+		LeakClass(const LeakClass& other)
+		: ptr(NULL)
+		{
+			(void)other;
+			if (leak_i++ == 10)
+				throw std::runtime_error("error leak custom");
+			if (ptr)
+				delete ptr;
+			ptr = new int;
+		}
+
+		LeakClass operator=(const LeakClass& rhs)
+		{
+			(void)rhs;
+			if (ptr)
+				delete ptr;
+			ptr = new int;
+			return (*this);
+		}
+
+		~LeakClass()
+		{
+			delete ptr;
+		}
+
+		int *ptr;
+};
 
 
 int main(int ac, char **av)
@@ -289,6 +328,33 @@ int main(int ac, char **av)
 			myvector.reserve(myvector.max_size() + 1);
 		}
 		catch (std::exception &e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+	}
+	if (special_arg == "11" )
+	{
+
+		ft::vector<LeakClass> v;
+		try
+		{
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+			v.push_back(LeakClass());
+
+		} catch (std::exception &e)
 		{
 			std::cout << e.what() << std::endl;
 		}
