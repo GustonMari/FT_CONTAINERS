@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 15:17:31 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:24:28 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,51 +167,33 @@ namespace ft
 			size_type searchCase(NodePtr node, _first key) const
 			{
 				if (key == node->data.first)
-				{
 					return 1;
-				}
 				if (node == LEAF_NULL)
 					return 0;
-
 				if (m_comp(key, node->data.first))
-				{
 					return searchCase(node->left, key);
-				}
 				return searchCase(node->right, key);
 			}
 
 			NodePtr searchTreeHelper(NodePtr node, const _first key)
 			{
 				if (key == node->data.first)
-				{
 					return node;
-				}
 				if (node == LEAF_NULL)
-				{
 					return LEAF_NULL;
-				}
 				if (m_comp(key, node->data.first))
-				{
 					return searchTreeHelper(node->left, key);
-				}
 				return searchTreeHelper(node->right, key);
 			}
 
 			NodePtr const_searchTreeHelper(NodePtr node, const _first key) const
 			{
 				if (key == node->data.first)
-				{
 					return node;
-				}
 				if (node == LEAF_NULL)
-				{
 					return LEAF_NULL;
-				}
-				// if (key < node->data.first)
 				if (m_comp(key, node->data.first))
-				{
 					return const_searchTreeHelper(node->left, key);
-				}
 				return const_searchTreeHelper(node->right, key);
 			}
 
@@ -295,17 +277,11 @@ namespace ft
 			void rbTransplant(NodePtr u, NodePtr v)
 			{
 				if (u->parent == ft::_nullptr)
-				{
 					root = v;
-				}
 				else if (u == u->parent->left)
-				{
 					u->parent->left = v;
-				}
 				else
-				{
 					u->parent->right = v;
-				}
 				v->parent = u->parent;
 			}
 
@@ -320,26 +296,15 @@ namespace ft
 				while (node != LEAF_NULL)
 				{
 					if (node->data == key)
-					{
 						z = node;
-					}
-					//BUG:
-					// if (node->data <= key)
 					if (m_comp(node->data.first, key.first))
-					{
 						node = node->right;
-					}
 					else
-					{
 						node = node->left;
-					}
 				}
 
 				if (z == LEAF_NULL)
-				{
-					std::cout << "Key not found in the tree" << std::endl;
 					return (false);
-				}
 
 				y = z;
 				//* we save the original color of futur deleted node
@@ -367,9 +332,7 @@ namespace ft
 					x = y->right;
 					//* if y is one of the child of the node to be deleted, then we assign x parent to y
 					if (y->parent == z)
-					{
 						x->parent = y;
-					}
 					else
 					{
 						rbTransplant(y, y->right);
@@ -387,9 +350,7 @@ namespace ft
 				// delete z;
 				//* if the original color of y was black, then we need to fix the tree
 				if (y_original_color == BLACK)
-				{
 					deleteFix(x);
-				}
 				return (true);
 			}
 
@@ -451,9 +412,7 @@ namespace ft
 						}
 					}
 					if (k == root) //* finish the loop because everything is balanced
-					{
 						break;
-					}
 				}
 				//* root node is always black
 				root->color = BLACK;
@@ -492,21 +451,6 @@ namespace ft
 
 			public:
 
-			// void preorder()
-			// {
-			// 	preOrderHelper(this->root);
-			// }
-
-			// void inorder()
-			// {
-			// 	inOrderHelper(this->root);
-			// }
-
-			// void postorder()
-			// {
-			// 	postOrderHelper(this->root);
-			// }
-
 			NodePtr searchTree(const _first k)
 			{
 				return searchTreeHelper(this->root, k);
@@ -522,9 +466,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->left != LEAF_NULL)
-				{
 					node = node->left;
-				}
 				return node;
 			}
 
@@ -533,9 +475,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->left != LEAF_NULL)
-				{
 					node = node->left;
-				}
 				return node;
 			}
 
@@ -544,9 +484,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->right != LEAF_NULL)
-				{
 					node = node->right;
-				}
 				return node;
 			}
 
@@ -555,45 +493,43 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->right != LEAF_NULL)
-				{
 					node = node->right;
-				}
 				return node;
 			}
 
 
-			NodePtr successor(NodePtr x)
-			{
-				if (x->right != LEAF_NULL)
-				{
-					return minimum(x->right);
-				}
+			// NodePtr successor(NodePtr x)
+			// {
+			// 	if (x->right != LEAF_NULL)
+			// 	{
+			// 		return minimum(x->right);
+			// 	}
 
-				NodePtr y = x->parent;
-				while (y != LEAF_NULL && x == y->right)
-				{
-					x = y;
-					y = y->parent;
-				}
-				return y;
-			}
+			// 	NodePtr y = x->parent;
+			// 	while (y != LEAF_NULL && x == y->right)
+			// 	{
+			// 		x = y;
+			// 		y = y->parent;
+			// 	}
+			// 	return y;
+			// }
 
-			NodePtr predecessor(NodePtr x)
-			{
-				if (x->left != LEAF_NULL)
-				{
-					return maximum(x->left);
-				}
+			// NodePtr predecessor(NodePtr x)
+			// {
+			// 	if (x->left != LEAF_NULL)
+			// 	{
+			// 		return maximum(x->left);
+			// 	}
 
-				NodePtr y = x->parent;
-				while (y != LEAF_NULL && x == y->left)
-				{
-					x = y;
-					y = y->parent;
-				}
+			// 	NodePtr y = x->parent;
+			// 	while (y != LEAF_NULL && x == y->left)
+			// 	{
+			// 		x = y;
+			// 		y = y->parent;
+			// 	}
 
-				return y;
-			}
+			// 	return y;
+			// }
 
 			void leftRotate(NodePtr x)
 			{
@@ -601,25 +537,17 @@ namespace ft
 				x->right = y->left;
 				//* if y's left child is not null (y has a left subtree), assign x as the parent of the left subtree of y
 				if (y->left != LEAF_NULL)
-				{
 					y->left->parent = x;
-				}
 				y->parent = x->parent;
 				//* if x's parent is null, assign y as the root of the tree
 				if (x->parent == ft::_nullptr)
-				{
 					this->root = y;
-				}
 				//* else if x is the left child of parent, assign y as the left child of x's parent
 				else if (x == x->parent->left)
-				{
 					x->parent->left = y;
-				}
 				//* else assign y as the right child of x's parent
 				else
-				{
 					x->parent->right = y;
-				}
 				//* y is now the parent of x
 				y->left = x;
 				x->parent = y;
@@ -631,25 +559,17 @@ namespace ft
 				x->left = y->right;
 				//* if x's right child is not null (x has a right subtree), assign y as the parent of the right subtree of x
 				if (y->right != LEAF_NULL)
-				{
 					y->right->parent = x;
-				}
 				y->parent = x->parent;
 				//* if x's parent is null, assign y as the root of the tree
 				if (x->parent == ft::_nullptr)
-				{
 					this->root = y;
-				}
 				//* else if x is the right child of parent, assign y as the right child of x's parent
 				else if (x == x->parent->right)
-				{
 					x->parent->right = y;
-				}
 				//* else assign y as the left child of x's parent
 				else
-				{
 					x->parent->left = y;
-				}
 				//* y is now the parent of x
 				y->right = x;
 				x->parent = y;
@@ -659,11 +579,8 @@ namespace ft
 			//* we always insert a node as a red node, and then we fix the tree, because red nodes does not violate the red-black tree properties
 			//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 			
-			//TODO: need to change int for the key to value_type??
-			// value_type insert(value_type key)
 			pointer insert(value_type key)
 			{
-				//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
 				NodePtr node = m_alloc.allocate(sizeof(Node<value_type>));
 				m_alloc.construct(node, Node<value_type>(key, LEAF_NULL, LEAF_NULL));
 				NodePtr y = ft::_nullptr;
@@ -673,8 +590,7 @@ namespace ft
 				{
 					y = x;
 					//*Move depending on the value of the data
-					// if (node->data < x->data) // TODO utiliser comp pas <
-					if (m_comp(node->data.first, x->data.first)) // TODO utiliser comp pas <
+					if (m_comp(node->data.first, x->data.first)) 
 					{
 						//*If the data is smaller than the current node, go left
 						x = x->left;
