@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 17:23:00 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 12:44:19 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,26 +318,27 @@ namespace ft {
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, ENABLE_IF(InputIterator) last)
 			{
-				//calculate the position of the iterator
-				ptrdiff_t pos = position - begin();
-				if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
-				{
-					if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
-					{
-						// this->reserve(this->m_capacity * 2);
-						this->reserve(this->m_size * 2);
-					}
-					else
-					{
-						this->reserve(this->m_size + (std::distance(first, last)));
-					}
-				}
+				// //calculate the position of the iterator
+				// ptrdiff_t pos = position - begin();
+				// if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
+				// {
+				// 	if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
+				// 	{
+				// 		// this->reserve(this->m_capacity * 2);
+				// 		this->reserve(this->m_size * 2);
+				// 	}
+				// 	else
+				// 	{
+				// 		this->reserve(this->m_size + (std::distance(first, last)));
+				// 	}
+				// }
 				
-				for (int i = 0; last != first; first++)
-				{
-					this->insert(begin() + pos + i, *first);
-					i++;
-				}
+				// for (int i = 0; last != first; first++)
+				// {
+				// 	this->insert(begin() + pos + i, *first);
+				// 	i++;
+				// }
+				this->insert_specialised(position, first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 			}
 
 			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
@@ -354,25 +355,24 @@ namespace ft {
 			template <class InputIterator>
 			void	assign(InputIterator first, ENABLE_IF(InputIterator) last)
 			{
-				// // if (this == &last)
-				// // 	return ;
-				// this->clear();
-				// // for (InputIterator tmp = first; !(tmp == last); tmp++)
-				// // 	this->push_back(*tmp);
-				// for (; (first != last); first++)
-				// 	this->push_back(*first);
 
-				difference_type	nb = std::distance(first, last);
-				this->clear();
-				reserve(nb);
+				// difference_type	nb = std::distance(first, last);
 				// this->clear();
-				this->m_size = nb;
-				for (difference_type i = 0; i < nb; i++)
-				{
-					this->m_alloc.construct(this->m_start + i, *first);
-					first++;
-				}
-				this->m_size = nb;
+				// reserve(nb);
+				// // this->clear();
+				// this->m_size = nb;
+				// for (difference_type i = 0; i < nb; i++)
+				// {
+				// 	this->m_alloc.construct(this->m_start + i, *first);
+				// 	first++;
+				// }
+				// this->m_size = nb;
+
+				
+				this->clear();
+				this->insert_specialised(this->begin(), first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
+				// this->m_size = nb;
+				
 			}
 
 			//TODO: need to redo assign for better speed benchmark result 
@@ -399,9 +399,10 @@ namespace ft {
 			template <class InputIterator>
 			vector (InputIterator first, ENABLE_IF(InputIterator) last, const allocator_type & alloc = allocator_type()): vector_base<Tp, Allocator>(first, last, alloc)
 			{
-				for (; first != last; first++)
-					push_back(*first);
-				this->m_capacity = this->m_size;
+				this->insert_specialised(this->begin(), first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
+				// for (; first != last; first++)
+				// 	push_back(*first);
+				// this->m_capacity = this->m_size;
 			};
 			
 			vector (const vector & x): vector_base<Tp, Allocator>(x)
@@ -495,6 +496,42 @@ namespace ft {
 			T	c(a);
 			a = b;
 			b = c;
+		}
+
+		template <class InputIterator>
+		void	insert_specialised(iterator position, InputIterator first, InputIterator last, std::forward_iterator_tag)
+		{
+				//calculate the position of the iterator
+				ptrdiff_t pos = position - begin();
+				if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
+				{
+					if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
+					{
+						// this->reserve(this->m_capacity * 2);
+						this->reserve(this->m_size * 2);
+					}
+					else
+					{
+						this->reserve(this->m_size + (std::distance(first, last)));
+					}
+				}
+				
+				for (int i = 0; last != first; first++)
+				{
+					this->insert(begin() + pos + i, *first);
+					i++;
+				}
+		}
+
+		template <class InputIterator>
+		void	insert_specialised(iterator position, InputIterator first, InputIterator last, std::input_iterator_tag)
+		{
+			ft::vector<value_type> tmp;
+			tmp.insert(tmp.begin(), this->begin(), position);
+			for (;first != last; first++)
+				tmp.push_back(*first);
+			tmp.insert(tmp.end(), position, this->end());
+			this->swap(tmp);
 		}
 	};
 

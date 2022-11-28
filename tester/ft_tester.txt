@@ -10,3 +10,22 @@
 3 - SET
 4 - PAIR
 [0m
+
+
+
+
+[0;103m                                         PAIR TESTS                                         [0m
+
+
+
+
+[4;35m                                         CONSTRUCTORS
+[0m
+0
+0
+42
+42
+42
+42
+42
+42

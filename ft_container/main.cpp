@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/25 15:37:06 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 12:41:41 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,8 +496,109 @@ int main(int ac, char **av)
 
 		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, int>::iterator, TESTED_NAMESPACE::map<int, int>::iterator> pair1 = map4.equal_range(42);
 		COUT(pair1.first->first);	
+
+
+		//nono tests
+		std::cout << BGRN << "a) Single element" << CRESET << std::endl;
+
+		TESTED_NAMESPACE::map<std::string,int> map_insert_1;
+
+		map_insert_1.insert (TESTED_NAMESPACE::make_pair<std::string, int>("A" , 100));
+		map_insert_1.insert (TESTED_NAMESPACE::make_pair<std::string, int>("b" , 300));
+		map_insert_1.insert (TESTED_NAMESPACE::make_pair<std::string, int>("C" , 400));
+		map_insert_1.insert (TESTED_NAMESPACE::make_pair<std::string, int>("D" , 200));
+		map_insert_1.insert (TESTED_NAMESPACE::make_pair<std::string, int>("E", 500));
+
+		// // print_map(map_insert_1);
+
+		std::cout << BGRN << "b) With hint" << CRESET << std::endl;
+
+		TESTED_NAMESPACE::map<std::string,int>::iterator it_insert_1 = map_insert_1.begin();
+		it_insert_1++;
+		it_insert_1++;
+		map_insert_1.insert (it_insert_1, TESTED_NAMESPACE::make_pair<std::string, int>("OHOHOHOH" , 100));
+		// print_map(map_insert_1);
+		std::cout << "-------" << std::endl;
+		map_insert_1.insert (map_insert_1.begin(), TESTED_NAMESPACE::make_pair<std::string, int>("OHOHOHOH" , 200));
+		// print_map(map_insert_1);
+		std::cout << "-------" << std::endl;
+		map_insert_1.insert (map_insert_1.begin(), TESTED_NAMESPACE::make_pair<std::string, int>("pouet" , 200));
+		// print_map(map_insert_1);
+
+		std::cout << BGRN << "c) Range" << CRESET << std::endl;
+
+		TESTED_NAMESPACE::map<std::string,int> map_insert_2;
+
+		map_insert_2.insert (map_insert_1.begin(), map_insert_1.end());
+
+		// print_map(map_insert_2);
+		std::cout << "-------" << std::endl;
+		map_insert_2.insert (map_insert_1.begin(), map_insert_1.end());
+		// print_map(map_insert_2);
+		std::cout << "-------" << std::endl;
+		map_insert_2.insert (map_insert_1.begin(), map_insert_1.begin());
+		// print_map(map_insert_2);
+		std::cout << "-------" << std::endl;
+
+		TESTED_NAMESPACE::map<std::string,int> map_insert_3;
+
+		TESTED_NAMESPACE::map<std::string,int>::iterator it_insert_2 = map_insert_1.begin();
+		TESTED_NAMESPACE::map<std::string,int>::iterator it_insert_3 = map_insert_1.end();
+
+		it_insert_2++;
+		it_insert_2++;
+		it_insert_3--;
+		it_insert_3--;
+
+		map_insert_3.insert (it_insert_2, it_insert_3);
+
+		// print_map(map_insert_3);
+
+		std::cout << BBLU << "18) BEGIN && END" << CRESET << std::endl;
+
+		TESTED_NAMESPACE::map<int ,int> map_begin_end;
+
+		for (int i = 0; i < 5; i++)
+			map_begin_end.insert (TESTED_NAMESPACE::make_pair<int, int>(i , i + 5));
+
+		TESTED_NAMESPACE::map<int ,int>::iterator it_be_begin = map_begin_end.begin();
+		for (int i = 0; i < 5; i++)
+		{
+			std::cout << "first  = " << it_be_begin->first <<  "| second = " << it_be_begin->second << std::endl;
+			it_be_begin++;
+		}
+		std::cout << "-------" << std::endl;
+		TESTED_NAMESPACE::map<int ,int>::iterator it_be_end = map_begin_end.end();
+		for (int i = 0; i < 5; i++)
+		{
+			it_be_end--;
+			std::cout << "first  = " << it_be_end->first <<  "| second = " << it_be_end->second << std::endl;
+		}
+		std::cout << "-------" << std::endl;
+		it_be_begin++;
+		it_be_begin++;
+		it_be_begin++;
+		it_be_begin--;
+		std::cout << "first  = " << it_be_begin->first <<  "| second = " << it_be_begin->second << std::endl;
+		it_be_begin--;
+		std::cout << "first  = " << it_be_begin->first <<  "| second = " << it_be_begin->second << std::endl;
+		it_be_begin--;
+		std::cout << "first  = " << it_be_begin->first <<  "| second = " << it_be_begin->second << std::endl;
+		it_be_begin--;
+		std::cout << "first  = " << it_be_begin->first <<  "| second = " << it_be_begin->second << std::endl;
+		std::cout << "-------" << std::endl;
+		// it_be_end--;
+		it_be_end++;
+		std::cout << "first  = " << it_be_end->first <<  "| second = " << it_be_end->second << std::endl;
+		it_be_end++;
+		std::cout << "first  = " << it_be_end->first <<  "| second = " << it_be_end->second << std::endl;
+		it_be_end++;
+		std::cout << "first  = " << it_be_end->first <<  "| second = " << it_be_end->second << std::endl;
+		it_be_end--;
+		std::cout << "first  = " << it_be_end->first <<  "| second = " << it_be_end->second << std::endl;
+		it_be_end--;
 	}
-//!====================================================================================================================================================
+	//!====================================================================================================================================================
 	if (arg == "3" || arg == "set" || arg == "all" )
 	{
 		COUT("\n\n\n")
@@ -675,7 +776,7 @@ int main(int ac, char **av)
 		// TESTED_NAMESPACE::pair<TESTED_NAMESPACE::set<int>::iterator, TESTED_NAMESPACE::set<int>::iterator> pair1 = set4.equal_range(42);
 		// COUT(pair1.first);	
 	}
-/!=================================================================================================================================================
+//!=================================================================================================================================================
 	if (arg == "4" || arg == "pair" || arg == "all" )
 	{
 		COUT("\n\n\n")
@@ -697,7 +798,7 @@ int main(int ac, char **av)
 		COUT(pair4.second);
 		
 	}
-/!=================================================================================================================================================
+//!=================================================================================================================================================
 	if (special_arg == "impossible")
 	{
 		TESTED_NAMESPACE::map<int, int> map;
