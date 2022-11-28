@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 12:47:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/26 08:43:53 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:28:02 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,16 @@ namespace ft
 			
 			explicit reverse_iterator(iterator_type other) : current(other) {}
 			
-			// reverse_iterator(const reverse_iterator<Iterator>& other) : current(other.current) {}
 			template <class Iter>
 			reverse_iterator(const reverse_iterator<Iter>& other) : current(other.base()) {}
 			
 			//!----------------------------OPERATORS---------------------------------------------------------
 			
-			
-			
-			//return c current, accesss the underlying container
 			Iterator base() const { return current; }
 
 
 			reverse_iterator& operator=(const reverse_iterator<Iterator>& other)
 			{
-				// CCOUT(BRED, "cest caaaaaaaaaaaaaaaaaaaaaaaa")
-
 				if (this != &other)
 				{
 					current = other.current;
@@ -74,15 +68,8 @@ namespace ft
 				return *--tmp;
 			}
 
-			
 			//retourne un pointeur sur le contenu de l'itérateur (a --current)
-			pointer operator->() const { return &(operator*()); } //TODO vraiment a tester
-
-			// pointer operator->() const
-			// {
-			// 	Iterator tmp = current;
-			// 	return &(*--tmp);
-			// }
+			pointer operator->() const { return &(operator*()); }
 
 			reverse_iterator & operator++()
 			{
@@ -110,28 +97,24 @@ namespace ft
 				return (tmp);
 			}
 			
-	
 			// ici on utilise difference_type car on a sait que (ptrdiff_t) appartient forcement au container associee
 			reverse_iterator operator+(difference_type n) const
 			{
 				return (reverse_iterator(current - n));
 			}
-
-			
-
 			
 			reverse_iterator operator-(difference_type n) const
 			{
 				return (reverse_iterator(current + n));
 			}
 			
-			reverse_iterator & operator+=(difference_type n) // BUG peut etre cest pas ce quil faut faire
+			reverse_iterator & operator+=(difference_type n)
 			{
 				current -= n;
 				return *this;
 			}
 
-			reverse_iterator & operator-=(difference_type n) //BUG cets peut etre pas exactement ca
+			reverse_iterator & operator-=(difference_type n)
 			{
 				current += n;
 				return *this;
@@ -156,7 +139,6 @@ namespace ft
 	{
 		return (reverse_iterator<Iterator>(x.base() - n));
 	}
-	// template <typename IteratorL,
 	
 	template <typename IteratorL, typename IteratorR>
 	typename reverse_iterator<IteratorL>::difference_type operator-(const reverse_iterator<IteratorL>& lhs, const reverse_iterator<IteratorR>& rhs)
@@ -187,7 +169,6 @@ namespace ft
 	template <typename Iterator>
 	inline bool operator<(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
 	{
-		// CCOUT(BYEL, "aaaaaaaaaaaaa")
 		return lhs.base() > rhs.base();
 	}
 
@@ -246,7 +227,6 @@ namespace ft
 	{
 		return lhs.base() <= rhs.base();
 	}
-	
 }
 
 #endif

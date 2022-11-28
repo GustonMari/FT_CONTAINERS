@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:10:22 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 17:17:38 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:39:59 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,6 @@ namespace ft
 			//!=============================== Constructors ======================================================
 
 			//*empty
-			// explicit set (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp),  m_size(0)
-			// {
-			// }
-
 			explicit set (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp), m_size(0)
 			{
 			}
@@ -185,7 +181,6 @@ namespace ft
 
 			size_type max_size(void) const
 			{
-				// return (m_alloc.max_size());
 				return (std::numeric_limits<difference_type>::max() / sizeof(Node<value_type>));
 			}
 
@@ -212,7 +207,6 @@ namespace ft
 
 			//!================================ Insert ======================================================
 			//*single element
-			// void insert (const value_type& val)
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				if (m_root.insert(val) == ft::_nullptr)
@@ -221,7 +215,6 @@ namespace ft
 				return ft::make_pair(iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()), true);
 			}
 			
-			//TODO: check if it works
 			//*with hint
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -272,15 +265,12 @@ namespace ft
 					it = first;
 					first++;
 					erase(*it);
-					// erase(it->first);
 				}
 			}
 			//!================================ Swap ======================================================
 			
-			//TODO: make non-memeber function and member functions
 			void swap (set& x)
 			{
-				//TODO: need to swap m_comp and m_alloc ??
 				real_swap(m_root, x.m_root);
 				real_swap(m_size, x.m_size);
 			}
@@ -301,14 +291,11 @@ namespace ft
 			
 			//!================================ Lower Bound ======================================================
 			
-			//TODO: this maybe is not working because "The function uses its internal comparison object (key_comp) to determine this, returning an iterator to the first element for which key_comp(element_key,k) would return false."
-			
 			iterator	lower_bound(const key_type& k)
 			{
 				return (iterator(m_root.lower_bound_rbt(m_root.getRoot(), k), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
-			//TODO: need to do const version of lower_bound
 			const_iterator	lower_bound(const key_type& k) const
 			{
 				return (const_iterator(m_root.lower_bound_rbt(m_root.const_getRoot(), k), m_root.const_get_leaf_null(), m_root.const_getRoot()));
@@ -333,7 +320,6 @@ namespace ft
 				return (ft::make_pair(lower_bound(k), upper_bound(k)));
 			}
 
-			//TODO: need to do const version of equal_range
 			pair<const_iterator, const_iterator>	equal_range(const key_type& k) const
 			{
 				return (ft::make_pair(lower_bound(k), upper_bound(k)));
@@ -350,7 +336,6 @@ namespace ft
 		private:
 
 			template <class L> 
-			// TODO: pas sur que le type soit T
 			void real_swap ( L& a, L& b )
 			{
 				L	c(a);
@@ -359,13 +344,7 @@ namespace ft
 			}
 
 			// !================================ Utils ======================================================
-			// void	print_tree()
-			// {
-				// m_root.printTree();
-			// }
 	};
-	
-
 
 template <class Key, class Compare, class Allocator>
 bool	operator==(const ft::set<Key, Compare, Allocator>& lhs, const ft::set<Key, Compare, Allocator>& rhs)

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:10:19 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 18:18:27 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:40:36 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ namespace ft
 			typedef typename Container::const_reference	const_reference;
 			typedef typename Container::size_type		size_type;
 			typedef			 Container					container_type;
-			
-			// stack() : c() {}
 			
 			explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {}
 

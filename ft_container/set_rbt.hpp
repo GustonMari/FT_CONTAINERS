@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 17:08:19 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:36:38 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,71 +32,41 @@
 
 namespace ft
 {
-	
-	// using namespace std;
-	// template <class value_type, class key_compare, class allocator_type>
 	template <class value_type, class key_compare, class allocator_type, class _first, class _second>
 	class Set_RedBlackTree
 	{
 		public:
 			typedef Node<value_type> *NodePtr;
-			typedef typename allocator_type::template rebind<Node<value_type> >::other node_allocator_type; //BUG comment marche reelmend le rebind??
+			typedef typename allocator_type::template rebind<Node<value_type> >::other node_allocator_type;
 			//TODO: vraiment pas sur pour les const :/
 
 			typedef typename std::allocator<Node<value_type> >::pointer 							pointer;	
-			// typedef typename ft::IteratorMap<value_type, Node<value_type> >						_iterator;
-			// typedef typename ft::IteratorMap<Node, key_compare>						const_iterator;
-			// typedef	typename ft::reverse_iterator<iterator>							reverse_iterator;
-			// typedef	typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 			typedef typename std::size_t										size_type;
 			typedef typename std::ptrdiff_t										difference_type;
-			// typedef typename 
-			
 
 		private:
 			//!Utils variables
 			key_compare m_comp;
 			node_allocator_type m_alloc;
 			NodePtr m_root;
-			// NodePtr m_nil;
 
 		public:
-
-			
 			//!	Constructors and destructor
 			NodePtr root;
 			NodePtr LEAF_NULL;
 
 			Set_RedBlackTree()
 			{
-				//TODO: need to instantiate _alloc so need to replace the new
 				m_alloc = allocator_type();
 				m_comp = key_compare();
-				// LEAF_NULL = m_alloc.allocate(sizeof(Node));
 				LEAF_NULL = m_alloc.allocate(sizeof(Node<value_type>));
-				// m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
-				// LEAF_NULL = new Node;
-				
-				//BUG TODO: attention la ligne en dessous est surement fausses et nique tout
 				LEAF_NULL->parent = ft::_nullptr;
-				
 				LEAF_NULL->color = BLACK;
 				LEAF_NULL->left = ft::_nullptr;
 				LEAF_NULL->right = ft::_nullptr;
-				// root = LEAF_NULL;
 				root = LEAF_NULL;
 			};
-
-			// Set_RedBlackTree(): root(ft::_nullptr), m_comp(key_compare), m_alloc(allocator_type)
-			// {
-			// 	//TODO: need to instantiate _alloc
-			// }
-
-			// Set_RedBlackTree(const Set_RedBlackTree &x)
-			// {
-			// 	*this = x;
-			// }
 
 			~Set_RedBlackTree()
 			{
@@ -106,32 +76,8 @@ namespace ft
 			}
 
 
-			// //!Operators
-			// Set_RedBlackTree &operator=(const Set_RedBlackTree &x)
-			// {
-			// 	if (this != &x)
-			// 	{
-			// 		// root = x.root;
-			// 		// m_comp = x.m_comp;
-			// 		// m_alloc = x.m_alloc;
-			// 		delete_tree(root);
-			// 		m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));					
-			// 		LEAF_NULL->color = BLACK;
-			// 		LEAF_NULL->left = ft::_nullptr;
-			// 		LEAF_NULL->right = ft::_nullptr;
-			// 		root = LEAF_NULL;
-					
-			// 	}
-			// 	return (*this);
-			// }
-
-			// void operator*(void)
-			// {
-			// 	std::cout << "operator*" << std::endl;
-			// }
-
+			//!Operators
 			//!================================Functions================================
-			
 
 			NodePtr begin()
 			{
@@ -143,7 +89,6 @@ namespace ft
 				return ((const_minimum(root)));
 			}
 
-		
 			NodePtr end()
 			{
 				return (maximum(root));
@@ -162,14 +107,11 @@ namespace ft
 			// size_type count(const value_type &k) const
 			size_type count(const _first &k) const
 			{
-				//voir si ca boucle pas inf
-				//TODO: vraiment pas sur de ca
 				return (searchCase(root, k));
 			}
 
 			void	destroy_leaf()
 			{
-				// CCOUT(BRED, "destroy_leaf");
 				m_alloc.destroy(LEAF_NULL);
 				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
@@ -178,8 +120,6 @@ namespace ft
 			{
 				delete_tree_internal(root);
 				m_root = LEAF_NULL;
-				// m_alloc.destroy(LEAF_NULL);
-				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 			void
@@ -191,11 +131,8 @@ namespace ft
 			
 		private:
 			//!Utils functions
-			// NodePtr root;
-			// NodePtr LEAF_NULL;
 			void	delete_tree_internal(NodePtr node)
 			{
-				// clear(root);
 				if (node == LEAF_NULL)
 					return ; 
 			
@@ -204,8 +141,6 @@ namespace ft
 			
 				m_alloc.destroy(node);
 				m_alloc.deallocate(node, sizeof(Node<value_type>));
-				// m_alloc.destroy(LEAF_NULL);
-				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 			void	clear_internal(NodePtr node)
@@ -229,39 +164,6 @@ namespace ft
 				node->color = BLACK;
 			}
 
-			// Preorder
-			void preOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					std::cout << node->data << " ";
-					preOrderHelper(node->left);
-					preOrderHelper(node->right);
-				}
-			}
-
-			// Inorder
-			void inOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					inOrderHelper(node->left);
-					std::cout << node->data << " ";
-					inOrderHelper(node->right);
-				}
-			}
-
-			// Post order
-			void postOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					postOrderHelper(node->left);
-					postOrderHelper(node->right);
-					std::cout << node->data << " ";
-				}
-			}
-
 			/*
 				!we recusively call the function until we find the good value
 				https://www.happycoders.eu/algorithms/binary-search-tree-java/#Binary_Search_Tree_Example
@@ -271,49 +173,33 @@ namespace ft
 			size_type searchCase(NodePtr node, _first key) const
 			{
 				if (key == node->data)
-				{
 					return 1;
-				}
 				if (node == LEAF_NULL)
 					return 0;
 				if (m_comp(key, node->data))
-				{
 					return searchCase(node->left, key);
-				}
 				return searchCase(node->right, key);
 			}
 
 			NodePtr searchTreeHelper(NodePtr node, const _first key)
 			{
 				if (key == node->data)
-				{
 					return node;
-				}
 				if (node == LEAF_NULL)
-				{
 					return LEAF_NULL;
-				}
 				if (m_comp(key, node->data))
-				{
 					return searchTreeHelper(node->left, key);
-				}
 				return searchTreeHelper(node->right, key);
 			}
 
 			NodePtr const_searchTreeHelper(NodePtr node, const _first key) const
 			{
 				if (key == node->data)
-				{
 					return node;
-				}
 				if (node == LEAF_NULL)
-				{
 					return LEAF_NULL;
-				}
 				if (m_comp(key, node->data))
-				{
 					return const_searchTreeHelper(node->left, key);
-				}
 				return const_searchTreeHelper(node->right, key);
 			}
 
@@ -397,17 +283,11 @@ namespace ft
 			void rbTransplant(NodePtr u, NodePtr v)
 			{
 				if (u->parent == ft::_nullptr)
-				{
 					root = v;
-				}
 				else if (u == u->parent->left)
-				{
 					u->parent->left = v;
-				}
 				else
-				{
 					u->parent->right = v;
-				}
 				v->parent = u->parent;
 			}
 
@@ -422,26 +302,15 @@ namespace ft
 				while (node != LEAF_NULL)
 				{
 					if (node->data == key)
-					{
 						z = node;
-					}
-					//BUG:
-					// if (node->data <= key)
 					if (m_comp(node->data, key))
-					{
 						node = node->right;
-					}
 					else
-					{
 						node = node->left;
-					}
 				}
 
 				if (z == LEAF_NULL)
-				{
-					std::cout << "Key not found in the tree" << std::endl;
 					return (false);
-				}
 
 				y = z;
 				//* we save the original color of futur deleted node
@@ -486,12 +355,9 @@ namespace ft
 				}
 				m_alloc.destroy(z);
 				m_alloc.deallocate(z, sizeof(Node<value_type>));
-				// delete z;
 				//* if the original color of y was black, then we need to fix the tree
 				if (y_original_color == BLACK)
-				{
 					deleteFix(x);
-				}
 				return (true);
 			}
 
@@ -553,9 +419,7 @@ namespace ft
 						}
 					}
 					if (k == root) //* finish the loop because everything is balanced
-					{
 						break;
-					}
 				}
 				//* root node is always black
 				root->color = BLACK;
@@ -563,8 +427,6 @@ namespace ft
 
 			void printHelper(NodePtr root, std::string indent, bool last)
 			{
-				// if (root == ft::_nullptr)
-				// 	return ;
 				if (root != LEAF_NULL)
 				{
 					std::cout << indent;
@@ -578,36 +440,16 @@ namespace ft
 						std::cout << "L----";
 						indent += "|  ";
 					}
-
 					if (root->color == RED)
-					{
 						std::cout << BRED << root->data << "(" << "RED" << ")" << "--->" << root->data << CRESET<< std::endl;
-					}
 					else
-					{
 						std::cout << BBLU << root->data << "(" << "BLACK" << ")" << "--->" << root->data << CRESET << std::endl;
-					}
 					printHelper(root->left, indent, false);
 					printHelper(root->right, indent, true);
 				}
 			}
 
 			public:
-
-			// void preorder()
-			// {
-			// 	preOrderHelper(this->root);
-			// }
-
-			// void inorder()
-			// {
-			// 	inOrderHelper(this->root);
-			// }
-
-			// void postorder()
-			// {
-			// 	postOrderHelper(this->root);
-			// }
 
 			NodePtr searchTree(const _first k)
 			{
@@ -624,9 +466,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->left != LEAF_NULL)
-				{
 					node = node->left;
-				}
 				return node;
 			}
 
@@ -635,9 +475,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->left != LEAF_NULL)
-				{
 					node = node->left;
-				}
 				return node;
 			}
 
@@ -646,9 +484,7 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->right != LEAF_NULL)
-				{
 					node = node->right;
-				}
 				return node;
 			}
 
@@ -657,44 +493,8 @@ namespace ft
 				if (node == LEAF_NULL)
 					return node;
 				while (node->right != LEAF_NULL)
-				{
 					node = node->right;
-				}
 				return node;
-			}
-
-
-			NodePtr successor(NodePtr x)
-			{
-				if (x->right != LEAF_NULL)
-				{
-					return minimum(x->right);
-				}
-
-				NodePtr y = x->parent;
-				while (y != LEAF_NULL && x == y->right)
-				{
-					x = y;
-					y = y->parent;
-				}
-				return y;
-			}
-
-			NodePtr predecessor(NodePtr x)
-			{
-				if (x->left != LEAF_NULL)
-				{
-					return maximum(x->left);
-				}
-
-				NodePtr y = x->parent;
-				while (y != LEAF_NULL && x == y->left)
-				{
-					x = y;
-					y = y->parent;
-				}
-
-				return y;
 			}
 
 			void leftRotate(NodePtr x)
@@ -703,25 +503,17 @@ namespace ft
 				x->right = y->left;
 				//* if y's left child is not null (y has a left subtree), assign x as the parent of the left subtree of y
 				if (y->left != LEAF_NULL)
-				{
 					y->left->parent = x;
-				}
 				y->parent = x->parent;
 				//* if x's parent is null, assign y as the root of the tree
 				if (x->parent == ft::_nullptr)
-				{
 					this->root = y;
-				}
 				//* else if x is the left child of parent, assign y as the left child of x's parent
 				else if (x == x->parent->left)
-				{
 					x->parent->left = y;
-				}
 				//* else assign y as the right child of x's parent
 				else
-				{
 					x->parent->right = y;
-				}
 				//* y is now the parent of x
 				y->left = x;
 				x->parent = y;
@@ -733,25 +525,17 @@ namespace ft
 				x->left = y->right;
 				//* if x's right child is not null (x has a right subtree), assign y as the parent of the right subtree of x
 				if (y->right != LEAF_NULL)
-				{
 					y->right->parent = x;
-				}
 				y->parent = x->parent;
 				//* if x's parent is null, assign y as the root of the tree
 				if (x->parent == ft::_nullptr)
-				{
 					this->root = y;
-				}
 				//* else if x is the right child of parent, assign y as the right child of x's parent
 				else if (x == x->parent->right)
-				{
 					x->parent->right = y;
-				}
 				//* else assign y as the left child of x's parent
 				else
-				{
 					x->parent->left = y;
-				}
 				//* y is now the parent of x
 				y->right = x;
 				x->parent = y;
@@ -761,11 +545,8 @@ namespace ft
 			//* we always insert a node as a red node, and then we fix the tree, because red nodes does not violate the red-black tree properties
 			//* If you attach a red node to a red node, then the rule is violated but it is easier to fix this problem than the problem introduced by violating the depth property.
 			
-			//TODO: need to change int for the key to value_type??
-			// value_type insert(value_type key)
 			pointer insert(value_type key)
 			{
-				//TODO: on pourait avoir un constructor ici pour node tel que Node(key, color, parent, left, right)
 				NodePtr node = m_alloc.allocate(sizeof(Node<value_type>));
 				m_alloc.construct(node, Node<value_type>(key, LEAF_NULL, LEAF_NULL));
 				NodePtr y = ft::_nullptr;
@@ -775,8 +556,7 @@ namespace ft
 				{
 					y = x;
 					//*Move depending on the value of the data
-					// if (node->data < x->data) // TODO utiliser comp pas <
-					if (m_comp(node->data, x->data)) // TODO utiliser comp pas <
+					if (m_comp(node->data, x->data))
 					{
 						//*If the data is smaller than the current node, go left
 						x = x->left;
@@ -794,38 +574,25 @@ namespace ft
 						return ft::_nullptr;
 					}
 				}
-
 				//*inserting the new node
 				node->parent = y;
 				//*If the tree is empty, the new node is the root (case 1)
 				if (y == ft::_nullptr)
-				{
 					root = node;
-				}
 				//* place node to left of right of y depending on the value of the data
-				// else if (node->data < y->data)
 				else if (m_comp(node->data, y->data))
-				{
 					y->left = node;
-				}
 				else
-				{
 					y->right = node;
-				}
-
 				//*If the new node is a root node, color it black and return (case 2)
 				if (node->parent == ft::_nullptr)
 				{
 					node->color = BLACK;
 					return (node);
 				}
-				
 				//*If the grandparent is null, there is nothing to do (case 3)
 				if (node->parent->parent == ft::_nullptr)
-				{
 					return (node);
-				}
-
 				//*Recalibrate the tree after insertion
 				insertFix(node);
 				return (node);
@@ -895,13 +662,10 @@ namespace ft
 				return (deleteNodeHelper(this->root, data));
 			}
 
-			//TODO: to delete
 			void printTree()
 			{
 				if (root)
-				{
 					printHelper(this->root, "", true);
-				}
 			}
 	};
 }

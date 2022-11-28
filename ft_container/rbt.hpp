@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 15:24:28 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:26:23 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -595,7 +595,6 @@ namespace ft
 						//*If the data is smaller than the current node, go left
 						x = x->left;
 					}
-					// else if (node->data > x->data)
 					else if (m_comp(x->data.first, node->data.first))
 					{
 						//*If the data is bigger than the current node, go right
@@ -613,33 +612,21 @@ namespace ft
 				node->parent = y;
 				//*If the tree is empty, the new node is the root (case 1)
 				if (y == ft::_nullptr)
-				{
 					root = node;
-				}
 				//* place node to left of right of y depending on the value of the data
-				// else if (node->data < y->data)
 				else if (m_comp(node->data.first, y->data.first))
-				{
 					y->left = node;
-				}
 				else
-				{
 					y->right = node;
-				}
-
 				//*If the new node is a root node, color it black and return (case 2)
 				if (node->parent == ft::_nullptr)
 				{
 					node->color = BLACK;
 					return (node);
 				}
-				
 				//*If the grandparent is null, there is nothing to do (case 3)
 				if (node->parent->parent == ft::_nullptr)
-				{
 					return (node);
-				}
-
 				//*Recalibrate the tree after insertion
 				insertFix(node);
 				return (node);
@@ -709,7 +696,6 @@ namespace ft
 				return (deleteNodeHelper(this->root, data));
 			}
 
-			//TODO: to delete
 			void printTree()
 			{
 				if (root)
