@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 09:44:08 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 12:50:25 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 16:03:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef typename : You are not actually creating a new data type,
 # include <memory>
 # include <sstream>
 
-
-// # include <vector>
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 # include "vector_base.hpp"
@@ -48,37 +46,30 @@ namespace ft {
 			typedef Tp												value_type;
 			typedef	Allocator										allocator_type;
 			typedef value_type&										reference;
-			//typedef std::__1::allocator_traits<Allocator>			alloc_traits; //BUG que faire ??
 			typedef const value_type&								const_reference;
 			typedef size_t											size_type;
 			typedef ptrdiff_t										difference_type;
 			typedef Tp*												iterator;
-			typedef const Tp* 										const_iterator; // pas sur dutous
+			typedef const Tp* 										const_iterator;
 			typedef ft::reverse_iterator<iterator>					reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-			typedef typename Allocator::pointer						pointer; //aka Tp*
-			
-
+			typedef typename Allocator::pointer						pointer;
 
 			// !------------------------------FUNCTION-------------------------------------
 
 			void	reserve(size_type n)
 			{
-				//TODO: QUE FAIR POUR N < 0 ??
 				if (n < this->m_capacity)
 					return ;
 				if (n > this->m_alloc.max_size())
-				{
-					throw std::length_error("vector::reserve"); //TODO check message
-				}
+					throw std::length_error("vector::reserve");
 				ft::vector_base<Tp, Allocator>::reserve(n);
 			}
 
 			void	resize(size_type n, value_type val = value_type())
 			{
-				//TODO: QUE FAIR POUR N < 0 ??
 				if (n > max_size())
-					throw std::length_error("vector::resize");
+					throw std::length_error("vector::_M_fill_insert");
 				if (n > this->m_size)
 				{
 					if (n >= this->m_size * 2)
@@ -95,7 +86,6 @@ namespace ft {
 				}
 				this->m_size = n;
 			}
-			//TODO: need to do assign function
 
 			Allocator get_allocator() const
 			{
@@ -166,7 +156,6 @@ namespace ft {
 			{
 				std::stringstream str;
 				str << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << this->m_size << ")";
-				
 				if (n >= size())
 					throw std::out_of_range(str.str());
 				return (this->m_start[n]);
@@ -176,10 +165,8 @@ namespace ft {
 			{
 				std::stringstream str;
 				str << "vector::_M_range_check: __n (which is " << n << ") >= this->size() (which is " << this->m_size << ")";
-				
 				if (n >= size())
 					throw std::out_of_range(str.str());
-					// throw std::out_of_range("vector::_M_range_check: __n (which is " << n <<") >= this->size() (which is " << this->m_size << ")");
 				return (this->m_start[n]);
 			}
 
@@ -213,7 +200,6 @@ namespace ft {
 						this->reserve(this->m_capacity * 2);
 				}
 				this->m_alloc.construct(&(this->m_start[this->m_size]), x);
-				// this->m_start[this->m_size] = x;
 				this->m_size++;
 			}
 
@@ -243,7 +229,6 @@ namespace ft {
 				if (pos == this->end() - 1)
 				{
 					this->pop_back();
-					// this->m_size--;
 					return (pos);
 				}
 				this->m_alloc.destroy(pos);
@@ -289,14 +274,12 @@ namespace ft {
 					this->m_alloc.destroy((it - 1));
 				}
 				this->m_alloc.construct(&(*it), x);
-				// this->m_alloc.construct(&(*position), x);
 				this->m_size++;
 				return (begin() + pos);
 			}
 
 			void insert (iterator position, size_type n, const value_type& val)
 			{
-				//calculate the position of the iterator
 				if (n == 0)
 					return ;
 				// ptrdiff_t pos = std::distance(begin(), position);
@@ -340,17 +323,6 @@ namespace ft {
 				// }
 				this->insert_specialised(position, first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 			}
-
-			//TODO : it is okay? This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
-			//TODO: if n is < 0 it need to segfault
-			//TODO: need to redo assign for better speed benchmark result 
-
-			// template <class InputIterator>
-			// void assign (InputIterator first, ENABLE_IF(InputIterator) last)
-			// {
-			// 	this->clear();
-			// 	this->insert(this->begin(), first, last);
-			// }
 			
 			template <class InputIterator>
 			void	assign(InputIterator first, ENABLE_IF(InputIterator) last)
@@ -371,11 +343,8 @@ namespace ft {
 				
 				this->clear();
 				this->insert_specialised(this->begin(), first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
-				// this->m_size = nb;
-				
 			}
 
-			//TODO: need to redo assign for better speed benchmark result 
 			void	assign(size_type n, const value_type & val)
 			{
 				this->clear();
@@ -405,88 +374,45 @@ namespace ft {
 				// this->m_capacity = this->m_size;
 			};
 			
-			vector (const vector & x): vector_base<Tp, Allocator>(x)
-			{
-				// for (size_type i = 0; i < x.size(); i++)
-				// 	push_back(x[i]);
-				// *this = x;
-			};
+			vector (const vector & x): vector_base<Tp, Allocator>(x) {};
 
 			//!------------------------------DESTRUCTOR-----------------------------------
 			
-			// ~vector()
-			// {
-			// 	// COUT ("~vector()");
-			// 	this->clear();
-			// 	this->m_alloc.deallocate(this->m_start, this->m_capacity);
-			// };
-			
-			virtual ~vector()
-			{
-				// if (this->m_capacity == 0) {
-				// 	return ;
-				// }
-				//TODO: que faire ici?? il y a deja dans ma base un destructeur qui fait le meme boulot
-				// COUT ("~vector()");
-				// this->clear();
-				// this->m_alloc.deallocate(this->m_start, this->m_capacity);
-			};
+			virtual ~vector() {};
+
 			//!------------------------------OPERATOR-------------------------------------
-			
-			// vector & operator=(const vector & x)
-			// {
-			// 	if (this != &x)
-			// 	{
-			// 		this->clear();
-			// 		for (size_type i = 0; i < x.size(); i++)
-			// 			push_back(x[i]);
-			// 	}
-			// 	return (*this);
-			// }
 			
 			vector & operator= (const vector & x)
 			{
 				if (this != &x)
 				{
 					this->clear();
-					//ft::vector_base<Tp, Allocator>::operator=(x);
 					this->assign(x.begin(), x.end());
-					
 				}
 				return (*this);
 			}
 
 			reference operator[] (size_type n)
 			{
-				//TODO: QUE FAIR POUR N < 0 ??
 				/*
-		*This operator allows for easy, array-style, data access.
-       *  Note that data access with this operator is unchecked and
-       *  out_of_range lookups are not defined. (For checked lookups
-       *  see at().)
+				*This operator allows for easy, array-style, data access.
+				*  Note that data access with this operator is unchecked and
+				*  out_of_range lookups are not defined. (For checked lookups
+				*  see at().)
 				*/
-			// if (n < 0 || n > this->m_size)
-			// 	return (this->m_start[0]);
-				//if (n >= this->m_size) //surement faux par consequent
-				//	throw std::out_of_range("vector_base::operator[]: out of range");
 			return (this->m_start[n]);
 			}
 
 			const_reference operator[] (size_type n) const
 			{
-				//TODO: QUE FAIR POUR N < 0 ??
 				/*
-		*This operator allows for easy, array-style, data access.
-       *  Note that data access with this operator is unchecked and
-       *  out_of_range lookups are not defined. (For checked lookups
-       *  see at().)
+				*This operator allows for easy, array-style, data access.
+				*  Note that data access with this operator is unchecked and
+				*  out_of_range lookups are not defined. (For checked lookups
+				*  see at().)
 				*/
-				
-				//if (n >= this->m_size) //surement faux par consequent
-				//	throw std::out_of_range("vector_base::operator[]: out of range");
 				return (this->m_start[n]);
 			}
-			
 
 		private:
 
@@ -506,13 +432,9 @@ namespace ft {
 				if (this->m_size + (std::distance(first, last)) >= this->m_capacity)
 				{
 					if (this->m_capacity * 2 > this->m_size + (std::distance(first, last)))
-					{
 						this->reserve(this->m_size * 2);
-					}
 					else
-					{
 						this->reserve(this->m_size + (std::distance(first, last)));
-					}
 				}
 				
 				for (int i = 0; last != first; first++)
@@ -534,61 +456,59 @@ namespace ft {
 		}
 	};
 
-//TODO: faire swap extern a la class
-template <class T, class Alloc>
-void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-{
-	x.swap(y);
-}
+	template <class T, class Alloc>
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+	{
+		x.swap(y);
+	}
 
-template <class T, class Alloc>
-bool	operator==(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	if (lhs.size() != rhs.size())
-		return (false);
-	if (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
-		return (false);
-	return (true);
-}
-
-
-
-template <class T, class Alloc>
-bool	operator!=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	return (!(lhs == rhs));
-}
-
-template <class T, class Alloc>
-bool	operator<(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-}
-
-template <class T, class Alloc>
-bool	operator<=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	if (lhs == rhs || lhs < rhs)
+	template <class T, class Alloc>
+	bool	operator==(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		if (!ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+			return (false);
 		return (true);
-	return (false);
-}
+	}
 
-template <class T, class Alloc>
-bool	operator>(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	if (lhs <= rhs)
+
+
+	template <class T, class Alloc>
+	bool	operator!=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	template <class T, class Alloc>
+	bool	operator<(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template <class T, class Alloc>
+	bool	operator<=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		if (lhs == rhs || lhs < rhs)
+			return (true);
 		return (false);
-	return (true);
-}
+	}
 
-template <class T, class Alloc>
-bool	operator>=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
-{
-	if (lhs < rhs)
-		return (false);
-	return (true);
-}
+	template <class T, class Alloc>
+	bool	operator>(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		if (lhs <= rhs)
+			return (false);
+		return (true);
+	}
 
+	template <class T, class Alloc>
+	bool	operator>=(const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+	{
+		if (lhs < rhs)
+			return (false);
+		return (true);
+	}
 
 }
 

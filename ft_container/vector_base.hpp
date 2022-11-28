@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:11:59 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 14:36:48 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:49:18 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,8 @@ namespace ft {
 			
 			//!----------------------------CONSTRUCTOR-------------------------------------
 			
-			//TODO: il y a bcp de constructor faut-il tous les faire ??
 		public:
 			
-			//vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(std::nullptr_t), m_size(0)
-			//BUG pq std::nullptr_t ne marche pas ??
 			vector_base(const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(NULL), m_size(0)
 			{
 				//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
@@ -66,43 +63,29 @@ namespace ft {
 			{
 				for (size_type i = 0; i < n; i++)
 					m_alloc.construct(m_start + i, val);
-				//TODO: need to continue this constructor to add the value to the vector
 				//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
 			}
 			
 			vector_base(size_t n): m_alloc(alloc_type()), m_capacity(n), m_start(m_alloc.allocate(n)), m_size(n)
 			{
-				//?????????? dois je  continuer
 			}
 
 			template <class InputIterator>
 			vector_base(InputIterator first, InputIterator last, const alloc_type & alloc = alloc_type()): m_alloc(alloc), m_capacity(0), m_start(NULL), m_size(0)
 			{
-				//TODO: more things to do ??
 				(void)first;
 				(void)last;
 			}
 			
 			vector_base(const vector_base & x): m_alloc(x.m_alloc), m_capacity(x.m_size), m_start(NULL), m_size(x.m_size)
 			{
-				// CCOUT(BGRN, " capacity: " << x.m_capacity << " size: " << x.m_size << " start: " << x.m_start << " alloc: " << x.m_alloc);
 				//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
 				//? on copie les elements de x dans le vecteur
 				m_start = m_alloc.allocate(m_capacity);
-				// m_capacity = x.m_size;
 				for (size_type i = 0; i < x.m_size; i++)
 					m_alloc.construct(m_start + i, x.m_start[i]);
 			}
 
-			// 	vector_base(const vector_base & x): m_alloc(x.m_alloc), m_start(m_alloc.allocate(x.m_capacity)), m_size(x.m_size)
-			// {
-			// 	// CCOUT(BGRN, " capacity: " << x.m_capacity << " size: " << x.m_size << " start: " << x.m_start << " alloc: " << x.m_alloc);
-			// 	//? ici on initialise le vecteur et par deffaut on utilise Allocator appartenant au template
-			// 	//? on copie les elements de x dans le vecteur
-			// 	m_capacity = x.m_size;
-			// 	for (size_type i = 0; i < x.m_size; i++)
-			// 		m_alloc.construct(m_start + i, x.m_start[i]);
-			// }
 			//!----------------------------DESTRUCTOR-------------------------------------
 
 			virtual ~vector_base()
@@ -115,14 +98,11 @@ namespace ft {
 
 			void	reserve(size_type n)
 			{
-				//TODO: throw anerror if n > m_alloc.amx_size()
-				
 				if (n > m_capacity)
 				{
 					pointer tmp = m_alloc.allocate(n);
 					for (size_type i = 0; i < m_size; i++)
 						m_alloc.construct(tmp + i, m_start[i]);
-					// destroy_vector();
 					for (size_type i = 0; i < m_size; i++)
 						m_alloc.destroy(m_start + i);
 					m_alloc.deallocate(m_start, m_capacity);
@@ -131,27 +111,12 @@ namespace ft {
 				}
 			}
 
-			// void	reserve(size_type n)
-			// {
-			// 	pointer tmp = m_alloc.allocate(n);
-			// 	for (size_type i = 0; i < m_size; i++)
-			// 		m_alloc.construct(tmp + i, m_start[i]);
-			// 	destroy_vector();
-			// 	//TODO: need to make a loop to destroy things
-			// 	m_start = tmp;
-			// 	m_capacity = n;
-			// }
-			
-
-
 			void	resize(size_type count)
 			{
 				(void)count;
-				//if (count > m_size)
-				//	//TODO: neeD TO CONTINUE
 			}
 
-			void	realloc(size_type count) //TODO not sure for realloc
+			void	realloc(size_type count)
 			{
 				destroy_vector();
 				pointer tmp = m_alloc.allocate(count);
@@ -173,7 +138,6 @@ namespace ft {
 				m_size = count;
 			}
 
-			//void	add_back
 		//!----------------------------OPERATOR-------------------------------------
 	
 		vector_base & operator=(const vector_base & rhs)
@@ -182,7 +146,6 @@ namespace ft {
 			{
 				destroy_vector();
 				m_capacity = rhs.m_capacity;
-				//TODO m_start = m_alloc.allocate(m_capacity);
 				m_start = m_alloc.allocate(rhs.m_capacity);
 				m_size = rhs.m_size;
 				for (size_type i = 0; i < m_size; i++)
@@ -220,9 +183,6 @@ namespace ft {
 	{
 		return !(lhs == rhs);
 	}
-
 }
-
-
 
 #endif
