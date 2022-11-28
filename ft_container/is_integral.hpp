@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:31:43 by gmary             #+#    #+#             */
-/*   Updated: 2022/06/23 16:19:34 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 13:54:50 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ namespace ft
 		static const Tp					value = v;
 		typedef Tp							value_type;
 		typedef integral_constant<Tp, v>	type;
-		value_type operator() (void) const { return value; } //BUG : compile error why ??
-		operator value_type() const { return value; } //BUG pas compris ca
+		//Returns the wrapped value. This function enables std::integral_constant to serve as a source of compile-time function objects.
+		value_type operator() (void) const { return value; } 
+		operator value_type() const { return value; } //its convertion operator  from integral_constant<T, v> to T
 	};
 	
 	typedef integral_constant<bool, true>	true_type;

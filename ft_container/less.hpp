@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:38:38 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/23 22:48:59 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 14:17:41 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 It is defined as a function object class for less than inequality comparison which returns a boolean value depending upon the condition.
 This can be used to change the functionality of the given function
 */
-
-//TODO: WTFFFFF is this shit ??
 
 namespace ft
 {

@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:10:30 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 10:10:30 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 14:10:44 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ namespace ft {
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 	// on passe par des struct car on ne peut pas faire de typedef sur un template direct tel que : typedef std::vector Tableau; // erreur de compilation
-	//la classe permet de definir les typedef utiliser plustard lors des specialistation
+	// la classe permet de definir les typedef utiliser plustard lors des specialistation
 	template <typename Category, typename Tp, typename Distance = std::ptrdiff_t, typename Pointer = Tp*, typename Reference = Tp&>
 	struct iterator
 	{

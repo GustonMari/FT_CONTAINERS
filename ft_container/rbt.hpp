@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/23 11:36:34 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:17:31 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,70 +33,44 @@
 namespace ft
 {
 	
-	// using namespace std;
-	// template <class value_type, class key_compare, class allocator_type>
 	template <class value_type, class key_compare, class allocator_type, class _first, class _second>
 	class RedBlackTree
 	{
 		public:
-			typedef Node<value_type> *NodePtr;
-			typedef typename allocator_type::template rebind<Node<value_type> >::other node_allocator_type; //BUG comment marche reelmend le rebind??
-			//TODO: vraiment pas sur pour les const :/
-
-			typedef typename std::allocator<Node<value_type> >::pointer 							pointer;	
-			// typedef typename ft::IteratorMap<value_type, Node<value_type> >						_iterator;
-			// typedef typename ft::IteratorMap<Node, key_compare>						const_iterator;
-			// typedef	typename ft::reverse_iterator<iterator>							reverse_iterator;
-			// typedef	typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-			typedef typename std::size_t										size_type;
-			typedef typename std::ptrdiff_t										difference_type;
-			// typedef typename 
-			
+			typedef Node<value_type> 														*NodePtr;
+			//?		https://alp.developpez.com/tutoriels/templaterebinding/
+			//?		rebind is used to get a template typedef from a template class and permit to compile this line
+			typedef typename allocator_type::template rebind<Node<value_type> >::other 		node_allocator_type;
+			typedef typename std::allocator<Node<value_type> >::pointer 					pointer;
+			typedef typename std::size_t													size_type;
+			typedef typename std::ptrdiff_t													difference_type;
 
 		private:
 			//!Utils variables
-			key_compare m_comp;
-			node_allocator_type m_alloc;
-			NodePtr m_root;
-			// NodePtr m_nil;
+			key_compare				m_comp;
+			node_allocator_type		m_alloc;
+			NodePtr					m_root;
 
 		public:
 
 			
 			//!	Constructors and destructor
-			NodePtr root;
-			NodePtr LEAF_NULL;
+			NodePtr	root;
+			NodePtr	LEAF_NULL;
 
 			RedBlackTree()
 			{
-				//TODO: need to instantiate _alloc so need to replace the new
 				m_alloc = allocator_type();
 				m_comp = key_compare();
-				// LEAF_NULL = m_alloc.allocate(sizeof(Node));
 				LEAF_NULL = m_alloc.allocate(sizeof(Node<value_type>));
-				// m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
 				m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));
-				// LEAF_NULL = new Node;
 				
-				//BUG TODO: attention la ligne en dessous est surement fausses et nique tout
 				LEAF_NULL->parent = ft::_nullptr;
-				
 				LEAF_NULL->color = BLACK;
 				LEAF_NULL->left = ft::_nullptr;
 				LEAF_NULL->right = ft::_nullptr;
-				// root = LEAF_NULL;
 				root = LEAF_NULL;
 			};
-
-			// RedBlackTree(): root(ft::_nullptr), m_comp(key_compare), m_alloc(allocator_type)
-			// {
-			// 	//TODO: need to instantiate _alloc
-			// }
-
-			// RedBlackTree(const RedBlackTree &x)
-			// {
-			// 	*this = x;
-			// }
 
 			~RedBlackTree()
 			{
@@ -105,30 +79,7 @@ namespace ft
 				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
-
-			// //!Operators
-			// RedBlackTree &operator=(const RedBlackTree &x)
-			// {
-			// 	if (this != &x)
-			// 	{
-			// 		// root = x.root;
-			// 		// m_comp = x.m_comp;
-			// 		// m_alloc = x.m_alloc;
-			// 		delete_tree(root);
-			// 		m_alloc.construct(LEAF_NULL, Node<value_type>(value_type()));					
-			// 		LEAF_NULL->color = BLACK;
-			// 		LEAF_NULL->left = ft::_nullptr;
-			// 		LEAF_NULL->right = ft::_nullptr;
-			// 		root = LEAF_NULL;
-					
-			// 	}
-			// 	return (*this);
-			// }
-
-			// void operator*(void)
-			// {
-			// 	std::cout << "operator*" << std::endl;
-			// }
+			//!Operators
 
 			//!================================Functions================================
 			
@@ -143,7 +94,6 @@ namespace ft
 				return ((const_minimum(root)));
 			}
 
-		
 			NodePtr end()
 			{
 				return (maximum(root));
@@ -159,17 +109,13 @@ namespace ft
 				return (root == LEAF_NULL);
 			}
 
-			// size_type count(const value_type &k) const
 			size_type count(const _first &k) const
 			{
-				//voir si ca boucle pas inf
-				//TODO: vraiment pas sur de ca
 				return (searchCase(root, k));
 			}
 
 			void	destroy_leaf()
 			{
-				// CCOUT(BRED, "destroy_leaf");
 				m_alloc.destroy(LEAF_NULL);
 				m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
@@ -178,8 +124,6 @@ namespace ft
 			{
 				delete_tree_internal(root);
 				m_root = LEAF_NULL;
-				// m_alloc.destroy(LEAF_NULL);
-				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 			void
@@ -191,11 +135,8 @@ namespace ft
 			
 		private:
 			//!Utils functions
-			// NodePtr root;
-			// NodePtr LEAF_NULL;
 			void	delete_tree_internal(NodePtr node)
 			{
-				// clear(root);
 				if (node == LEAF_NULL)
 					return ; 
 			
@@ -204,8 +145,6 @@ namespace ft
 			
 				m_alloc.destroy(node);
 				m_alloc.deallocate(node, sizeof(Node<value_type>));
-				// m_alloc.destroy(LEAF_NULL);
-				// m_alloc.deallocate(LEAF_NULL, sizeof(Node<value_type>));
 			}
 
 			void	clear_internal(NodePtr node)
@@ -220,54 +159,11 @@ namespace ft
 				m_alloc.deallocate(node, sizeof(Node<value_type>));
 			}
 
-			void initializeNULLNode(NodePtr node, NodePtr parent)
-			{
-				node->data = 0;
-				node->parent = parent;
-				node->left = ft::_nullptr;
-				node->right = ft::_nullptr;
-				node->color = BLACK;
-			}
-
-			// Preorder
-			void preOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					std::cout << node->data << " ";
-					preOrderHelper(node->left);
-					preOrderHelper(node->right);
-				}
-			}
-
-			// Inorder
-			void inOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					inOrderHelper(node->left);
-					std::cout << node->data << " ";
-					inOrderHelper(node->right);
-				}
-			}
-
-			// Post order
-			void postOrderHelper(NodePtr node)
-			{
-				if (node != LEAF_NULL)
-				{
-					postOrderHelper(node->left);
-					postOrderHelper(node->right);
-					std::cout << node->data << " ";
-				}
-			}
-
 			/*
 				!we recusively call the function until we find the good value
 				https://www.happycoders.eu/algorithms/binary-search-tree-java/#Binary_Search_Tree_Example
 			*/
 
-			// size_type searchCase(NodePtr node, value_type key)
 			size_type searchCase(NodePtr node, _first key) const
 			{
 				if (key == node->data.first)
@@ -277,7 +173,6 @@ namespace ft
 				if (node == LEAF_NULL)
 					return 0;
 
-				// if (key < node->data.first)
 				if (m_comp(key, node->data.first))
 				{
 					return searchCase(node->left, key);
@@ -295,7 +190,6 @@ namespace ft
 				{
 					return LEAF_NULL;
 				}
-				// if (key < node->data.first)
 				if (m_comp(key, node->data.first))
 				{
 					return searchTreeHelper(node->left, key);

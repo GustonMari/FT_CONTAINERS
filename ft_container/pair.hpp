@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:20:53 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/03 15:13:54 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:08:39 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ namespace ft
 			}
 			return *this;
 		}
-
-		//TODO: swap nest pas a inclure puisqu'il est code seuement a partir de c11 ??
 	};
 
 	template <class T1, class T2>

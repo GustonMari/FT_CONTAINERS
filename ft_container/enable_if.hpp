@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:35:37 by gmary             #+#    #+#             */
-/*   Updated: 2022/10/24 17:07:10 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 14:06:15 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@
 	TODO: FINIR DE LIRE LE LINK EN DESSOUS
 	TOP:
 		https://riptutorial.com/cplusplus/example/3777/enable-if
+		https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html
 */
 
 
 namespace ft
 {
-	/*
-		TODO: faut il faire deux declaration de enable if tel que (https://cplusplus.com/reference/type_traits/enable_if/) ou une seul??
-	*/
 	
 	template <bool B, class T = void>
 	struct enable_if {};

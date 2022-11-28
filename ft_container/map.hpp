@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/24 15:37:13 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 15:05:33 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,12 @@
 #include "node.hpp"
 #include "lexicographical_compare.hpp"
 
-
-// #include <map>
-// std::map<int, int> m;
-// m.lower_bound(1);
-
 namespace ft
 {
 	template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<pair<const Key,T> > >
 	class map
 	{
 		public:
-
 		
 			typedef Key																					key_type;
 			typedef T																					mapped_type;
@@ -83,10 +77,6 @@ namespace ft
 			//!=============================== Constructors ======================================================
 
 			//*empty
-			// explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp),  m_size(0)
-			// {
-			// }
-
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):  m_root(), m_alloc(alloc),  m_comp(comp), m_size(0)
 			{
 			}
@@ -101,7 +91,6 @@ namespace ft
 			//*copy
 			map (const map& x)/* : m_root(), m_alloc(x.m_alloc), m_comp(x.m_comp), m_size(x.m_size) */
 			{
-				// insert(x.begin(), x.end());
 				*this = x;
 			}
 
@@ -111,12 +100,9 @@ namespace ft
 				//TODO: double free ???
 				if (m_size != 0)
 				{
-					// m_root.clear();
 					m_root.delete_tree();
-					// clear();
 				}
 					m_root.destroy_leaf();
-				
 			}
 
 			//!=============================== Operators ======================================================
@@ -132,7 +118,6 @@ namespace ft
 				}
 				return (*this);
 			}
-
 
 			mapped_type& operator[] (const key_type& k)
 			{
@@ -169,7 +154,6 @@ namespace ft
 			
 			iterator end(void)
 			{
-				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
 				iterator it(m_root.end(), m_root.get_leaf_null(), m_root.getRoot());
 				it++;
 				return (it);
@@ -177,20 +161,13 @@ namespace ft
 			
 			const_iterator end(void) const
 			{
-				//BUG: ilfaut surement fait it++ pour avoir le past end iterator
 				const_iterator it(m_root.const_end(), m_root.const_get_leaf_null(), m_root.const_getRoot());
 				it++;
 				return (it);
 			}
 
-			// reverse_iterator rbegin(void)
-			// {
-			// 	return (reverse_iterator(iterator(m_root.end(), m_root.get_leaf_null(), m_root.getRoot())));
-			// }
-
 			reverse_iterator rbegin(void)
 			{
-				// return (reverse_iterator(m_root.end()));
 				return (reverse_iterator(end()));
 			}
 
@@ -211,8 +188,6 @@ namespace ft
 
 			bool empty(void) const
 			{
-				//ou utiliser la fonction empty dans rbt
-				// return (m_size == 0);
 				return (m_root.empty());
 			}
 			
@@ -228,9 +203,9 @@ namespace ft
 				return (m_size);
 			}
 
+			//we get the max size of the difference_type and divide by the node to get the max size of node possible
 			size_type max_size(void) const
 			{
-				// return (m_alloc.max_size());
 				return (std::numeric_limits<difference_type>::max() / sizeof(Node<value_type>));
 			}
 
@@ -253,11 +228,10 @@ namespace ft
 					return (end());
 				return (const_iterator(node, m_root.const_get_leaf_null(), m_root.const_getRoot()));
 			}
-			//TODO:neeed to do const_iterator version of find
 
 			//!================================ Insert ======================================================
+			
 			//*single element
-			// void insert (const value_type& val)
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				if (m_root.insert(val) == ft::_nullptr)
@@ -266,7 +240,6 @@ namespace ft
 				return ft::make_pair(iterator(m_root.searchTree(val.first), m_root.get_leaf_null(), m_root.getRoot()), true);
 			}
 			
-			//TODO: check if it works
 			//*with hint
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -321,10 +294,8 @@ namespace ft
 			}
 			//!================================ Swap ======================================================
 			
-			//TODO: make non-memeber function and member functions
 			void swap (map& x)
 			{
-				//TODO: need to swap m_comp and m_alloc ??
 				real_swap(m_root, x.m_root);
 				real_swap(m_size, x.m_size);
 			}
@@ -345,14 +316,11 @@ namespace ft
 			
 			//!================================ Lower Bound ======================================================
 			
-			//TODO: this maybe is not working because "The function uses its internal comparison object (key_comp) to determine this, returning an iterator to the first element for which key_comp(element_key,k) would return false."
-			
 			iterator	lower_bound(const key_type& k)
 			{
 				return (iterator(m_root.lower_bound_rbt(m_root.getRoot(), k), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 
-			//TODO: need to do const version of lower_bound
 			const_iterator	lower_bound(const key_type& k) const
 			{
 				return (const_iterator(m_root.lower_bound_rbt(m_root.const_getRoot(), k), m_root.const_get_leaf_null(), m_root.const_getRoot()));
@@ -394,7 +362,6 @@ namespace ft
 		private:
 
 			template <class L> 
-			// TODO: pas sur que le type soit T
 			void real_swap ( L& a, L& b )
 			{
 				L	c(a);

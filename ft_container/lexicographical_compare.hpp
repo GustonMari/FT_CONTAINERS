@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 13:24:54 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/17 14:30:36 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 14:17:59 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 
 #ifndef LEXICOGRAPHICAL_COMPARE_HPP
 # define LEXICOGRAPHICAL_COMPARE_HPP
-
-//TODO : check if they need more implementation or less
 
 namespace ft
 {
