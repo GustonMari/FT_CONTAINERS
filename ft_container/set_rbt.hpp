@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 15:43:03 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/29 12:51:28 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft
 			// size_type count(const value_type &k) const
 			size_type count(const _first &k) const
 			{
-				return (searchCase(root, k));
+				return (search_occurence(root, k));
 			}
 
 			void	destroy_leaf()
@@ -168,42 +168,42 @@ namespace ft
 				https://www.happycoders.eu/algorithms/binary-search-tree-java/#Binary_Search_Tree_Example
 			*/
 
-			// size_type searchCase(NodePtr node, value_type key)
-			size_type searchCase(NodePtr node, _first key) const
+			// size_type search_occurence(NodePtr node, value_type key)
+			size_type search_occurence(NodePtr node, _first key) const
 			{
 				if (key == node->data)
 					return 1;
 				if (node == LEAF_NULL)
 					return 0;
 				if (m_comp(key, node->data))
-					return searchCase(node->left, key);
-				return searchCase(node->right, key);
+					return search_occurence(node->left, key);
+				return search_occurence(node->right, key);
 			}
 
-			NodePtr searchTreeHelper(NodePtr node, const _first key)
+			NodePtr search_occurence_normal(NodePtr node, const _first key)
 			{
 				if (key == node->data)
 					return node;
 				if (node == LEAF_NULL)
 					return LEAF_NULL;
 				if (m_comp(key, node->data))
-					return searchTreeHelper(node->left, key);
-				return searchTreeHelper(node->right, key);
+					return search_occurence_normal(node->left, key);
+				return search_occurence_normal(node->right, key);
 			}
 
-			NodePtr const_searchTreeHelper(NodePtr node, const _first key) const
+			NodePtr const_search_occurence_normal(NodePtr node, const _first key) const
 			{
 				if (key == node->data)
 					return node;
 				if (node == LEAF_NULL)
 					return LEAF_NULL;
 				if (m_comp(key, node->data))
-					return const_searchTreeHelper(node->left, key);
-				return const_searchTreeHelper(node->right, key);
+					return const_search_occurence_normal(node->left, key);
+				return const_search_occurence_normal(node->right, key);
 			}
 
 
-			void deleteFix(NodePtr x) {
+			void delete_balance(NodePtr x) {
 				NodePtr s;
 				while (x != root && x->color == BLACK)
 				{
@@ -214,7 +214,7 @@ namespace ft
 						{
 							s->color = BLACK;
 							x->parent->color = RED;
-							leftRotate(x->parent);
+							left_rotation(x->parent);
 							s = x->parent->right;
 						}
 
@@ -229,14 +229,14 @@ namespace ft
 							{
 								s->left->color = BLACK;
 								s->color = RED;
-								rightRotate(s);
+								right_rotation(s);
 								s = x->parent->right;
 							}
 
 							s->color = x->parent->color;
 							x->parent->color = BLACK;
 							s->right->color = BLACK;
-							leftRotate(x->parent);
+							left_rotation(x->parent);
 							x = root;
 						}
 					}
@@ -248,7 +248,7 @@ namespace ft
 						{
 							s->color = BLACK;
 							x->parent->color = RED;
-							rightRotate(x->parent);
+							right_rotation(x->parent);
 							s = x->parent->left;
 						}
 
@@ -263,14 +263,14 @@ namespace ft
 							{
 								s->right->color = BLACK;
 								s->color = RED;
-								leftRotate(s);
+								left_rotation(s);
 								s = x->parent->left;
 							}
 
 							s->color = x->parent->color;
 							x->parent->color = BLACK;
 							s->left->color = BLACK;
-							rightRotate(x->parent);
+							right_rotation(x->parent);
 							x = root;
 						}
 					}
@@ -279,7 +279,7 @@ namespace ft
 			}
 
 
-			void rbTransplant(NodePtr u, NodePtr v)
+			void transplant(NodePtr u, NodePtr v)
 			{
 				if (u->parent == ft::_nullptr)
 					root = v;
@@ -293,7 +293,7 @@ namespace ft
 
 			//? https://www.youtube.com/watch?v=lU99loSvD8s&ab_channel=MichaelSambol
 			//TODO: replace int with value_type juste en dessous ??
-			bool deleteNodeHelper(NodePtr node, value_type key)
+			bool delete_node(NodePtr node, value_type key)
 			{
 				NodePtr z = LEAF_NULL;
 				NodePtr x, y;
@@ -320,12 +320,12 @@ namespace ft
 					//*we assign the right child to x (it became a null_leaf)
 					x = z->right;
 					//* we transplant (replace) the deleted node with x
-					rbTransplant(z, z->right);
+					transplant(z, z->right);
 				}
 				else if (z->right == LEAF_NULL) //*same thing but symetrics
 				{
 					x = z->left;
-					rbTransplant(z, z->left);
+					transplant(z, z->left);
 				}
 				else //* neither child is null (leaf)
 				{
@@ -342,12 +342,12 @@ namespace ft
 					}
 					else
 					{
-						rbTransplant(y, y->right);
+						transplant(y, y->right);
 						y->right = z->right;
 						y->right->parent = y;
 					}
 
-					rbTransplant(z, y);
+					transplant(z, y);
 					y->left = z->left;
 					y->left->parent = y;
 					y->color = z->color;
@@ -356,7 +356,7 @@ namespace ft
 				m_alloc.deallocate(z, sizeof(Node<value_type>));
 				//* if the original color of y was black, then we need to fix the tree
 				if (y_original_color == BLACK)
-					deleteFix(x);
+					delete_balance(x);
 				return (true);
 			}
 
@@ -364,7 +364,7 @@ namespace ft
 			//* the case 1 is when the node is the root is already check if insert
 			//* the case 2 is when the parent is black it cannot append because we insert red node
 			//* sowe need to resolve the case 3 where we violate the property of to red node side by side
-			void insertFix(NodePtr k)
+			void insert_balance(NodePtr k)
 			{
 				NodePtr u;
 				while (k->parent->color == RED)
@@ -385,13 +385,13 @@ namespace ft
 							if (k == k->parent->left) //* case 3.2.2
 							{
 								k = k->parent;
-								rightRotate(k);
+								right_rotation(k);
 							}
 							//*case 3.2.1
 							k->parent->color = BLACK;
 							k->parent->parent->color = RED;
 							//* we need to rotate the grandparent to the left,so the grand parent is now the sibling of k
-							leftRotate(k->parent->parent);
+							left_rotation(k->parent->parent);
 						}
 					}
 					else //* symetric case
@@ -410,11 +410,11 @@ namespace ft
 							if (k == k->parent->right)
 							{
 								k = k->parent;
-								leftRotate(k);
+								left_rotation(k);
 							}
 							k->parent->color = BLACK;
 							k->parent->parent->color = RED;
-							rightRotate(k->parent->parent);
+							right_rotation(k->parent->parent);
 						}
 					}
 					if (k == root) //* finish the loop because everything is balanced
@@ -424,7 +424,7 @@ namespace ft
 				root->color = BLACK;
 			}
 
-			void printHelper(NodePtr root, std::string indent, bool last)
+			void print_tree(NodePtr root, std::string indent, bool last)
 			{
 				if (root != LEAF_NULL)
 				{
@@ -443,21 +443,21 @@ namespace ft
 						std::cout << BRED << root->data << "(" << "RED" << ")" << "--->" << root->data << CRESET<< std::endl;
 					else
 						std::cout << BBLU << root->data << "(" << "BLACK" << ")" << "--->" << root->data << CRESET << std::endl;
-					printHelper(root->left, indent, false);
-					printHelper(root->right, indent, true);
+					print_tree(root->left, indent, false);
+					print_tree(root->right, indent, true);
 				}
 			}
 
 			public:
 
-			NodePtr searchTree(const _first k)
+			NodePtr search_in_tree(const _first k)
 			{
-				return searchTreeHelper(this->root, k);
+				return search_occurence_normal(this->root, k);
 			}
 
-			NodePtr const_searchTree(const _first k) const
+			NodePtr const_search_in_tree(const _first k) const
 			{
-				return const_searchTreeHelper(this->root, k);
+				return const_search_occurence_normal(this->root, k);
 			}
 
 			NodePtr minimum(NodePtr node)
@@ -496,7 +496,7 @@ namespace ft
 				return node;
 			}
 
-			void leftRotate(NodePtr x)
+			void left_rotation(NodePtr x)
 			{
 				NodePtr y = x->right;
 				x->right = y->left;
@@ -518,7 +518,7 @@ namespace ft
 				x->parent = y;
 			}
 
-			void rightRotate(NodePtr x)
+			void right_rotation(NodePtr x)
 			{
 				NodePtr y = x->left;
 				x->left = y->right;
@@ -593,7 +593,7 @@ namespace ft
 				if (node->parent->parent == ft::_nullptr)
 					return (node);
 				//*Recalibrate the tree after insertion
-				insertFix(node);
+				insert_balance(node);
 				return (node);
 			}
 
@@ -658,13 +658,13 @@ namespace ft
 
 			bool deleteNode(value_type data)
 			{
-				return (deleteNodeHelper(this->root, data));
+				return (delete_node(this->root, data));
 			}
 
 			void printTree()
 			{
 				if (root)
-					printHelper(this->root, "", true);
+					print_tree(this->root, "", true);
 			}
 	};
 }

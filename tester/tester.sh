@@ -76,6 +76,14 @@
 		# else
 		# 	echo -e "\033[1;31mFailed\033[0m";
 		# fi
+		# ../ft_container/./ft_containers 6 12 > ft_tester.txt
+		# ../ft_container/./std_containers 6 12 > std_tester.txt
+		# # if diff ft_tester.txt std_tester.txt >/dev/null; then
+		# if diff ft_tester.txt std_tester.txt ; then
+		# 	echo -e "\033[32;1mPassed\033[0m";
+		# else
+		# 	echo -e "\033[1;31mFailed\033[0m";
+		# fi
 	}
 	fi
 

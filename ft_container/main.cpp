@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 16:11:04 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/28 16:23:15 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,20 @@ int main(int ac, char **av)
 	}
 	if (special_arg == "11" )
 	{
+		try
+		{
+			TESTED_NAMESPACE::vector<int> myvector(10);
+			myvector.push_back(42);
+			CCOUT(BRED, "exception on resize")
+			myvector.resize(myvector.max_size() + 1);
+		}
+		catch (std::exception &e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+	}
+	if (special_arg == "12" )
+	{
 
 		ft::vector<LeakClass> v;
 		try
@@ -355,20 +369,6 @@ int main(int ac, char **av)
 			v.push_back(LeakClass());
 
 		} catch (std::exception &e)
-		{
-			std::cout << e.what() << std::endl;
-		}
-	}
-	if (special_arg == "11" )
-	{
-		try
-		{
-			TESTED_NAMESPACE::vector<int> myvector(10);
-			myvector.push_back(42);
-			CCOUT(BRED, "exception on resize")
-			myvector.resize(myvector.max_size() + 1);
-		}
-		catch (std::exception &e)
 		{
 			std::cout << e.what() << std::endl;
 		}

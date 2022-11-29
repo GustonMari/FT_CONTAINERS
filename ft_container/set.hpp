@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:10:22 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 15:39:59 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/29 12:51:28 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ namespace ft
 			{
 				if (m_size == 0)
 					return (end());
-				Node<value_type> *node = m_root.searchTree(k);
+				Node<value_type> *node = m_root.search_in_tree(k);
 				if (node == m_root.get_leaf_null())
 					return (end());
 				return (iterator(node, m_root.get_leaf_null(), m_root.getRoot()));
@@ -198,7 +198,7 @@ namespace ft
 			{
 				if (m_size == 0)
 					return (end());
-				Node<value_type> *node = m_root.const_searchTree(k);
+				Node<value_type> *node = m_root.const_search_in_tree(k);
 				if (node == m_root.const_get_leaf_null())
 					return (end());
 				return (const_iterator(node, m_root.const_get_leaf_null(), m_root.const_getRoot()));
@@ -210,9 +210,9 @@ namespace ft
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
 				if (m_root.insert(val) == ft::_nullptr)
-					return ft::make_pair(iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()), false);
+					return ft::make_pair(iterator(m_root.search_in_tree(val), m_root.get_leaf_null(), m_root.getRoot()), false);
 				this->m_size++;
-				return ft::make_pair(iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()), true);
+				return ft::make_pair(iterator(m_root.search_in_tree(val), m_root.get_leaf_null(), m_root.getRoot()), true);
 			}
 			
 			//*with hint
@@ -220,7 +220,7 @@ namespace ft
 			{
 				(void)position;
 				insert(val);
-				return (iterator(m_root.searchTree(val), m_root.get_leaf_null(), m_root.getRoot()));
+				return (iterator(m_root.search_in_tree(val), m_root.get_leaf_null(), m_root.getRoot()));
 			}
 			
 			//*ranges
