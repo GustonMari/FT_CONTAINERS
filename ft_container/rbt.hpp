@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 10:23:46 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/29 12:51:28 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/29 12:55:27 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,25 +197,25 @@ namespace ft
 			}
 
 
-			void delete_balance(NodePtr x) {
+			void delete_balance(NodePtr x_node) {
 				NodePtr s;
-				while (x != root && x->color == BLACK)
+				while (x_node != root && x_node->color == BLACK)
 				{
-					if (x == x->parent->left)
+					if (x_node == x_node->parent->left)
 					{
-						s = x->parent->right;
+						s = x_node->parent->right;
 						if (s->color == RED)
 						{
 							s->color = BLACK;
-							x->parent->color = RED;
-							left_rotation(x->parent);
-							s = x->parent->right;
+							x_node->parent->color = RED;
+							left_rotation(x_node->parent);
+							s = x_node->parent->right;
 						}
 
 						if (s->left->color == BLACK && s->right->color == BLACK)
 						{
 							s->color = RED;
-							x = x->parent;
+							x_node = x_node->parent;
 						}
 						else
 						{
@@ -224,32 +224,32 @@ namespace ft
 								s->left->color = BLACK;
 								s->color = RED;
 								right_rotation(s);
-								s = x->parent->right;
+								s = x_node->parent->right;
 							}
 
-							s->color = x->parent->color;
-							x->parent->color = BLACK;
+							s->color = x_node->parent->color;
+							x_node->parent->color = BLACK;
 							s->right->color = BLACK;
-							left_rotation(x->parent);
-							x = root;
+							left_rotation(x_node->parent);
+							x_node = root;
 						}
 					}
 					//*same as above but the rotation is contrar
 					else
 					{
-						s = x->parent->left;
+						s = x_node->parent->left;
 						if (s->color == RED)
 						{
 							s->color = BLACK;
-							x->parent->color = RED;
-							right_rotation(x->parent);
-							s = x->parent->left;
+							x_node->parent->color = RED;
+							right_rotation(x_node->parent);
+							s = x_node->parent->left;
 						}
 
 						if (s->right->color == BLACK && s->right->color == BLACK)
 						{
 							s->color = RED;
-							x = x->parent;
+							x_node = x_node->parent;
 						}
 						else
 						{
@@ -258,18 +258,18 @@ namespace ft
 								s->right->color = BLACK;
 								s->color = RED;
 								left_rotation(s);
-								s = x->parent->left;
+								s = x_node->parent->left;
 							}
 
-							s->color = x->parent->color;
-							x->parent->color = BLACK;
+							s->color = x_node->parent->color;
+							x_node->parent->color = BLACK;
 							s->left->color = BLACK;
-							right_rotation(x->parent);
-							x = root;
+							right_rotation(x_node->parent);
+							x_node = root;
 						}
 					}
 				}
-				x->color = BLACK;
+				x_node->color = BLACK;
 			}
 
 
@@ -290,7 +290,7 @@ namespace ft
 			bool delete_node(NodePtr node, value_type key)
 			{
 				NodePtr z = LEAF_NULL;
-				NodePtr x, y;
+				NodePtr x_node, y_node;
 				//*find the node to delete
 				while (node != LEAF_NULL)
 				{
@@ -305,51 +305,51 @@ namespace ft
 				if (z == LEAF_NULL)
 					return (false);
 
-				y = z;
+				y_node = z;
 				//* we save the original color of futur deleted node
-				int y_original_color = y->color;
+				int y_original_color = y_node->color;
 				//* if the left child is null (leaf)
 				if (z->left == LEAF_NULL)
 				{
-					//*we assign the right child to x (it became a null_leaf)
-					x = z->right;
-					//* we transplant (replace) the deleted node with x
+					//*we assign the right child to x_node (it became a null_leaf)
+					x_node = z->right;
+					//* we transplant (replace) the deleted node with x_node
 					transplant(z, z->right);
 				}
 				else if (z->right == LEAF_NULL) //*same thing but symetrics
 				{
-					x = z->left;
+					x_node = z->left;
 					transplant(z, z->left);
 				}
 				else //* neither child is null (leaf)
 				{
-					//* we assign the minimum of the right subtree (of the node to be deleted) to y
-					y = minimum(z->right);
-					//* we save the original color of y
-					y_original_color = y->color;
-					//* we assign the right child of y to x
-					x = y->right;
-					//* if y is one of the child of the node to be deleted, then we assign x parent to y
-					if (y->parent == z)
-						x->parent = y;
+					//* we assign the minimum of the right subtree (of the node to be deleted) to y_node
+					y_node = minimum(z->right);
+					//* we save the original color of y_node
+					y_original_color = y_node->color;
+					//* we assign the right child of y_node to x_node
+					x_node = y_node->right;
+					//* if y_node is one of the child of the node to be deleted, then we assign x_node parent to y_node
+					if (y_node->parent == z)
+						x_node->parent = y_node;
 					else
 					{
-						transplant(y, y->right);
-						y->right = z->right;
-						y->right->parent = y;
+						transplant(y_node, y_node->right);
+						y_node->right = z->right;
+						y_node->right->parent = y_node;
 					}
 
-					transplant(z, y);
-					y->left = z->left;
-					y->left->parent = y;
-					y->color = z->color;
+					transplant(z, y_node);
+					y_node->left = z->left;
+					y_node->left->parent = y_node;
+					y_node->color = z->color;
 				}
 				m_alloc.destroy(z);
 				m_alloc.deallocate(z, sizeof(Node<value_type>));
 				// delete z;
-				//* if the original color of y was black, then we need to fix the tree
+				//* if the original color of y_node was black, then we need to fix the tree
 				if (y_original_color == BLACK)
-					delete_balance(x);
+					delete_balance(x_node);
 				return (true);
 			}
 
@@ -497,81 +497,81 @@ namespace ft
 			}
 
 
-			// NodePtr successor(NodePtr x)
+			// NodePtr successor(NodePtr x_node)
 			// {
-			// 	if (x->right != LEAF_NULL)
+			// 	if (x_node->right != LEAF_NULL)
 			// 	{
-			// 		return minimum(x->right);
+			// 		return minimum(x_node->right);
 			// 	}
 
-			// 	NodePtr y = x->parent;
-			// 	while (y != LEAF_NULL && x == y->right)
+			// 	NodePtr y_node = x_node->parent;
+			// 	while (y_node != LEAF_NULL && x_node == y_node->right)
 			// 	{
-			// 		x = y;
-			// 		y = y->parent;
+			// 		x_node = y_node;
+			// 		y_node = y_node->parent;
 			// 	}
-			// 	return y;
+			// 	return y_node;
 			// }
 
-			// NodePtr predecessor(NodePtr x)
+			// NodePtr predecessor(NodePtr x_node)
 			// {
-			// 	if (x->left != LEAF_NULL)
+			// 	if (x_node->left != LEAF_NULL)
 			// 	{
-			// 		return maximum(x->left);
+			// 		return maximum(x_node->left);
 			// 	}
 
-			// 	NodePtr y = x->parent;
-			// 	while (y != LEAF_NULL && x == y->left)
+			// 	NodePtr y_node = x_node->parent;
+			// 	while (y_node != LEAF_NULL && x_node == y_node->left)
 			// 	{
-			// 		x = y;
-			// 		y = y->parent;
+			// 		x_node = y_node;
+			// 		y_node = y_node->parent;
 			// 	}
 
-			// 	return y;
+			// 	return y_node;
 			// }
 
-			void left_rotation(NodePtr x)
+			void left_rotation(NodePtr x_node)
 			{
-				NodePtr y = x->right;
-				x->right = y->left;
-				//* if y's left child is not null (y has a left subtree), assign x as the parent of the left subtree of y
-				if (y->left != LEAF_NULL)
-					y->left->parent = x;
-				y->parent = x->parent;
-				//* if x's parent is null, assign y as the root of the tree
-				if (x->parent == ft::_nullptr)
-					this->root = y;
-				//* else if x is the left child of parent, assign y as the left child of x's parent
-				else if (x == x->parent->left)
-					x->parent->left = y;
-				//* else assign y as the right child of x's parent
+				NodePtr y_node = x_node->right;
+				x_node->right = y_node->left;
+				//* if y_node's left child is not null (y_node has a left subtree), assign x_node as the parent of the left subtree of y_node
+				if (y_node->left != LEAF_NULL)
+					y_node->left->parent = x_node;
+				y_node->parent = x_node->parent;
+				//* if x_node's parent is null, assign y_node as the root of the tree
+				if (x_node->parent == ft::_nullptr)
+					this->root = y_node;
+				//* else if x_node is the left child of parent, assign y_node as the left child of x_node's parent
+				else if (x_node == x_node->parent->left)
+					x_node->parent->left = y_node;
+				//* else assign y_node as the right child of x_node's parent
 				else
-					x->parent->right = y;
-				//* y is now the parent of x
-				y->left = x;
-				x->parent = y;
+					x_node->parent->right = y_node;
+				//* y_node is now the parent of x_node
+				y_node->left = x_node;
+				x_node->parent = y_node;
 			}
 
-			void right_rotation(NodePtr x)
+			void right_rotation(NodePtr x_node)
 			{
-				NodePtr y = x->left;
-				x->left = y->right;
-				//* if x's right child is not null (x has a right subtree), assign y as the parent of the right subtree of x
-				if (y->right != LEAF_NULL)
-					y->right->parent = x;
-				y->parent = x->parent;
-				//* if x's parent is null, assign y as the root of the tree
-				if (x->parent == ft::_nullptr)
-					this->root = y;
-				//* else if x is the right child of parent, assign y as the right child of x's parent
-				else if (x == x->parent->right)
-					x->parent->right = y;
-				//* else assign y as the left child of x's parent
+				NodePtr y_node = x_node->left;
+				x_node->left = y_node->right;
+				//* if x_node's right child is not null (x_node has a right subtree), assign y_node as the parent of the right subtree of x_node
+				if (y_node->right != LEAF_NULL)
+					y_node->right->parent = x_node;
+				y_node->parent = x_node->parent;
+				//* if x_node's parent is null, assign y_node as the root of the tree
+				if (x_node->parent == ft::_nullptr)
+					this->root = y_node;
+				//* else if x_node is the right child of parent, assign y_node as the right child of x_node's parent
+				else if (x_node == x_node->parent->right)
+					x_node->parent->right = y_node;
+				//* else assign y_node as the left child of x_node's parent
 				else
-					x->parent->left = y;
-				//* y is now the parent of x
-				y->right = x;
-				x->parent = y;
+					x_node->parent->left = y_node;
+				//* y_node is now the parent of x_node
+				y_node->right = x_node;
+				x_node->parent = y_node;
 			}
 
 			//!========================================= Inserting a node =======================================================================
@@ -582,22 +582,22 @@ namespace ft
 			{
 				NodePtr node = m_alloc.allocate(sizeof(Node<value_type>));
 				m_alloc.construct(node, Node<value_type>(key, LEAF_NULL, LEAF_NULL));
-				NodePtr y = ft::_nullptr;
-				NodePtr x = this->root;
+				NodePtr y_node = ft::_nullptr;
+				NodePtr x_node = this->root;
 
-				while (x != LEAF_NULL)
+				while (x_node != LEAF_NULL)
 				{
-					y = x;
+					y_node = x_node;
 					//*Move depending on the value of the data
-					if (m_comp(node->data.first, x->data.first)) 
+					if (m_comp(node->data.first, x_node->data.first)) 
 					{
 						//*If the data is smaller than the current node, go left
-						x = x->left;
+						x_node = x_node->left;
 					}
-					else if (m_comp(x->data.first, node->data.first))
+					else if (m_comp(x_node->data.first, node->data.first))
 					{
 						//*If the data is bigger than the current node, go right
-						x = x->right;
+						x_node = x_node->right;
 					}
 					else
 					{
@@ -608,15 +608,15 @@ namespace ft
 				}
 
 				//*inserting the new node
-				node->parent = y;
+				node->parent = y_node;
 				//*If the tree is empty, the new node is the root (case 1)
-				if (y == ft::_nullptr)
+				if (y_node == ft::_nullptr)
 					root = node;
-				//* place node to left of right of y depending on the value of the data
-				else if (m_comp(node->data.first, y->data.first))
-					y->left = node;
+				//* place node to left of right of y_node depending on the value of the data
+				else if (m_comp(node->data.first, y_node->data.first))
+					y_node->left = node;
 				else
-					y->right = node;
+					y_node->right = node;
 				//*If the new node is a root node, color it black and return (case 2)
 				if (node->parent == ft::_nullptr)
 				{
