@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:33:21 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:15 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/29 13:44:26 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,6 +406,9 @@ int main(int ac, char **av)
 		COUT("size: " << mystack.size());
 		COUT("top: " << mystack.top());
 		COUT("empty: " << mystack.empty());
+		TESTED_NAMESPACE::stack<std::list<int> > mystack3;
+		mystack3.push(std::list<int> (1, 42));
+		mystack3.push(std::list<int> (2, 64));
 		
 	}
 //!====================================================================================================================================================
@@ -590,6 +593,7 @@ int main(int ac, char **av)
 
 		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, int>::iterator, TESTED_NAMESPACE::map<int, int>::iterator> pair1 = map4.equal_range(42);
 		COUT(pair1.first->first);	
+
 
 	}
 	//!====================================================================================================================================================

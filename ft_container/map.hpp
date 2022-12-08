@@ -6,7 +6,7 @@
 /*   By: gmary <gmary@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 21:36:33 by gmary             #+#    #+#             */
-/*   Updated: 2022/11/29 12:51:28 by gmary            ###   ########.fr       */
+/*   Updated: 2022/11/29 13:50:51 by gmary            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ namespace ft
 			typedef typename _Rep_type::difference_type													difference_type;
 			typedef typename ft::reverse_iterator<iterator>	 											reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
+
+			/*
+				binary_function is a base class for creating function objects with two arguments.
+				binary_function does not define operator(); it is expected that derived classes will define this.
+				binary_function provides only three types - first_argument_type, second_argument_type and result_type - defined by the template parameters.
+			*/
 
 			class value_compare : public std::binary_function<value_type, value_type, bool>
 			{
